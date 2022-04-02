@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/objects/Wall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/objects/Walls.gd" type="Script" id=2]
+
+[node name="Walls" type="Node"]
+script = ExtResource( 2 )
+walls = [ NodePath("Wall"), NodePath("Wall2"), NodePath("Wall3"), NodePath("Wall4"), NodePath("Wall5") ]
+
+[node name="Wall" parent="." instance=ExtResource( 1 )]
+position = Vector2( 704, 238 )
+rotation = 1.25664
+
+[node name="Wall2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 628, 470 )
+rotation = 2.51327
+
+[node name="Wall3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 385, 470 )
+rotation = -2.51327
+
+[node name="Wall4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 310, 238 )
+rotation = -1.25664
+
+[node name="Wall5" parent="." instance=ExtResource( 1 )]
+position = Vector2( 507, 95 )
