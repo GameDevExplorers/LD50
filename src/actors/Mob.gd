@@ -6,11 +6,16 @@ var _sigil = null
 var _speed = 75
 var _velocity: = Vector2.ZERO
 var _target = null
+var _dead = false
 
 var rng = RandomNumberGenerator.new()
 
 func set_sigil(t) -> void:
 	_sigil = t
+	
+func trigger_death() -> void:
+	_dead = true
+	anim.animation = "death"
 
 func _physics_process(delta) -> void:
 	if _sigil:
@@ -23,7 +28,8 @@ func _physics_process(delta) -> void:
 				set_target(collision.collider)
 		else:
 			_target = null
-			anim.animation = "walk"
+			if !_dead:
+				anim.animation = "walk"
 			
 func set_target(t) -> void:
 	_target = t
@@ -35,7 +41,10 @@ func attack() -> void:
 		_target.hit()
 		$Timer.start(2)
 
-
 func _on_Timer_timeout() -> void:
 	if _target:
 		attack()
+
+func _on_skele_anim_finished() -> void:
+	if anim.animation == "death":
+		queue_free()
