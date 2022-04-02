@@ -9,7 +9,7 @@ var velocity:Vector2 = Vector2()
 var player_nearby = false
 
 enum State { IDLE, ATTACKING, ATTACK_PAUSE }
-enum Attack { SPIRAL, BEAM }
+enum Attack { SPIRAL }
 
 var state:int = State.IDLE
 var attack:int = -1
@@ -55,7 +55,6 @@ func fire():
 	b.start(position, 0, speed)
 	get_parent().add_child(b)
 	b.set_target(Game.player_location)
-
 
 func _on_Timer_timeout():
 	if state == State.IDLE:

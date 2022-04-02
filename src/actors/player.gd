@@ -24,6 +24,7 @@ func get_input():
 		fire_projectile(0)
 
 func _physics_process(delta):
+	Game.player_location = position
 	get_input()
 	velocity = move_and_slide(velocity)
 	Game.player_location = global_position
