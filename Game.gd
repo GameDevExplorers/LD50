@@ -3,6 +3,7 @@ extends Node
 
 export var paused = false
 export var player_health:int = 10
+export var player_location:Vector2 = Vector2(0,0)
 
 var pause_scene:Control = load("res://pause_menu.tscn").instance()
 
