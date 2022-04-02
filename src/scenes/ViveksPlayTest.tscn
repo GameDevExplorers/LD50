@@ -28,21 +28,21 @@ position = Vector2( 105, 114 )
 position = Vector2( 34, 36 )
 
 [node name="Spawner" parent="." instance=ExtResource( 5 )]
-position = Vector2( 131, 17 )
+position = Vector2( 133, -70 )
 target = NodePath("../Sigil")
 
 [node name="Spawner2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 237, 69 )
+position = Vector2( 323, 60 )
 target = NodePath("../Sigil2")
 
 [node name="Spawner3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 230, 206 )
+position = Vector2( 330, 176 )
 target = NodePath("../Sigil3")
 
 [node name="Spawner4" parent="." instance=ExtResource( 5 )]
-position = Vector2( 19, 203 )
+position = Vector2( -17, 262 )
 target = NodePath("../Sigil4")
 
 [node name="Spawner5" parent="." instance=ExtResource( 5 )]
-position = Vector2( 20, 86 )
+position = Vector2( -79, 28 )
 target = NodePath("../Sigil5")
