@@ -20,8 +20,9 @@ Game="*res://Game.gd"
 
 [display]
 
-window/size/width=256
-window/size/height=224
+window/size/width=512
+window/size/height=448
+window/size/fullscreen=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
