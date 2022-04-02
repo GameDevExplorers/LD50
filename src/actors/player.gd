@@ -3,7 +3,7 @@ extends KinematicBody2D
 export (int) var speed = 200
 export (int) var spread = 10
 
-var Bullet = load("res://bullet.tscn")
+var Bullet = load("res://src/objects/bullet.tscn")
 var velocity:Vector2 = Vector2()
 
 func get_input():
