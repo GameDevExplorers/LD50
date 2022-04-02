@@ -2,6 +2,7 @@ extends Node
 
 
 export var paused = false
+export var player_health:int = 10
 
 var pause_scene:Control = load("res://pause_menu.tscn").instance()
 
