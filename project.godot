@@ -22,9 +22,12 @@ Game="*res://Game.gd"
 
 window/size/width=256
 window/size/height=224
-window/size/fullscreen=true
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
+
+[global]
+
+full=false
 
 [input]
 

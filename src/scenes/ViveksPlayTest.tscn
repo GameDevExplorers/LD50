@@ -36,7 +36,7 @@ position = Vector2( 323, 60 )
 target = NodePath("../Sigil2")
 
 [node name="Spawner3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 330, 176 )
+position = Vector2( 275, 277 )
 target = NodePath("../Sigil3")
 
 [node name="Spawner4" parent="." instance=ExtResource( 5 )]
