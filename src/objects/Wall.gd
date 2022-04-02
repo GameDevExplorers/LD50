@@ -1,10 +1,26 @@
 extends KinematicBody2D
 
-export var health: = 1000
+var wall_base = preload("res://src/BlueTexture.jpg")
+var wall_damaged = preload("res://src/DarkBlueTexture.jpg")
+var wall_down = preload("res://src/YellowTexture.jpg")
+
+onready var wall_sprite = $wall_sprite
+
+export var health: = 400
 var _velocity: = Vector2.ZERO
 
-func take_damage() -> void:
-	health -= 10
+func repair() -> void:
+	$CollisionShape2D.disabled = false
+	health = 400
+	wall_sprite.set_texture(wall_base)
 
-func _on_Area2D_body_entered(body: Node) -> void:
+func take_damage() -> void:
+	health -= 40
+	if health < 250:
+		wall_sprite.set_texture(wall_damaged)
+	if health <= 0:
+		wall_sprite.set_texture(wall_down)
+		$CollisionShape2D.disabled = true
+
+func hit() -> void:
 	take_damage()
