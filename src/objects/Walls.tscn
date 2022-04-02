@@ -8,20 +8,20 @@ script = ExtResource( 2 )
 walls = [ NodePath("Wall"), NodePath("Wall2"), NodePath("Wall3"), NodePath("Wall4"), NodePath("Wall5") ]
 
 [node name="Wall" parent="." instance=ExtResource( 1 )]
-position = Vector2( 175, 105 )
+position = Vector2( 248, 75 )
 rotation = 1.25664
 
 [node name="Wall2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 156, 162 )
+position = Vector2( 202, 216 )
 rotation = 2.51327
 
 [node name="Wall3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 96, 162 )
+position = Vector2( 54, 216 )
 rotation = -2.51327
 
 [node name="Wall4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 77, 105 )
+position = Vector2( 8, 75 )
 rotation = -1.25664
 
 [node name="Wall5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 126, 70 )
+position = Vector2( 128, -12 )
