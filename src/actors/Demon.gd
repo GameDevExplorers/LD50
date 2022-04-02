@@ -9,7 +9,7 @@ var velocity:Vector2 = Vector2()
 var player_nearby = false
 
 enum State { IDLE, ATTACKING, ATTACK_PAUSE }
-enum Attack { SPIRAL }
+enum Attack { SPIRAL, BEAM }
 
 var state:int = State.IDLE
 var attack:int = -1
@@ -41,7 +41,7 @@ func _process(delta):
 	else:
 		if !player_nearby:
 			if Game.player_location and position and speed:
-				dir = Game.player_location.direction_to(position)
+				dir = global_position.direction_to(Game.player_location)
 				velocity = dir * speed
 		else:
 			velocity = Vector2.ZERO
@@ -74,14 +74,17 @@ func _on_Timer_timeout():
 func assign_attack():
 	state  = State.ATTACKING
 	if randf() > 0.5:
-		attack = Attack.BEAM#Attack.SPIRAL
+		attack = Attack.SPIRAL
 	else:
 		attack = Attack.BEAM
 
 
-
 func _on_Area2D_body_exited(body:Node):
-	pass # Replace with function body.
+	if body.get_name() == "player":
+		player_nearby = false
+
 
 func _on_Area2D_body_entered(body:Node):
-	pass # Replace with function body.
+	print(body.get_name())
+	if body.get_name() == "player":
+		player_nearby = true
