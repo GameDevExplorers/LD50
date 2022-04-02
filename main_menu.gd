@@ -2,7 +2,7 @@ extends Control
 
 
 func _on_StartBtn_pressed():
-	var result = get_tree().change_scene("res://level_one.tscn")
+	var result = get_tree().change_scene("res://src/scenes/ViveksPlayTest.tscn")
 	if result != OK:
 	  print("Error loading scene")
 

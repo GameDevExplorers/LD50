@@ -6,15 +6,15 @@
 [node name="play_scene" type="Node2D"]
 
 [node name="Mob2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 944, 136 )
+position = Vector2( 269, 31 )
 
 [node name="Mob" parent="." instance=ExtResource( 2 )]
-position = Vector2( 800, 91 )
+position = Vector2( 215, 40 )
 
 [node name="Mob3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 990, 229 )
+position = Vector2( 273, 69 )
 
 [node name="Mob4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 846, 184 )
+position = Vector2( 231, 97 )
 
 [node name="Walls" parent="." instance=ExtResource( 1 )]
