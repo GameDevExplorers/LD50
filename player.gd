@@ -29,6 +29,5 @@ func _physics_process(delta):
 
 func fire_projectile(offset:int):
 	var b = Bullet.instance()
-	print(rotation)
 	b.start($BulletSpawn.global_position, rotation + deg2rad(offset))
 	get_parent().add_child(b)
