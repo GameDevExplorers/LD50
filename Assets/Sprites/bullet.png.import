@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Skeleton-die-Sheet.png-40636dfcf48b5e07fd285b6726c7756f.stex"
+path="res://.import/bullet.png-01b797d76f64f0a3fea939dd04a7ef5b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Skeleton-die-Sheet.png"
-dest_files=[ "res://.import/Skeleton-die-Sheet.png-40636dfcf48b5e07fd285b6726c7756f.stex" ]
+source_file="res://Assets/Sprites/bullet.png"
+dest_files=[ "res://.import/bullet.png-01b797d76f64f0a3fea939dd04a7ef5b.stex" ]
 
 [params]
 
