@@ -19,15 +19,13 @@ func get_input():
 		velocity.y -= 1
 	velocity = velocity.normalized() * speed
 	if Input.is_action_just_released("fire"):
-		fire_projectile(spread)
-		fire_projectile(spread * -1)
-		fire_projectile(0)
+	  fire_projectile(spread)
+	  fire_projectile(spread * -1)
+	  fire_projectile(0)
 
 func _physics_process(delta):
-	Game.player_location = position
 	get_input()
 	velocity = move_and_slide(velocity)
-	Game.player_location = global_position
 
 func fire_projectile(offset:int):
 	var b = Bullet.instance()
