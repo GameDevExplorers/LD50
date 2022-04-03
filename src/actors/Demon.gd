@@ -32,6 +32,7 @@ func _process(delta):
 			var step = 2 * PI / count
 			var b = Bullet.instance()
 			b.start(position + radius.rotated(step * attack_progress), 0, speed)
+			b.set_animation("demon")
 			get_parent().add_child(b)
 			state = State.ATTACK_PAUSE
 		if attack == Attack.BEAM:
@@ -44,6 +45,7 @@ func _process(delta):
 				dir = global_position.direction_to(Game.player_location)
 				velocity = dir * speed
 		else:
+			$AnimatedSprite.play("default")
 			velocity = Vector2.ZERO
 
 func _physics_process(delta):
@@ -53,6 +55,7 @@ func _physics_process(delta):
 func fire():
 	var b = Bullet.instance()
 	b.start(position, 0, speed)
+	b.set_animation("demon")
 	get_parent().add_child(b)
 	b.set_target(Game.player_location)
 
@@ -72,6 +75,7 @@ func _on_Timer_timeout():
 			$Timer.start(5)
 
 func assign_attack():
+	$AnimatedSprite.play("jumping")
 	state  = State.ATTACKING
 	if randf() > 0.5:
 		attack = Attack.SPIRAL
@@ -85,6 +89,10 @@ func _on_Area2D_body_exited(body:Node):
 
 
 func _on_Area2D_body_entered(body:Node):
-	print(body.get_name())
 	if body.get_name() == "player":
 		player_nearby = true
+
+
+func _on_AnimatedSprite_animation_finished():
+	if $AnimatedSprite.animation == "jumping":
+		$AnimatedSprite.play("flying")
