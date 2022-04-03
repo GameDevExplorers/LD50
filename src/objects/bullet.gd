@@ -1,13 +1,15 @@
 extends KinematicBody2D
 
-var speed = 750
+export var damage: = 30
+var speed = 850
 var velocity = Vector2()
 var target = Vector2();
 
-func start(pos, dir, bullet_speed = speed):
+func start(pos, dir, bullet_speed = speed, dam = 10):
 	rotation = dir
 	position = pos
 	speed    = bullet_speed
+	damage   = dam
 	velocity = Vector2(speed, 0).rotated(rotation)
 
 func set_animation(anim: String):
@@ -29,6 +31,8 @@ func _physics_process(delta):
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
-
 func _on_Timer_timeout():
 	queue_free()
+
+func _on_Hitbox_body_entered(body):
+	print(body)
