@@ -75,6 +75,7 @@ func _on_Timer_timeout():
 			$Timer.start(5)
 
 func assign_attack():
+	$AudioRoar.play()
 	$AnimatedSprite.play("jumping")
 	state  = State.ATTACKING
 	if randf() > 0.5:

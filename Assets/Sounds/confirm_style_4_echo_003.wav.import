@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/confirm_style_4_echo_003.wav-a68d9c4c0a557873510945dfe7b9b08c.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/confirm_style_4_echo_003.wav"
+dest_files=[ "res://.import/confirm_style_4_echo_003.wav-a68d9c4c0a557873510945dfe7b9b08c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

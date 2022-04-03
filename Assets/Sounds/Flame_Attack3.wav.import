@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Flame_Attack3.wav-67de56dc8e546e6f7f76110598bd82dc.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Flame_Attack3.wav"
+dest_files=[ "res://.import/Flame_Attack3.wav-67de56dc8e546e6f7f76110598bd82dc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

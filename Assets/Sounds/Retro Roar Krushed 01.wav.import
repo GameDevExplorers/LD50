@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Retro Roar Krushed 01.wav-25f7ae0a5f9a0b39900ba894cdf3653f.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Retro Roar Krushed 01.wav"
+dest_files=[ "res://.import/Retro Roar Krushed 01.wav-25f7ae0a5f9a0b39900ba894cdf3653f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
