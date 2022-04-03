@@ -3,6 +3,7 @@ extends KinematicBody2D
 onready var anim = $skele_anim
 
 var _sigil = null
+var _default_target = null
 var _speed = 75
 var _velocity: = Vector2.ZERO
 var _target = null
@@ -10,8 +11,9 @@ var _dead = false
 
 var rng = RandomNumberGenerator.new()
 
-func set_sigil(t) -> void:
+func set_sigils(t, default) -> void:
 	_sigil = t
+	_default_target = default
 	
 func trigger_death() -> void:
 	_dead = true
@@ -19,7 +21,9 @@ func trigger_death() -> void:
 
 func _physics_process(delta) -> void:
 	if _sigil:
-		_velocity = position.direction_to(_sigil.position) * _speed
+		if _sigil.locked:
+			_sigil = _default_target
+		_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
 		anim.flip_h = true if _velocity.x < 0 else false
 		var collision = move_and_collide(_velocity * delta)
 		if collision && collision.collider.has_method("hit"):
