@@ -34,8 +34,8 @@ position = Vector2( -206, -81 )
 
 [node name="Spawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 214, -148 )
-defaultTarget = NodePath("../Walls")
-target = NodePath("../EternalSigil")
+defaultTarget = NodePath("../EternalSigil")
+target = NodePath("../Sigil")
 
 [node name="Spawner2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 671, 77 )

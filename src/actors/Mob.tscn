@@ -113,7 +113,6 @@ shape = SubResource( 1 )
 [node name="skele_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "walk"
-frame = 1
 playing = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
