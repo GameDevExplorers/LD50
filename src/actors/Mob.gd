@@ -18,6 +18,7 @@ func set_sigils(t, default) -> void:
 	_default_target = default
 	
 func trigger_death() -> void:
+	$Die.play()
 	_dead = true
 	anim.animation = "death"
 
@@ -40,9 +41,8 @@ func handle_collision(collision) -> void:
 		
 	var collider = collision.collider
 
-	if  collider.has_method("hit"):
+	if collider.has_method("hit"):
 		if _target == null:
-			anim.animation = "attack"
 			_target = collision.collider
 			$Timer.start(0.1)
 
@@ -54,13 +54,34 @@ func set_velocity() -> void:
 func attack() -> void:
 	$Timer.stop()
 	if _target:
+		anim.animation = "attack"
 		_target.hit()
 		$Timer.start(2)
 
 func take_damage(damage) -> void:
+	var old_velocity = _velocity
+	_velocity = Vector2.ZERO
+
+	if anim.animation == "attack":
+		anim.animation = "walk"
+
+	$Hit.play()
 	health = health - damage
 	if health <= 0:
 		trigger_death()
+
+	modulate = Color.red
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.red
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
+
+	yield(get_tree().create_timer(0.5), "timeout")
+	_velocity = old_velocity
+
+	
 
 func _on_Timer_timeout() -> void:
 	if _target:

@@ -7,6 +7,7 @@ export (int) var max_health = 91
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var velocity:Vector2 = Vector2()
+var ready_to_fire = true
 
 onready var health_bar = $Healthbar
 
@@ -31,14 +32,26 @@ func get_input():
 	if Input.is_action_pressed("up"):
 		velocity.y -= 1
 	velocity = velocity.normalized() * speed
-	if Input.is_action_just_released("fire"):
-		fire_projectile(spread)
+	if Input.is_action_just_released("fire") && ready_to_fire:
+		ready_to_fire = false
+		$GunFire.play()
+		yield(get_tree().create_timer(0.1), "timeout")
+		fire_projectile(0)
+		yield(get_tree().create_timer(0.05), "timeout")
+		fire_projectile(spread / 2)
+		yield(get_tree().create_timer(0.05), "timeout")
+		fire_projectile((spread / 2) * -1)
+		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile(spread * -1)
+		yield(get_tree().create_timer(0.05), "timeout")
+		fire_projectile(spread)
+		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile(0)
 
 func _physics_process(delta):
-	Game.player_location = position
 	get_input()
+	if velocity.length_squared() > 0 && $Walk.playing == false:
+		$Walk.play()
 	velocity = move_and_slide(velocity)
 	Game.player_location = global_position
 
@@ -46,6 +59,18 @@ func fire_projectile(offset:int):
 	var b = Bullet.instance()
 	b.start($BulletSpawn.global_position, rotation + deg2rad(offset), "player")
 	get_parent().add_child(b)
+
+
+func _on_GunFire_finished():
+	$GunReload.play()
+
+
+func _on_GunReload_finished():
+	ready_to_fire = true
+
+
+func _on_Walk_finished():
+	pass
 
 func take_damage(damage) -> void:
 	health = health - damage

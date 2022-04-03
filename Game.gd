@@ -46,7 +46,7 @@ func _input(event):
 		if current_scene() != "main_menu":
 			if paused == false:
 				pause()
-				get_tree().get_current_scene().add_child(pause_scene)
+				get_tree().get_current_scene().find_node("CanvasLayer").add_child(pause_scene)
 				var popup = pause_scene.get_node("PopupDialog") as PopupDialog
 				popup.popup_centered()
 				popup.show()

@@ -1,34 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
+[ext_resource path="res://Assets/Sounds/GlassBreak1.wav" type="AudioStream" id=1]
 [ext_resource path="res://src/objects/Wall.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sprites/gate-Sheet.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 318, 64 )
-
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 3 )
-region = Rect2( 160, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 3 )
-region = Rect2( 320, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 3 )
-region = Rect2( 480, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 3 )
-region = Rect2( 640, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=26]
-atlas = ExtResource( 3 )
-region = Rect2( 800, 32, 160, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
@@ -58,13 +35,32 @@ region = Rect2( 800, 0, 160, 32 )
 atlas = ExtResource( 3 )
 region = Rect2( 0, 64, 160, 32 )
 
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 3 )
+region = Rect2( 320, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 3 )
+region = Rect2( 480, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 3 )
+region = Rect2( 640, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 3 )
+region = Rect2( 800, 32, 160, 32 )
+
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
-"loop": true,
-"name": "damaged",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "solid",
@@ -73,6 +69,11 @@ animations = [ {
 "frames": [ SubResource( 20 ) ],
 "loop": true,
 "name": "broken",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
+"loop": true,
+"name": "damaged",
 "speed": 5.0
 } ]
 
@@ -89,4 +90,10 @@ shape = SubResource( 1 )
 [node name="gate_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 10 )
 animation = "solid"
+frame = 4
 playing = true
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 1 )
+volume_db = -9.114
+pitch_scale = 1.41

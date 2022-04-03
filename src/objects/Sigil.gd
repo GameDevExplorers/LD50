@@ -15,6 +15,7 @@ func _ready() -> void:
 
 func _on_Sigil_body_entered(body: Node) -> void:
 	if !locked && body.has_method("trigger_death"):
+		$PoweredUp.play()
 		charge = min(charge + 15, 100)
 		anim.set_frame(charge / 10)
 		if charge == 100:
