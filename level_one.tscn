@@ -2,12 +2,13 @@
 
 [ext_resource path="res://src/actors/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/actors/Demon.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/Sprites/Ground Pallete Sprite-Sheet.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Ground Palletes/Ground Pallete Sprite-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://level_one.gd" type="Script" id=4]
 [ext_resource path="res://src/objects/Walls.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/objects/Spawner.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/objects/EternalSigil.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/objects/Sigil.tscn" type="PackedScene" id=8]
+
 
 [sub_resource type="TileSet" id=2]
 0/name = "Ground Pallete Sprite-Sheet.png 0"

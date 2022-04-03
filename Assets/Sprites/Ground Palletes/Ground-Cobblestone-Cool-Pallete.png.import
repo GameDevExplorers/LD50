@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ground Pallete Sprite-Sheet.png-4cde693071b1e2eb20d95a68415acad4.stex"
+path="res://.import/Ground-Cobblestone-Cool-Pallete.png-21cbbd6182a172de640c26ab88a2455f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Ground Palletes/Ground Pallete Sprite-Sheet.png"
-dest_files=[ "res://.import/Ground Pallete Sprite-Sheet.png-4cde693071b1e2eb20d95a68415acad4.stex" ]
+source_file="res://Assets/Sprites/Ground Palletes/Ground-Cobblestone-Cool-Pallete.png"
+dest_files=[ "res://.import/Ground-Cobblestone-Cool-Pallete.png-21cbbd6182a172de640c26ab88a2455f.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ground Pallete Sprite-Sheet.png-4cde693071b1e2eb20d95a68415acad4.stex"
+path="res://.import/Ground-Grass-Decorations.png-72dd3aebff844e31707e4faa924da76f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/Ground Palletes/Ground Pallete Sprite-Sheet.png"
-dest_files=[ "res://.import/Ground Pallete Sprite-Sheet.png-4cde693071b1e2eb20d95a68415acad4.stex" ]
+source_file="res://Assets/Sprites/Ground Palletes/Ground-Grass-Decorations.png"
+dest_files=[ "res://.import/Ground-Grass-Decorations.png-72dd3aebff844e31707e4faa924da76f.stex" ]
 
 [params]
 
