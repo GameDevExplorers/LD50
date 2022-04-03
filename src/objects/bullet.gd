@@ -10,9 +10,14 @@ func start(pos, dir, bullet_speed = speed):
 	speed    = bullet_speed
 	velocity = Vector2(speed, 0).rotated(rotation)
 
+func set_animation(anim: String):
+	$AnimatedSprite.animation = anim
+
+
 func set_target(pos: Vector2):
 	target = pos
 	velocity = global_position.direction_to(pos) * speed
+
 
 func _physics_process(delta):
 	var collision = move_and_collide(velocity * delta)
