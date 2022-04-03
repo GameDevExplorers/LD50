@@ -1,14 +1,13 @@
-[gd_scene load_steps=24 format=2]
-
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/actors/Demon.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/demon 2 idle-Sheet.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Sprites/demon 2 fly-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Sprites/demon 2 jump-Sheet.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sprites/shadow.png" type="Texture" id=5]
-[ext_resource path="res://Assets/Sounds/Retro Roar Krushed 01.wav" type="AudioStream" id=6]
 [ext_resource path="res://src/objects/Healthbar.tscn" type="PackedScene" id=6]
-
+[ext_resource path="res://Assets/Sounds/Retro Impact Punch 07.wav" type="AudioStream" id=7]
+[ext_resource path="res://Assets/Sounds/Retro Roar Krushed 01.wav" type="AudioStream" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -93,7 +92,7 @@ height = 0.0
 collision_layer = 16
 collision_mask = 0
 script = ExtResource( 1 )
-speed = 100
+speed = 400
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -102,7 +101,7 @@ shape = SubResource( 1 )
 rotation = 0.0012719
 frames = SubResource( 2 )
 animation = "flying"
-frame = 3
+frame = 5
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -121,9 +120,9 @@ scale = Vector2( 0.828125, 0.6875 )
 texture = ExtResource( 5 )
 
 [node name="AudioRoar" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 6 )
+stream = ExtResource( 8 )
 volume_db = -13.639
-pitch_scale = 0.97
+pitch_scale = 0.89
 
 [node name="BulletCollider" type="Area2D" parent="."]
 collision_layer = 2
@@ -141,6 +140,11 @@ margin_left = 64.0
 margin_top = 10.0
 margin_right = 448.0
 margin_bottom = 23.0
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = 1.594
+pitch_scale = 0.63
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

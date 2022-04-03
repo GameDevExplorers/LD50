@@ -30,6 +30,14 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var dir = Vector2.ZERO
+	if !player_nearby:
+		if Game.player_location:
+			dir = global_position.direction_to(Game.player_location)
+			velocity = dir * speed
+	else:
+		$AnimatedSprite.play("default")
+		velocity = Vector2.ZERO
+
 	if state == State.ATTACKING:
 		if attack == Attack.SPIRAL:
 			var count = 10
@@ -44,14 +52,6 @@ func _process(delta):
 			fire()
 			fire()
 			state = State.ATTACK_PAUSE
-	else:
-		if !player_nearby:
-			if Game.player_location and position and speed:
-				dir = global_position.direction_to(Game.player_location)
-				velocity = dir * speed
-		else:
-			$AnimatedSprite.play("default")
-			velocity = Vector2.ZERO
 
 func _physics_process(delta):
 	velocity = move_and_slide(velocity * delta)
@@ -91,16 +91,28 @@ func assign_attack():
 func take_damage(damage) -> void:
 	health = health - damage
 	health_bar.set_health(health)
+	modulate = Color.white
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.black
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.black
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
+
 	#if health <= 0:
 		#trigger_death()
 
 func _on_Area2D_body_exited(body:Node):
 	if body.get_name() == "player":
+		modulate = Color.white
 		player_nearby = false
 
 
 func _on_Area2D_body_entered(body:Node):
 	if body.get_name() == "player":
+		modulate = Color.blueviolet
 		player_nearby = true
 
 
