@@ -22,6 +22,5 @@ func spawn() -> void:
 	m.set_sigils(target_node, default_target_node)
 	var ran_1 = rng.randf_range(-100.0, 100.0)
 	var ran_2 = rng.randf_range(-100.0, 100.0)
-	print(str(ran_1) + ":" + str(ran_2))
 	m.global_position = global_position + Vector2(ran_1, ran_2)
 	get_parent().add_child(m)

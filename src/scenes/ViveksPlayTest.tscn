@@ -14,20 +14,24 @@ position = Vector2( -2, 26 )
 [node name="EternalSigil" parent="." instance=ExtResource( 2 )]
 position = Vector2( 240, 235 )
 
-[node name="Sigil" parent="." instance=ExtResource( 4 )]
+[node name="Sigil-Red" parent="." instance=ExtResource( 4 )]
 position = Vector2( 240, 85 )
 
-[node name="Sigil2" parent="." instance=ExtResource( 4 )]
+[node name="Sigil-Gold" parent="." instance=ExtResource( 4 )]
 position = Vector2( 367, 193 )
+color = "gold"
 
-[node name="Sigil3" parent="." instance=ExtResource( 4 )]
+[node name="Sigil-Green" parent="." instance=ExtResource( 4 )]
 position = Vector2( 316, 331 )
+color = "green"
 
-[node name="Sigil4" parent="." instance=ExtResource( 4 )]
+[node name="Sigil-Blue" parent="." instance=ExtResource( 4 )]
 position = Vector2( 162, 334 )
+color = "blue"
 
-[node name="Sigil5" parent="." instance=ExtResource( 4 )]
+[node name="Sigil-Purple" parent="." instance=ExtResource( 4 )]
 position = Vector2( 127, 186 )
+color = "purple"
 
 [node name="player" parent="." instance=ExtResource( 3 )]
 position = Vector2( -206, -81 )
@@ -35,24 +39,24 @@ position = Vector2( -206, -81 )
 [node name="Spawner" parent="." instance=ExtResource( 5 )]
 position = Vector2( 214, -148 )
 defaultTarget = NodePath("../EternalSigil")
-target = NodePath("../Sigil")
+target = NodePath("../Sigil-Red")
 
 [node name="Spawner2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 671, 77 )
 defaultTarget = NodePath("../EternalSigil")
-target = NodePath("../Sigil2")
+target = NodePath("../Sigil-Gold")
 
 [node name="Spawner3" parent="." instance=ExtResource( 5 )]
 position = Vector2( 506, 610 )
 defaultTarget = NodePath("../EternalSigil")
-target = NodePath("../Sigil3")
+target = NodePath("../Sigil-Green")
 
 [node name="Spawner4" parent="." instance=ExtResource( 5 )]
 position = Vector2( -78, 597 )
 defaultTarget = NodePath("../EternalSigil")
-target = NodePath("../Sigil4")
+target = NodePath("../Sigil-Blue")
 
 [node name="Spawner5" parent="." instance=ExtResource( 5 )]
 position = Vector2( -186, 51 )
 defaultTarget = NodePath("../EternalSigil")
-target = NodePath("../Sigil5")
+target = NodePath("../Sigil-Purple")
