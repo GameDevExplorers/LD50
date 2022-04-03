@@ -24,7 +24,8 @@ func set_target(pos: Vector2):
 
 
 func _physics_process(delta):
-	rotation += 10 * delta
+	if spawned_by == "demon":
+		rotation += 20 * delta
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		velocity = velocity.bounce(collision.normal)

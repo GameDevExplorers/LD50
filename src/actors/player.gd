@@ -21,23 +21,37 @@ func _on_demon_summoned():
 	add_child(health_bar)
 	
 func get_input():
-	look_at(get_global_mouse_position())
 	velocity = Vector2()
 	if Input.is_action_pressed("right"):
+		$AnimatedSprite.flip_h = false
+		$BulletSpawn.position.x = 22
+		$BulletSpawn/MuzzleFlash.flip_h = false
+		$BulletSpawn/MuzzleFlash.position.x = 20
+		$AnimatedSprite/Sprite.position.x = -3
 		velocity.x += 1
 	if Input.is_action_pressed("left"):
+		$AnimatedSprite.flip_h = true
+		$BulletSpawn.position.x = -22
+		$BulletSpawn/MuzzleFlash.flip_h = true
+		$BulletSpawn/MuzzleFlash.position.x = -20
+		$AnimatedSprite/Sprite.position.x = 2
 		velocity.x -= 1
 	if Input.is_action_pressed("down"):
 		velocity.y += 1
 	if Input.is_action_pressed("up"):
 		velocity.y -= 1
+
 	velocity = velocity.normalized() * speed
+
 	if Input.is_action_just_released("fire") && ready_to_fire:
+		$BulletSpawn/MuzzleFlash.frame = 0
 		ready_to_fire = false
 		$GunFire.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		fire_projectile(0)
+		$BulletSpawn/MuzzleFlash.frame = 1
 		yield(get_tree().create_timer(0.05), "timeout")
+		$BulletSpawn/MuzzleFlash.frame = 0
 		fire_projectile(spread / 2)
 		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile((spread / 2) * -1)
@@ -50,14 +64,20 @@ func get_input():
 
 func _physics_process(delta):
 	get_input()
-	if velocity.length_squared() > 0 && $Walk.playing == false:
-		$Walk.play()
+	if velocity.length_squared() > 0:
+		if $Walk.playing == false:
+			$Walk.play()
+		$AnimatedSprite.play()
+	else:
+		$AnimatedSprite.stop()
+		$AnimatedSprite.frame = 0
 	velocity = move_and_slide(velocity)
 	Game.player_location = global_position
 
 func fire_projectile(offset:int):
+	$BulletSpawn/MuzzleFlash.frame = 0
 	var b = Bullet.instance()
-	b.start($BulletSpawn.global_position, rotation + deg2rad(offset), "player")
+	b.start($BulletSpawn.global_position, get_angle_to(get_global_mouse_position()) + deg2rad(offset), "player")
 	get_parent().add_child(b)
 
 
