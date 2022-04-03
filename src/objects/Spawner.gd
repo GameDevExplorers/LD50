@@ -2,6 +2,7 @@ extends Node2D
 
 export var defaultTarget: NodePath
 export var target: NodePath
+export var spawn_index: int
 
 var Mob = load("res://src/actors/Mob.tscn")
 var rng = RandomNumberGenerator.new()
@@ -12,10 +13,18 @@ onready var target_node = get_node(target)
 
 func _ready() -> void:
 	$Timer.start(5)
-
+	get_parent().connect("spawn_skeles", self, "_on_spawn")
+	
 func _on_Timer_timeout() -> void:
-	spawn()
+	#spawn()
+	pass
 
+func _on_spawn(arr):
+	yield(get_tree().create_timer(5), "timeout")
+	var count = arr[spawn_index]
+	for i in range(count):
+		spawn()
+	
 func spawn() -> void:
 	rng.randomize()
 	var m = Mob.instance()
