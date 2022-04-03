@@ -89,5 +89,5 @@ shape = SubResource( 1 )
 [node name="gate_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 10 )
 animation = "solid"
-frame = 3
+frame = 2
 playing = true
