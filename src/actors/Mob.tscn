@@ -8,22 +8,6 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 21.0526, 40.7895 )
 
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 3 )
-region = Rect2( 48, 0, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 3 )
-region = Rect2( 96, 0, 48, 48 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 3 )
-region = Rect2( 144, 0, 48, 48 )
-
 [sub_resource type="AtlasTexture" id=30]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 48, 48 )
@@ -51,6 +35,22 @@ region = Rect2( 240, 0, 48, 48 )
 [sub_resource type="AtlasTexture" id=36]
 atlas = ExtResource( 5 )
 region = Rect2( 288, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 144, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=23]
 atlas = ExtResource( 4 )
@@ -82,15 +82,15 @@ region = Rect2( 288, 0, 48, 48 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
-"loop": true,
-"name": "walk",
-"speed": 4.0
-}, {
 "frames": [ SubResource( 30 ), SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
 "loop": false,
 "name": "death",
 "speed": 7.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
+"loop": true,
+"name": "walk",
+"speed": 4.0
 }, {
 "frames": [ SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
 "loop": true,
@@ -113,7 +113,7 @@ shape = SubResource( 1 )
 [node name="skele_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "walk"
-frame = 3
+frame = 2
 playing = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
