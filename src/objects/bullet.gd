@@ -1,15 +1,17 @@
 extends KinematicBody2D
 
 export var damage: = 30
+export var spawned_by: = ""
 var speed = 850
 var velocity = Vector2()
 var target = Vector2();
 
-func start(pos, dir, bullet_speed = speed, dam = 10):
+func start(pos, dir, spawner, bullet_speed = speed, dam = 30):
 	rotation = dir
 	position = pos
 	speed    = bullet_speed
 	damage   = dam
+	spawned_by = spawner
 	velocity = Vector2(speed, 0).rotated(rotation)
 
 func set_animation(anim: String):
