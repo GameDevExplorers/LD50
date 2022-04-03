@@ -18,6 +18,7 @@ func set_sigils(t, default) -> void:
 	_default_target = default
 	
 func trigger_death() -> void:
+	remove_child($BulletCollider)
 	$Die.play()
 	_dead = true
 	anim.animation = "death"
@@ -53,7 +54,7 @@ func set_velocity() -> void:
 	
 func attack() -> void:
 	$Timer.stop()
-	if _target:
+	if _target && !_dead:
 		anim.animation = "attack"
 		_target.hit()
 		$Timer.start(2)
