@@ -5,20 +5,20 @@
 [node name="Walls" type="Node2D"]
 
 [node name="Wall" parent="." instance=ExtResource( 1 )]
-position = Vector2( 451, 137 )
+position = Vector2( 518, 70 )
 rotation = 1.25664
 
 [node name="Wall2" parent="." instance=ExtResource( 1 )]
-position = Vector2( 377, 393 )
+position = Vector2( 471, 413 )
 rotation = 2.51327
 
 [node name="Wall3" parent="." instance=ExtResource( 1 )]
-position = Vector2( 91, 385 )
+position = Vector2( 31, 414 )
 rotation = -2.51327
 
 [node name="Wall4" parent="." instance=ExtResource( 1 )]
-position = Vector2( 46, 129 )
+position = Vector2( 7, 70 )
 rotation = -1.25664
 
 [node name="Wall5" parent="." instance=ExtResource( 1 )]
-position = Vector2( 233, -17 )
+position = Vector2( 248, -114 )
