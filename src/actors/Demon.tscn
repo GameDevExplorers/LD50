@@ -1,4 +1,5 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
+
 
 [ext_resource path="res://src/actors/Demon.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/demon 2 idle-Sheet.png" type="Texture" id=2]
@@ -6,6 +7,8 @@
 [ext_resource path="res://Assets/Sprites/demon 2 jump-Sheet.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sprites/shadow.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Sounds/Retro Roar Krushed 01.wav" type="AudioStream" id=6]
+[ext_resource path="res://src/objects/Healthbar.tscn" type="PackedScene" id=6]
+
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -82,7 +85,13 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=3]
 radius = 176.003
 
+[sub_resource type="CapsuleShape2D" id=17]
+radius = 52.6316
+height = 0.0
+
 [node name="Demon" type="KinematicBody2D"]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource( 1 )
 speed = 100
 
@@ -100,6 +109,7 @@ playing = true
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
 
 [node name="DetectionRing" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 3 )
@@ -115,7 +125,25 @@ stream = ExtResource( 6 )
 volume_db = -13.639
 pitch_scale = 0.97
 
+[node name="BulletCollider" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 32
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BulletCollider"]
+position = Vector2( 1, -3 )
+scale = Vector2( 0.38, 0.38 )
+shape = SubResource( 17 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Healthbar" parent="CanvasLayer" instance=ExtResource( 6 )]
+margin_left = 64.0
+margin_top = 10.0
+margin_right = 448.0
+margin_bottom = 23.0
+
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+[connection signal="body_entered" from="BulletCollider" to="." method="_on_BulletCollider_body_entered"]

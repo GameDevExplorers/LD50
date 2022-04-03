@@ -105,7 +105,7 @@ fire={
 2d_physics/layer_4="sigil"
 2d_physics/layer_5="boss"
 2d_physics/layer_6="enemy_projectile"
-2d_physics/layer_7="player_projectile"
+2d_physics/layer_6="projectile"
 
 [physics]
 
