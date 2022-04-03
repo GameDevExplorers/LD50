@@ -314,23 +314,23 @@ region = Rect2( 192, 64, 64, 64 )
 atlas = ExtResource( 4 )
 region = Rect2( 256, 64, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=73]
+[sub_resource type="AtlasTexture" id=84]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 64, 64, 64 )
+region = Rect2( 0, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=74]
+[sub_resource type="AtlasTexture" id=85]
 atlas = ExtResource( 4 )
 region = Rect2( 64, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=75]
+[sub_resource type="AtlasTexture" id=86]
 atlas = ExtResource( 4 )
 region = Rect2( 128, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=76]
+[sub_resource type="AtlasTexture" id=87]
 atlas = ExtResource( 4 )
 region = Rect2( 192, 0, 64, 64 )
 
-[sub_resource type="AtlasTexture" id=77]
+[sub_resource type="AtlasTexture" id=88]
 atlas = ExtResource( 4 )
 region = Rect2( 256, 0, 64, 64 )
 
@@ -371,7 +371,7 @@ animations = [ {
 "name": "gold",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 73 ), SubResource( 74 ), SubResource( 75 ), SubResource( 76 ), SubResource( 77 ) ],
+"frames": [ SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ) ],
 "loop": false,
 "name": "red",
 "speed": 10.0

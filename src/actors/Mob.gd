@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 onready var anim = $skele_anim
+onready var bullet_collider = $BulletCollider
 
 export var health: = 30
 
@@ -18,7 +19,8 @@ func set_sigils(t, default) -> void:
 	_default_target = default
 	
 func trigger_death() -> void:
-	remove_child($BulletCollider)
+	get_node("CollisionShape2D").disabled = true
+	bullet_collider.get_node("CollisionShape2D2").disabled = true
 	$Die.play()
 	_dead = true
 	anim.animation = "death"
@@ -94,6 +96,6 @@ func _on_skele_anim_finished() -> void:
 
 
 func _on_bullet_entered(body: Node) -> void:
-	if body.get("damage"):
+	if body.get("damage") && !_dead:
 		body.queue_free()
 		take_damage(body.get("damage"))
