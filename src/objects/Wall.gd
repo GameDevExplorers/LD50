@@ -8,13 +8,15 @@ var _velocity: = Vector2.ZERO
 
 func _ready():
 	repair_plate.connect("repaired", self, "_on_repaired")
-	remove_child(repair_plate)
+	repair_plate.set_process(false)
+	repair_plate.visible = false
 
 func _on_repaired():
 	repair()
 	
 func repair() -> void:
-	remove_child(repair_plate)
+	repair_plate.set_process(false)
+	repair_plate.visible = false
 	$CollisionShape2D.disabled = false
 	health = 1200
 	anim.set_animation("solid")
@@ -25,7 +27,8 @@ func take_damage() -> void:
 	if health < 800:
 		anim.set_animation("damaged")
 	if health <= 0:
-		add_child(repair_plate)
+		repair_plate.set_process(true)
+		repair_plate.visible = true
 		anim.set_animation("broken")
 		$CollisionShape2D.disabled = true
 
