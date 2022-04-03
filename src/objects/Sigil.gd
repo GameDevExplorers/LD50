@@ -7,6 +7,8 @@ export var locked: = false
 onready var anim = $sigil_base
 onready var fire_anim = $sigil_fire
 
+signal on_lock
+
 func _ready() -> void:
 	anim.set_animation(color)
 	anim.set_frame(0)
@@ -25,6 +27,8 @@ func lock() -> void:
 	anim.set_frame(10)
 	$collider.disabled = true
 	locked = true
+	Game.sigil_locked()
+	emit_signal("on_lock")
 
 
 func _on_sigil_fire_animation_finished() -> void:
