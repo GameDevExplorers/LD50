@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 onready var anim = $skele_anim
 
+export var health: = 30
+
 var _sigil = null
 var _default_target = null
 var _speed = 75
@@ -27,18 +29,23 @@ func _physics_process(delta) -> void:
 		_sigil = _default_target
 	
 	set_velocity()
-	move_and_handle_collision(delta)
-
-func move_and_handle_collision(delta) -> void:
 	var collision = move_and_collide(_velocity * delta)
-	if  collision && collision.collider.has_method("hit"):
+	handle_collision(collision)
+
+func handle_collision(collision) -> void:
+	if !collision:
+		_target = null
+		anim.animation = "walk"
+		return
+		
+	var collider = collision.collider
+
+	if  collider.has_method("hit"):
 		if _target == null:
 			anim.animation = "attack"
 			_target = collision.collider
 			$Timer.start(0.1)
-	else:
-		_target = null
-		anim.animation = "walk"
+
 
 func set_velocity() -> void:
 	_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
@@ -50,6 +57,11 @@ func attack() -> void:
 		_target.hit()
 		$Timer.start(2)
 
+func take_damage(damage) -> void:
+	health = health - damage
+	if health <= 0:
+		trigger_death()
+
 func _on_Timer_timeout() -> void:
 	if _target:
 		attack()
@@ -57,3 +69,9 @@ func _on_Timer_timeout() -> void:
 func _on_skele_anim_finished() -> void:
 	if anim.animation == "death":
 		queue_free()
+
+
+func _on_bullet_entered(body: Node) -> void:
+	if body.get("damage"):
+		body.queue_free()
+		take_damage(body.get("damage"))
