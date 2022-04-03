@@ -20,24 +20,29 @@ func trigger_death() -> void:
 	anim.animation = "death"
 
 func _physics_process(delta) -> void:
-	if _sigil:
-		if _sigil.locked:
-			_sigil = _default_target
-		_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
-		anim.flip_h = true if _velocity.x < 0 else false
-		var collision = move_and_collide(_velocity * delta)
-		if collision && collision.collider.has_method("hit"):
-			if _target == null:
-				anim.animation = "attack"
-				set_target(collision.collider)
-		else:
-			_target = null
-			if !_dead:
-				anim.animation = "walk"
-			
-func set_target(t) -> void:
-	_target = t
-	$Timer.start(0.1)
+	if _sigil == null || _dead:
+		return
+	
+	if _sigil.locked:
+		_sigil = _default_target
+	
+	set_velocity()
+	move_and_handle_collision(delta)
+
+func move_and_handle_collision(delta) -> void:
+	var collision = move_and_collide(_velocity * delta)
+	if  collision && collision.collider.has_method("hit"):
+		if _target == null:
+			anim.animation = "attack"
+			_target = collision.collider
+			$Timer.start(0.1)
+	else:
+		_target = null
+		anim.animation = "walk"
+
+func set_velocity() -> void:
+	_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
+	anim.flip_h = true if _velocity.x < 0 else false
 	
 func attack() -> void:
 	$Timer.stop()
