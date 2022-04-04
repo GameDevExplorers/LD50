@@ -9,7 +9,13 @@ signal repaired
 
 var count: = 0
 
+
+func _ready():
+	reset_frame()
+
+
 func _on_RepairPlate_body_entered(body: Node) -> void:
+	timer_feedback()
 	timer.start(0.1)
 	repair_anim.play("default")
 
@@ -19,11 +25,17 @@ func _on_RepairPlate_body_exited(body: Node) -> void:
 	progress_bar.value = count
 	timer.stop()
 	repair_anim.stop()
-	repair_anim.set_frame(0)
+	reset_frame()
 
 
 func _on_Timer_timeout() -> void:
+	timer_feedback()
+		
+func timer_feedback() -> void:
 	count = count + 1
 	progress_bar.value = count
 	if count == 30:
 		emit_signal("repaired")
+		
+func reset_frame() -> void:
+	repair_anim.set_frame(2)

@@ -34,7 +34,8 @@ animations = [ {
 "speed": 6.8
 } ]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=10]
+height = 14.0
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 7 )
@@ -81,7 +82,8 @@ scale = Vector2( 0.206249, 0.187813 )
 texture = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+position = Vector2( -4, -1 )
+shape = SubResource( 10 )
 
 [node name="BulletSpawn" type="Node2D" parent="."]
 position = Vector2( 15, 0 )
@@ -112,6 +114,7 @@ volume_db = -17.936
 pitch_scale = 0.67
 
 [node name="BulletCollider" type="Area2D" parent="."]
+visible = false
 collision_mask = 32
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BulletCollider"]
