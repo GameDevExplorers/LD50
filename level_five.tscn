@@ -11,8 +11,8 @@
 [ext_resource path="res://src/objects/Sigil.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/actors/player.tscn" type="PackedScene" id=10]
 [ext_resource path="res://level_five.gd" type="Script" id=11]
-[ext_resource path="res://Assets/Sprites/boulder-7.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Music/Demon Sigil.wav" type="AudioStream" id=13]
+[ext_resource path="res://src/objects/boulder.tscn" type="PackedScene" id=14]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Ground-Stone-Pallete.png 0"
@@ -189,199 +189,140 @@ margin_right = 293.0
 margin_bottom = 147.0
 text = "LEVEL_ONE"
 
-[node name="Boulder-7" type="Sprite" parent="."]
-position = Vector2( -102, 100 )
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-7" parent="." instance=ExtResource( 14 )]
+position = Vector2( -94, 93 )
 
-[node name="Boulder-8" type="Sprite" parent="."]
-position = Vector2( -120, 163 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-40" parent="." instance=ExtResource( 14 )]
+position = Vector2( -113, 151 )
+rotation = -0.142176
 
-[node name="Boulder-9" type="Sprite" parent="."]
-position = Vector2( -113, 214 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-42" parent="." instance=ExtResource( 14 )]
+position = Vector2( -139, 278 )
+rotation = -0.142176
 
-[node name="Boulder-10" type="Sprite" parent="."]
-position = Vector2( -139, 266 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-44" parent="." instance=ExtResource( 14 )]
+position = Vector2( -143, 415 )
+rotation = -0.142176
 
-[node name="Boulder-11" type="Sprite" parent="."]
-position = Vector2( -157, 327 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-41" parent="." instance=ExtResource( 14 )]
+position = Vector2( -123, 219 )
+rotation = -0.858893
 
-[node name="Boulder-12" type="Sprite" parent="."]
-position = Vector2( -130.475, 387 )
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-46" parent="." instance=ExtResource( 14 )]
+position = Vector2( -71, 451 )
+rotation = -0.858893
 
-[node name="Boulder-13" type="Sprite" parent="."]
-position = Vector2( -136, 442 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-43" parent="." instance=ExtResource( 14 )]
+position = Vector2( -148, 344 )
+rotation = 0.0914203
 
-[node name="Boulder-24" type="Sprite" parent="."]
-position = Vector2( 648.525, 106 )
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-45" parent="." instance=ExtResource( 14 )]
+position = Vector2( -108, 465 )
+rotation = 0.0914203
 
-[node name="Boulder-25" type="Sprite" parent="."]
-position = Vector2( 630.525, 169 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-47" parent="." instance=ExtResource( 14 )]
+position = Vector2( 93, 592 )
+rotation = 0.0914203
 
-[node name="Boulder-26" type="Sprite" parent="."]
-position = Vector2( 638, 224 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-48" parent="." instance=ExtResource( 14 )]
+position = Vector2( 140, 625 )
+rotation = -0.462553
 
-[node name="Boulder-27" type="Sprite" parent="."]
-position = Vector2( 647.525, 274.451 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-49" parent="." instance=ExtResource( 14 )]
+position = Vector2( 194, 643 )
+rotation = 0.0914203
 
-[node name="Boulder-28" type="Sprite" parent="."]
-position = Vector2( 629.525, 335.451 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-50" parent="." instance=ExtResource( 14 )]
+position = Vector2( 247, 664 )
+rotation = -0.278739
 
-[node name="Boulder-29" type="Sprite" parent="."]
-position = Vector2( 620.05, 393 )
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-51" parent="." instance=ExtResource( 14 )]
+position = Vector2( 300, 676 )
+rotation = 0.0914203
 
-[node name="Boulder-30" type="Sprite" parent="."]
-position = Vector2( 614.525, 448 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-52" parent="." instance=ExtResource( 14 )]
+position = Vector2( 357, 686 )
+rotation = 0.0914203
 
-[node name="Boulder-14" type="Sprite" parent="."]
-position = Vector2( -83, 467 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-53" parent="." instance=ExtResource( 14 )]
+position = Vector2( 410, 666 )
+rotation = -0.299197
 
-[node name="Boulder-15" type="Sprite" parent="."]
-position = Vector2( 105.525, 590.451 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-54" parent="." instance=ExtResource( 14 )]
+position = Vector2( 465, 651 )
+rotation = 0.0914203
 
-[node name="Boulder-16" type="Sprite" parent="."]
-position = Vector2( 165, 607 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-55" parent="." instance=ExtResource( 14 )]
+position = Vector2( 497, 592 )
+rotation = 0.0914203
 
-[node name="Boulder-17" type="Sprite" parent="."]
-position = Vector2( 494, 590 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-56" parent="." instance=ExtResource( 14 )]
+position = Vector2( 651, 104 )
+rotation = 0.0914203
 
-[node name="Boulder-18" type="Sprite" parent="."]
-position = Vector2( 457, 628 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-63" parent="." instance=ExtResource( 14 )]
+position = Vector2( 387, -223 )
+rotation = -0.258709
 
-[node name="Boulder-19" type="Sprite" parent="."]
-position = Vector2( 426, 657 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-68" parent="." instance=ExtResource( 14 )]
+position = Vector2( 177, -219 )
+rotation = -0.258709
 
-[node name="Boulder-23" type="Sprite" parent="."]
-position = Vector2( 375, 648 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-69" parent="." instance=ExtResource( 14 )]
+position = Vector2( 126, -190 )
+rotation = -0.258709
 
-[node name="Boulder-20" type="Sprite" parent="."]
-position = Vector2( 222, 626 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-70" parent="." instance=ExtResource( 14 )]
+position = Vector2( 73, -161 )
+rotation = -0.258709
 
-[node name="Boulder-21" type="Sprite" parent="."]
-position = Vector2( 281, 647 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-71" parent="." instance=ExtResource( 14 )]
+position = Vector2( 33, -136 )
+rotation = -0.258709
 
-[node name="Boulder-22" type="Sprite" parent="."]
-position = Vector2( 337, 662 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-72" parent="." instance=ExtResource( 14 )]
+position = Vector2( -6, -114 )
+rotation = 0.10502
 
-[node name="Boulder-31" type="Sprite" parent="."]
-position = Vector2( 1.00003, -120 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-64" parent="." instance=ExtResource( 14 )]
+position = Vector2( 448, -207 )
+rotation = -0.743417
 
-[node name="Boulder-32" type="Sprite" parent="."]
-position = Vector2( 47, -157 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-65" parent="." instance=ExtResource( 14 )]
+position = Vector2( 515, -201 )
+rotation = -0.258709
 
-[node name="Boulder-33" type="Sprite" parent="."]
-position = Vector2( 167, -215 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-66" parent="." instance=ExtResource( 14 )]
+position = Vector2( 568, -165 )
+rotation = -0.258709
 
-[node name="Boulder-34" type="Sprite" parent="."]
-position = Vector2( 105, -199 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-67" parent="." instance=ExtResource( 14 )]
+position = Vector2( 598, -107 )
+rotation = -0.258709
 
-[node name="Boulder-35" type="Sprite" parent="."]
-position = Vector2( 390, -222 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-57" parent="." instance=ExtResource( 14 )]
+position = Vector2( 640, 164 )
+rotation = 0.0914203
 
-[node name="Boulder-36" type="Sprite" parent="."]
-position = Vector2( 458, -217 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-58" parent="." instance=ExtResource( 14 )]
+position = Vector2( 628, 225 )
+rotation = 0.0914203
 
-[node name="Boulder-37" type="Sprite" parent="."]
-position = Vector2( 522, -203 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-59" parent="." instance=ExtResource( 14 )]
+position = Vector2( 655, 282 )
+rotation = 0.0914203
 
-[node name="Boulder-38" type="Sprite" parent="."]
-position = Vector2( 581, -167 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-60" parent="." instance=ExtResource( 14 )]
+position = Vector2( 656, 348 )
+rotation = 0.0914203
 
-[node name="Boulder-39" type="Sprite" parent="."]
-position = Vector2( 615, -114 )
-rotation = -0.0871034
-texture = ExtResource( 12 )
-offset = Vector2( -2, -2 )
+[node name="Boulder-61" parent="." instance=ExtResource( 14 )]
+position = Vector2( 668, 409 )
+rotation = 0.0914203
+
+[node name="Boulder-62" parent="." instance=ExtResource( 14 )]
+position = Vector2( 654, 447 )
+rotation = 0.0914203
 
 [node name="EternalSigil" parent="." instance=ExtResource( 8 )]
 position = Vector2( 291, 211 )
