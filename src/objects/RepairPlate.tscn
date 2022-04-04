@@ -38,7 +38,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 13.435, 13.435 )
+extents = Vector2( 13, 11 )
 
 [node name="RepairPlate" type="Area2D"]
 collision_layer = 0
@@ -56,7 +56,6 @@ frames = SubResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -1.2815e-06, 0 )
 rotation = 0.785398
-scale = Vector2( 1, 1 )
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
