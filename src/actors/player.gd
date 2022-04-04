@@ -116,6 +116,12 @@ func _on_GunReload_finished():
 
 func _on_Walk_finished():
 	pass
+	
+func heal() -> void:
+	health = health + 10
+	if health > max_health:
+		health = max_health
+	health_bar.set_health(health)
 
 func take_damage(damage) -> void:
 	$Hit.play()
