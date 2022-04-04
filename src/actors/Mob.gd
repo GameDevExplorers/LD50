@@ -5,6 +5,11 @@ onready var bullet_collider = $BulletCollider
 
 export var health: = 30
 
+export var drop_chance: = 20
+
+var rng = RandomNumberGenerator.new()
+var health_orb = load("res://src/objects/HealthOrb.tscn")
+
 var _sigil = null
 var _default_target = null
 var _speed = 55
@@ -12,13 +17,14 @@ var _velocity: = Vector2.ZERO
 var _target = null
 var _dead = false
 
-var rng = RandomNumberGenerator.new()
-
 func set_sigils(t, default) -> void:
 	_sigil = t
 	_default_target = default
 
 func trigger_death() -> void:
+	set_collision_layer_bit(1, false)
+	set_collision_mask_bit(0, false)
+	set_collision_mask_bit(1, false)
 	get_node("CollisionShape2D").disabled = true
 	bullet_collider.get_node("CollisionShape2D2").disabled = true
 	$Die.play()
@@ -93,6 +99,12 @@ func _on_Timer_timeout() -> void:
 
 func _on_skele_anim_finished() -> void:
 	if anim.animation == "death":
+		rng.randomize()
+		var drop = rng.randi_range(1, 100)
+		if drop < drop_chance:
+			var h = health_orb.instance()
+			h.position = global_position
+			get_parent().add_child(h)
 		queue_free()
 
 

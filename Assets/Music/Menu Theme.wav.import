@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Menu Theme.wav-a2dd395484caf04c07061d7bf32bd73a.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Menu Theme.wav"
+dest_files=[ "res://.import/Menu Theme.wav-a2dd395484caf04c07061d7bf32bd73a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

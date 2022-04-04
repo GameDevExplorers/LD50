@@ -126,6 +126,12 @@ func _on_GunFire_finished():
 func _on_GunReload_finished():
 	ready_to_fire = true
 
+func heal() -> void:
+	health = health + 10
+	if health > max_health:
+		health = max_health
+	health_bar.set_health(health)
+
 func take_damage(damage) -> void:
 	$Hit.play()
 	invincible = true
