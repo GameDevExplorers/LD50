@@ -12,7 +12,6 @@ onready var target_node = get_node(target)
 
 
 func _ready() -> void:
-	$Timer.start(5)
 	get_parent().connect("spawn_skeles", self, "_on_spawn")
 	
 func _on_Timer_timeout() -> void:
@@ -20,7 +19,6 @@ func _on_Timer_timeout() -> void:
 	pass
 
 func _on_spawn(arr):
-	yield(get_tree().create_timer(5), "timeout")
 	var count = arr[spawn_index]
 	for i in range(count):
 		spawn()
