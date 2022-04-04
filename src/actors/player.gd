@@ -62,6 +62,7 @@ func get_input():
 		$GunAltFire.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		fire_projectile(0)
+		fire_projectile(spread / 3)
 		$BulletSpawn/MuzzleFlash.frame = 1
 		yield(get_tree().create_timer(0.05), "timeout")
 		$BulletSpawn/MuzzleFlash.frame = 0
@@ -74,6 +75,7 @@ func get_input():
 		fire_projectile(spread)
 		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile(0)
+		fire_projectile((spread / 3) * -1)
 
 func _physics_process(delta):
 	get_input()
