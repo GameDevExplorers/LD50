@@ -386,13 +386,6 @@ spawn_index = 4
 position = Vector2( 293, 183 )
 speed = 250
 
-[node name="Camera2D" type="Camera2D" parent="player"]
-position = Vector2( 0, -4 )
-current = true
-editor_draw_limits = true
-
-[node name="CasingContainer" type="Node" parent="."]
-
 [node name="Timer" type="Timer" parent="."]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

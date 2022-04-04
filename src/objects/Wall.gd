@@ -13,7 +13,7 @@ func _ready():
 
 func _on_repaired():
 	repair()
-	
+
 func repair() -> void:
 	repair_plate.reset()
 	$CollisionShape2D.disabled = false
