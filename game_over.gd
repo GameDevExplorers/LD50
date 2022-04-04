@@ -1,11 +1,10 @@
 extends Control
 
-export var start_scene:String = "res://level_five.tscn"
 
 func _on_StartBtn_pressed():
 	$Select.play()
 	yield(get_tree().create_timer(0.4), "timeout")
-	var result = get_tree().change_scene(start_scene)
+	var result = get_tree().change_scene("res://level_five.tscn")
 	if result != OK:
 		print("Error loading scene")
 

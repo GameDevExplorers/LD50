@@ -14,7 +14,7 @@ func _ready() -> void:
 	anim.set_animation(color)
 	anim.set_frame(0)
 	get_parent().connect("spawn_skeles", self, "_on_spawn")
-	
+
 func _on_spawn(arr):
 	if arr[spawn_index] > 0:
 		fire_anim.play(color)

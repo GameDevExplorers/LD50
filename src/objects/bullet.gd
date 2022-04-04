@@ -12,11 +12,17 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = 30):
 	speed    = bullet_speed
 	damage   = dam
 	spawned_by = spawner
+	z_index = 3
 	velocity = Vector2(speed, 0).rotated(rotation)
+	if spawned_by == "demon":
+		var ran = randf() + 1
+		scale = Vector2(1 * ran, 1 * ran)
 
 func set_animation(anim: String):
 	$AnimatedSprite.animation = anim
 
+func set_velocity(vel: Vector2):
+	velocity = vel * speed
 
 func set_target(pos: Vector2):
 	target = pos
@@ -25,7 +31,7 @@ func set_target(pos: Vector2):
 
 func _physics_process(delta):
 	if spawned_by == "demon":
-		rotation += 20 * delta
+		rotation += 25 * delta
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		velocity = velocity.bounce(collision.normal)
@@ -36,7 +42,8 @@ func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
 func _on_Timer_timeout():
-	queue_free()
+	if spawned_by != "demon":
+		queue_free()
 
 func _on_Hitbox_body_entered(body):
 	print(body)

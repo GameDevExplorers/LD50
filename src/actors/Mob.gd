@@ -17,7 +17,7 @@ var rng = RandomNumberGenerator.new()
 func set_sigils(t, default) -> void:
 	_sigil = t
 	_default_target = default
-	
+
 func trigger_death() -> void:
 	get_node("CollisionShape2D").disabled = true
 	bullet_collider.get_node("CollisionShape2D2").disabled = true
@@ -28,10 +28,10 @@ func trigger_death() -> void:
 func _physics_process(delta) -> void:
 	if _sigil == null || _dead:
 		return
-	
+
 	if _sigil.locked:
 		_sigil = _default_target
-	
+
 	set_velocity()
 	var collision = move_and_collide(_velocity * delta)
 	handle_collision(collision)
@@ -41,7 +41,7 @@ func handle_collision(collision) -> void:
 		_target = null
 		anim.animation = "walk"
 		return
-		
+
 	var collider = collision.collider
 
 	if collider.has_method("hit"):
@@ -53,7 +53,7 @@ func handle_collision(collision) -> void:
 func set_velocity() -> void:
 	_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
 	anim.flip_h = true if _velocity.x < 0 else false
-	
+
 func attack() -> void:
 	$Timer.stop()
 	if _target && !_dead:
@@ -71,6 +71,7 @@ func take_damage(damage) -> void:
 	$Hit.play()
 	health = health - damage
 	if health <= 0:
+		Game.mob_killed()
 		trigger_death()
 
 	modulate = Color.red
@@ -84,7 +85,7 @@ func take_damage(damage) -> void:
 	yield(get_tree().create_timer(0.5), "timeout")
 	_velocity = old_velocity
 
-	
+
 
 func _on_Timer_timeout() -> void:
 	if _target:

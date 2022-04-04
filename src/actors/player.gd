@@ -9,13 +9,14 @@ var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 var velocity:Vector2 = Vector2()
 var ready_to_fire = true
+var invincible = false
 
 onready var health_bar = $Healthbar
 
 func _ready():
 	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
-	remove_child(health_bar)
+	#remove_child(health_bar)
 	get_parent().connect("demon_summoned", self, "_on_demon_summoned")
 
 func _process(delta):
@@ -31,10 +32,10 @@ func _process(delta):
 		$BulletSpawn/MuzzleFlash.flip_h = false
 		$BulletSpawn/MuzzleFlash.position.x = 20
 		$AnimatedSprite/Sprite.position.x = -3
-	
+
 func _on_demon_summoned():
 	add_child(health_bar)
-	
+
 func get_input():
 	velocity = Vector2()
 	if Input.is_action_pressed("right"):
@@ -48,13 +49,16 @@ func get_input():
 
 	velocity = velocity.normalized() * speed
 
+	if invincible:
+		return
+
 	if Input.is_action_just_pressed("fire"):
 		$BulletSpawn/MuzzleFlash.frame = 1
 		$GunFire.play()
 		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile(0)
 		$BulletSpawn/MuzzleFlash.frame = 0
-	
+
 
 	if Input.is_action_just_released("alt_fire") && ready_to_fire:
 		$BulletSpawn/MuzzleFlash.frame = 0
@@ -95,7 +99,7 @@ func fire_projectile(offset:int):
 	c.position = $CasingSpawn.global_position
 	if $AnimatedSprite.flip_h == true:
 		c.flip_h = true
-	get_node("../CasingContainer").add_child(c)
+	$CasingContainer.add_child(c)
 	$BulletSpawn/MuzzleFlash.frame = 0
 	var b = Bullet.instance()
 	b.start($BulletSpawn.global_position, get_angle_to(get_global_mouse_position()) + deg2rad(offset), "player")
@@ -114,12 +118,35 @@ func _on_Walk_finished():
 	pass
 
 func take_damage(damage) -> void:
+	$Hit.play()
+	invincible = true
 	health = health - damage
+	if health <= 0:
+		Engine.time_scale = 0.1
 	health_bar.set_health(health)
-	#if health <= 0:
-		#trigger_death()
+
+	modulate = Color.white
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.red
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
+
+	if health <= 0:
+		Engine.time_scale = 1
+		var result = get_tree().change_scene("res://game_over.tscn")
+		if result != OK:
+			print_debug("Failed to change scene: " + result)
+
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.red
+	invincible = false
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.gray
+	yield(get_tree().create_timer(0.25), "timeout")
+	modulate = Color.white
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
-	if body.get("damage") && body.get("spawned_by") != "player":	
+	if body.get("damage") && body.get("spawned_by") != "player":
 		body.queue_free()
-		take_damage(body.get("damage"))
+		if invincible == false:
+			take_damage(body.get("damage"))

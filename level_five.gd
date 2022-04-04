@@ -30,7 +30,7 @@ func _on_Timer_timeout():
 func handle_spawns():
 	if tick_count % spawn_timer == 0 || tick_count == 1:
 		var new_arr = [0, 0, 0, 0, 0]
-		
+
 		rng.randomize()
 		var divide = rng.randi_range(1, 5)
 
@@ -39,7 +39,7 @@ func handle_spawns():
 			index = 8
 		var spawns = spawn_count[index]
 		var each_node = spawns / divide
-		
+
 		for n in range(divide):
 			var i = rng.randi_range(0, 4)
 			new_arr[i] = new_arr[i] + each_node
