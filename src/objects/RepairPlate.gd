@@ -21,7 +21,6 @@ func _on_RepairPlate_body_entered(body: Node) -> void:
 
 
 func _on_RepairPlate_body_exited(body: Node) -> void:
-	count = 0
 	progress_bar.value = count
 	timer.stop()
 	repair_anim.stop()
@@ -39,3 +38,9 @@ func timer_feedback() -> void:
 		
 func reset_frame() -> void:
 	repair_anim.set_frame(2)
+
+
+func reset() -> void:
+	set_process(false)
+	visible = false
+	count = 0
