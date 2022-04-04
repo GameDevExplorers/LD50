@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Demon_Sigil.wav-bdfac659d1b474061a438b99443e2735.sample"
+
+[deps]
+
+source_file="res://Assets/Music/Demon_Sigil.wav"
+dest_files=[ "res://.import/Demon_Sigil.wav-bdfac659d1b474061a438b99443e2735.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

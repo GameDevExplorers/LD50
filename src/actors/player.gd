@@ -51,9 +51,6 @@ func get_input():
 	if Input.is_action_just_pressed("fire"):
 		$BulletSpawn/MuzzleFlash.frame = 1
 		$GunFire.play()
-		var c = Casing.instance()
-		c.position = $BulletSpawn.global_position
-		get_parent().add_child(c)
 		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile(0)
 		$BulletSpawn/MuzzleFlash.frame = 0
@@ -65,6 +62,7 @@ func get_input():
 		$GunAltFire.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		fire_projectile(0)
+		fire_projectile(spread / 3)
 		$BulletSpawn/MuzzleFlash.frame = 1
 		yield(get_tree().create_timer(0.05), "timeout")
 		$BulletSpawn/MuzzleFlash.frame = 0
@@ -77,6 +75,7 @@ func get_input():
 		fire_projectile(spread)
 		yield(get_tree().create_timer(0.05), "timeout")
 		fire_projectile(0)
+		fire_projectile((spread / 3) * -1)
 
 func _physics_process(delta):
 	get_input()
@@ -94,6 +93,9 @@ func _physics_process(delta):
 	Game.player_location = global_position
 
 func fire_projectile(offset:int):
+	var c = Casing.instance()
+	c.position = $CasingSpawn.global_position
+	get_node("../CasingContainer").add_child(c)
 	$BulletSpawn/MuzzleFlash.frame = 0
 	var b = Bullet.instance()
 	b.start($BulletSpawn.global_position, get_angle_to(get_global_mouse_position()) + deg2rad(offset), "player")
