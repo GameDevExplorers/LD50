@@ -23,7 +23,7 @@ func repair() -> void:
 
 func take_damage() -> void:
 	$Hit.play()
-	health -= 40
+	health -= 20
 	if health < 800:
 		anim.set_animation("damaged")
 	if health <= 0:

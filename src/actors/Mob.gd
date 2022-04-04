@@ -7,7 +7,7 @@ export var health: = 30
 
 var _sigil = null
 var _default_target = null
-var _speed = 75
+var _speed = 35
 var _velocity: = Vector2.ZERO
 var _target = null
 var _dead = false

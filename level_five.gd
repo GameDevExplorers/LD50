@@ -1,6 +1,6 @@
 extends Node2D
 
-export (Array, int) var spawn_count
+export (Array, int) var spawn_count = [10, 10, 15, 0 ,0 , 20, 20, 25, 0, 0, 25, 25, 30, 0, 0, 20, 20, 25, 25, 30, 30]
 export var spawn_timer = 10
 var Demon = load("res://src/actors/Demon.tscn")
 
@@ -12,6 +12,7 @@ var rng = RandomNumberGenerator.new()
 var tick_count = 0
 
 func _ready():
+	print("hello?")
 	$Timer.start(1)
 
 
@@ -36,7 +37,7 @@ func handle_spawns():
 
 		var index = (tick_count / spawn_timer) - 1
 		if index > spawn_count.size():
-			index = 9
+			index = 8
 		var spawns = spawn_count[index]
 		
 		var each_node = spawns / divide

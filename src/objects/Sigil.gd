@@ -3,6 +3,7 @@ extends Area2D
 export var color: = "red"
 export var charge: = 0
 export var locked: = false
+export var spawn_index: int
 
 onready var anim = $sigil_base
 onready var fire_anim = $sigil_fire
@@ -10,8 +11,15 @@ onready var fire_anim = $sigil_fire
 signal on_lock
 
 func _ready() -> void:
-	anim.set_animation(color)
-	anim.set_frame(0)
+#	anim.set_animation(color)
+#	anim.set_frame(0)
+	get_parent().connect("spawn_skeles", self, "_on_spawn")
+	
+func _on_spawn(arr):
+	if arr[spawn_index] > 0:
+		fire_anim.play(color)
+	else:
+		fire_anim.play("blank")
 
 func _on_Sigil_body_entered(body: Node) -> void:
 	if !locked && body.has_method("trigger_death"):
@@ -21,8 +29,8 @@ func _on_Sigil_body_entered(body: Node) -> void:
 		if charge == 100:
 			lock()
 		body.trigger_death()
-		fire_anim.set_frame(0)
-		fire_anim.play(color)
+#		fire_anim.set_frame(0)
+#		fire_anim.play(color)
 
 func lock() -> void:
 	anim.set_frame(10)
@@ -33,8 +41,9 @@ func lock() -> void:
 
 
 func _on_sigil_fire_animation_finished() -> void:
-	if locked:
-		fire_anim.set_frame(0)
-		fire_anim.play(color)
-	else:
-		fire_anim.set_animation("blank")
+	pass
+#	if locked:
+#		fire_anim.set_frame(0)
+#		fire_anim.play(color)
+#	else:
+#		fire_anim.set_animation("blank")

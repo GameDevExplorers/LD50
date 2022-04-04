@@ -357,27 +357,27 @@ region = Rect2( 256, 256, 64, 64 )
 [sub_resource type="SpriteFrames" id=83]
 animations = [ {
 "frames": [ SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ) ],
-"loop": false,
+"loop": true,
 "name": "blue",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ) ],
-"loop": false,
+"loop": true,
 "name": "green",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ) ],
-"loop": false,
+"loop": true,
 "name": "gold",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ) ],
-"loop": false,
+"loop": true,
 "name": "red",
 "speed": 10.0
 }, {
 "frames": [ SubResource( 78 ), SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ) ],
-"loop": false,
+"loop": true,
 "name": "purple",
 "speed": 10.0
 }, {

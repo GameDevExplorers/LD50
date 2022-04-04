@@ -52,6 +52,7 @@ radius = 52.6316
 height = 0.0
 
 [node name="player" type="KinematicBody2D"]
+collision_layer = 65
 script = ExtResource( 2 )
 
 [node name="Healthbar" parent="." instance=ExtResource( 3 )]
@@ -65,7 +66,6 @@ rect_scale = Vector2( 0.25, 0.5 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.00275, 1 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="Sprite" type="Sprite" parent="AnimatedSprite"]
