@@ -15,7 +15,7 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = 30):
 	z_index = 3
 	velocity = Vector2(speed, 0).rotated(rotation)
 	if spawned_by == "demon":
-		var ran = randf() + 1
+		var ran = rand_range(0.5, 2.0)
 		scale = Vector2(1 * ran, 1 * ran)
 
 func set_animation(anim: String):
