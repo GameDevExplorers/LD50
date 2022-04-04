@@ -91,7 +91,7 @@ shape = SubResource( 1 )
 [node name="gate_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 10 )
 animation = "solid"
-frame = 2
+frame = 5
 playing = true
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="."]
