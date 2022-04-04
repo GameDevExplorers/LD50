@@ -16,6 +16,7 @@ var tick_count = 0
 var sigil_lock_count = 0
 
 func _ready():
+	Game.reset()
 	$Timer.start(1)
 
 
@@ -23,8 +24,17 @@ func _on_Timer_timeout():
 	tick_count = tick_count + 1
 	handle_spawns()
 	$Timer.start(1)
-	$Label.text = "Demon Time in: " + str(Game.elapsed_time() - Game.summon_timer) + " seconds"
-	if Game.elapsed_time() > Game.summon_timer and Game.demon_summoned == false:
+	var time = Game.summon_timer - Game.elapsed_time()
+	$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is in " + str(time) + " seconds"
+	$CanvasLayer/hud/HBoxContainer/Sigils.text = "Activated Demon Sigils: " + str(Game.activated_sigils())
+	print("time:" + str(time))
+
+	if time < 8:
+		$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is soon"
+	if time <= 2:
+		$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is now!"
+
+	if time <= 0 and Game.demon_summoned == false:
 		Game.demon_summoned = true
 		demon_instance = Demon.instance()
 		demon_instance.max_health = demon_instance.max_health + (sigil_lock_count * demon_instance.sigil_buff)
