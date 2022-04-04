@@ -19,6 +19,9 @@ func _ready():
 func current_scene():
 	return get_tree().get_current_scene().get_name()
 
+func reset_timer():
+	start_time = OS.get_unix_time()
+
 func elapsed_time():
 	if start_time == 0:
 		start_time = OS.get_unix_time()

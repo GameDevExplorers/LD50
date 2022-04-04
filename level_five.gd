@@ -12,6 +12,7 @@ var rng = RandomNumberGenerator.new()
 var tick_count = 0
 
 func _ready():
+	Game.reset_timer()
 	$Timer.start(1)
 
 
