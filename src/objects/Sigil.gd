@@ -31,7 +31,7 @@ func _on_Sigil_body_entered(body: Node) -> void:
 		anim.set_frame(charge / 10)
 		if charge == 100:
 			lock()
-		body.trigger_death()
+		body.trigger_death(false)
 		fire_anim.set_frame(0)
 		fire_anim.play(color)
 

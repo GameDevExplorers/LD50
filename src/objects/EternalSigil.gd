@@ -18,5 +18,5 @@ func _on_Sigil_body_entered(body: Node) -> void:
 		$AnimatedSprite.play()
 		$PoweredUp.play()
 		Game.mob_sacrificed()
-		body.trigger_death()
+		body.trigger_death(false)
 

@@ -16,12 +16,14 @@ var _speed = 55
 var _velocity: = Vector2.ZERO
 var _target = null
 var _dead = false
+var _drop_loot = true
 
 func set_sigils(t, default) -> void:
 	_sigil = t
 	_default_target = default
 
-func trigger_death() -> void:
+func trigger_death(drop_loot = true) -> void:
+	_drop_loot = drop_loot
 	set_collision_layer_bit(1, false)
 	set_collision_mask_bit(0, false)
 	set_collision_mask_bit(1, false)
@@ -101,7 +103,7 @@ func _on_skele_anim_finished() -> void:
 	if anim.animation == "death":
 		rng.randomize()
 		var drop = rng.randi_range(1, 100)
-		if drop < drop_chance:
+		if drop < drop_chance && _drop_loot:
 			var h = health_orb.instance()
 			h.position = global_position
 			get_parent().add_child(h)
