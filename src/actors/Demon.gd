@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
-export (int) var speed = 800
-export (int) var bullet_speed = 100
+export (int) var speed = 3000
+export (int) var bullet_speed = 200
 export (int) var spread = 10
 export (int) var health = 2500
 export (int) var max_health = 2500
