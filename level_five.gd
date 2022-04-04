@@ -22,10 +22,10 @@ func _on_Timer_timeout():
 	$Label.text = "Demon Time in: " + str(Game.elapsed_time() - Game.summon_timer) + " seconds"
 	if Game.elapsed_time() > Game.summon_timer and Game.demon_summoned == false:
 		Game.demon_summoned = true
-		emit_signal("demon_summoned")
 		var d = Demon.instance()
 		d.position = $EternalSigil.position
 		add_child(d)
+		emit_signal("demon_summoned")
 
 func handle_spawns():
 	if tick_count % spawn_timer == 0 || tick_count == 1:

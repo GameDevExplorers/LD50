@@ -12,9 +12,8 @@ func _ready():
 		Tween.TRANS_ELASTIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 
-
 func _on_Tween_tween_all_completed():
 	z_index = 0
 
-
-
+func _on_Timer_timeout():
+	queue_free()

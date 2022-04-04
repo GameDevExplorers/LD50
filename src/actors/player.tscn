@@ -77,6 +77,7 @@ rect_scale = Vector2( 0.0733683, 0.323427 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.00275, 1 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Sprite" type="Sprite" parent="AnimatedSprite"]
@@ -143,5 +144,4 @@ editor_draw_limits = true
 
 [connection signal="finished" from="GunAltFire" to="." method="_on_GunFire_finished"]
 [connection signal="finished" from="GunReload" to="." method="_on_GunReload_finished"]
-[connection signal="finished" from="Walk" to="." method="_on_Walk_finished"]
 [connection signal="body_entered" from="BulletCollider" to="." method="_on_BulletCollider_body_entered"]

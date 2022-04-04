@@ -1,6 +1,6 @@
 extends Node
 
-var summon_timer = 300
+var summon_timer = 10
 var start_time = 0
 var mobs_killed = 0
 var mobs_sacrificed = 0
@@ -12,7 +12,7 @@ export var demon_summoned = false
 
 var pause_scene:Control = load("res://pause_menu.tscn").instance()
 
-func _start():
+func _ready():
 	start_time = OS.get_unix_time()
 
 func current_scene():
