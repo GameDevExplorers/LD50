@@ -19,8 +19,11 @@ func _ready():
 func current_scene():
 	return get_tree().get_current_scene().get_name()
 
-func reset_timer():
+func reset():
 	start_time = OS.get_unix_time()
+	summon_timer = 280
+	sigils = 0
+
 
 func elapsed_time():
 	if start_time == 0:
