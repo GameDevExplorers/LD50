@@ -1,6 +1,6 @@
 extends Node2D
 
-export (Array, int) var spawn_count = [10, 10, 15, 0 ,0 , 20, 20, 25, 0, 0, 25, 25, 30, 0, 0, 20, 20, 25, 25, 30, 30]
+export (Array, int) var spawn_count = [10, 10, 15, 1, 1, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
 export var spawn_timer = 10
 var Demon = load("res://src/actors/Demon.tscn")
 
@@ -12,7 +12,6 @@ var rng = RandomNumberGenerator.new()
 var tick_count = 0
 
 func _ready():
-	print("hello?")
 	$Timer.start(1)
 
 
@@ -47,3 +46,7 @@ func handle_spawns():
 			new_arr[i] = new_arr[i] + each_node
 		
 		emit_signal("spawn_skeles", new_arr)
+
+
+func _on_AudioStreamPlayer2D_finished():
+	$AudioStreamPlayer2D.play()

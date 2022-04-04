@@ -86,15 +86,15 @@ func _physics_process(delta):
 	else:
 		$AnimatedSprite.stop()
 		$AnimatedSprite.frame = 0
-	if velocity.dot(get_global_mouse_position()) < 0:
-		velocity = move_and_slide(velocity/2)
-	else:
-		velocity = move_and_slide(velocity)
+
+	velocity = move_and_slide(velocity)
 	Game.player_location = global_position
 
 func fire_projectile(offset:int):
 	var c = Casing.instance()
 	c.position = $CasingSpawn.global_position
+	if $AnimatedSprite.flip_h == true:
+		c.flip_h = true
 	get_node("../CasingContainer").add_child(c)
 	$BulletSpawn/MuzzleFlash.frame = 0
 	var b = Bullet.instance()
