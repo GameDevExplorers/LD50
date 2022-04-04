@@ -1,9 +1,10 @@
 extends Node
 
-var summon_timer = 320
+var summon_timer = 280
 var start_time = 0
 var mobs_killed = 0
 var mobs_sacrificed = 0
+var sigils = 0
 
 export var paused = false
 export var player_health:int = 10
@@ -40,7 +41,11 @@ func mob_sacrificed():
 	mobs_sacrificed += 1
 
 func sigil_locked():
+	sigils += 1
 	summon_timer -= 45
+
+func activated_sigils():
+	return sigils
 
 func _input(event):
 	if event.is_action_pressed("pause"):

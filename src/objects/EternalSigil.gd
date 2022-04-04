@@ -10,7 +10,6 @@ func _ready():
 func _on_demon_summoned():
 	var demon = get_parent().get_node("Demon")
 	var _i = self.connect("soul_absorbed", demon, "absorb_souls")
-	#var _x = demon.connect("soul_absorbed", self, "absorb_souls")
 
 func _on_Sigil_body_entered(body: Node) -> void:
 	if body.has_method("trigger_death"):
@@ -20,3 +19,8 @@ func _on_Sigil_body_entered(body: Node) -> void:
 		Game.mob_sacrificed()
 		body.trigger_death()
 
+
+
+func _on_AnimatedSprite_animation_finished():
+	$AnimatedSprite.stop()
+	$AnimatedSprite.frame = 0
