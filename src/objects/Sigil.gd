@@ -11,8 +11,8 @@ onready var fire_anim = $sigil_fire
 signal on_lock
 
 func _ready() -> void:
-#	anim.set_animation(color)
-#	anim.set_frame(0)
+	anim.set_animation(color)
+	anim.set_frame(0)
 	get_parent().connect("spawn_skeles", self, "_on_spawn")
 	
 func _on_spawn(arr):
