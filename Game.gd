@@ -1,6 +1,6 @@
 extends Node
 
-var summon_timer = 10
+var summon_timer = 320
 var start_time = 0
 var mobs_killed = 0
 var mobs_sacrificed = 0
