@@ -15,15 +15,14 @@ func _on_repaired():
 	repair()
 	
 func repair() -> void:
-	repair_plate.set_process(false)
-	repair_plate.visible = false
+	repair_plate.reset()
 	$CollisionShape2D.disabled = false
 	health = 4000
 	anim.set_animation("solid")
 
 func take_damage() -> void:
 	$Hit.play()
-	health -= 50
+	health -= 100
 	if health < 3500:
 		anim.set_animation("damaged")
 		repair_plate.visible = true
