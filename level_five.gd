@@ -36,7 +36,7 @@ func handle_spawns():
 		var divide = rng.randi_range(1, 5)
 
 		var index = (tick_count / spawn_timer) - 1
-		if index > spawn_count.size():
+		if index >= spawn_count.size():
 			index = 8
 		var spawns = spawn_count[index]
 		

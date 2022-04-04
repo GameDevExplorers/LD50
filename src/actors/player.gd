@@ -6,6 +6,7 @@ export (int) var health = 91
 export (int) var max_health = 91
 
 var Bullet = load("res://src/objects/bullet.tscn")
+var Casing = load("res://src/objects/casing.tscn")
 var velocity:Vector2 = Vector2()
 var ready_to_fire = true
 
@@ -17,24 +18,28 @@ func _ready():
 	remove_child(health_bar)
 	get_parent().connect("demon_summoned", self, "_on_demon_summoned")
 
+func _process(delta):
+	if get_global_mouse_position().x < global_position.x:
+		$AnimatedSprite.flip_h = true
+		$BulletSpawn.position.x = -22
+		$BulletSpawn/MuzzleFlash.flip_h = true
+		$BulletSpawn/MuzzleFlash.position.x = -20
+		$AnimatedSprite/Sprite.position.x = 2
+	else:
+		$AnimatedSprite.flip_h = false
+		$BulletSpawn.position.x = 22
+		$BulletSpawn/MuzzleFlash.flip_h = false
+		$BulletSpawn/MuzzleFlash.position.x = 20
+		$AnimatedSprite/Sprite.position.x = -3
+	
 func _on_demon_summoned():
 	add_child(health_bar)
 	
 func get_input():
 	velocity = Vector2()
 	if Input.is_action_pressed("right"):
-		$AnimatedSprite.flip_h = false
-		$BulletSpawn.position.x = 22
-		$BulletSpawn/MuzzleFlash.flip_h = false
-		$BulletSpawn/MuzzleFlash.position.x = 20
-		$AnimatedSprite/Sprite.position.x = -3
 		velocity.x += 1
 	if Input.is_action_pressed("left"):
-		$AnimatedSprite.flip_h = true
-		$BulletSpawn.position.x = -22
-		$BulletSpawn/MuzzleFlash.flip_h = true
-		$BulletSpawn/MuzzleFlash.position.x = -20
-		$AnimatedSprite/Sprite.position.x = 2
 		velocity.x -= 1
 	if Input.is_action_pressed("down"):
 		velocity.y += 1
@@ -43,10 +48,21 @@ func get_input():
 
 	velocity = velocity.normalized() * speed
 
-	if Input.is_action_just_released("fire") && ready_to_fire:
+	if Input.is_action_just_pressed("fire"):
+		$BulletSpawn/MuzzleFlash.frame = 1
+		$GunFire.play()
+		var c = Casing.instance()
+		c.position = $BulletSpawn.global_position
+		get_parent().add_child(c)
+		yield(get_tree().create_timer(0.05), "timeout")
+		fire_projectile(0)
+		$BulletSpawn/MuzzleFlash.frame = 0
+	
+
+	if Input.is_action_just_released("alt_fire") && ready_to_fire:
 		$BulletSpawn/MuzzleFlash.frame = 0
 		ready_to_fire = false
-		$GunFire.play()
+		$GunAltFire.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		fire_projectile(0)
 		$BulletSpawn/MuzzleFlash.frame = 1
@@ -71,7 +87,10 @@ func _physics_process(delta):
 	else:
 		$AnimatedSprite.stop()
 		$AnimatedSprite.frame = 0
-	velocity = move_and_slide(velocity)
+	if velocity.dot(get_global_mouse_position()) < 0:
+		velocity = move_and_slide(velocity/2)
+	else:
+		velocity = move_and_slide(velocity)
 	Game.player_location = global_position
 
 func fire_projectile(offset:int):
