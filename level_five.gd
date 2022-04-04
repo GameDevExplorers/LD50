@@ -47,5 +47,5 @@ func handle_spawns():
 		emit_signal("spawn_skeles", new_arr)
 
 
-func _on_AudioStreamPlayer2D_finished():
-	$AudioStreamPlayer2D.play()
+func _on_AudioStreamPlayer_finished():
+	$AudioStreamPlayer.play()
