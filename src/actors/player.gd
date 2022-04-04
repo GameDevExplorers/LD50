@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 export (int) var speed = 200
 export (int) var spread = 10
-export (int) var health = 200
-export (int) var max_health = 200
+export (int) var health = 400
+export (int) var max_health = 400
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
@@ -127,7 +127,7 @@ func _on_GunReload_finished():
 	ready_to_fire = true
 
 func heal() -> void:
-	health = health + 10
+	health = health + 30
 	if health > max_health:
 		health = max_health
 	health_bar.set_health(health)
@@ -151,14 +151,14 @@ func take_damage(damage) -> void:
 		var result = get_tree().change_scene("res://game_over.tscn")
 		if result != OK:
 			print_debug("Failed to change scene: " + result)
-
-	yield(get_tree().create_timer(0.1), "timeout")
-	modulate = Color.red
-	invincible = false
-	yield(get_tree().create_timer(0.1), "timeout")
-	modulate = Color.gray
-	yield(get_tree().create_timer(0.25), "timeout")
-	modulate = Color.white
+	else:
+		yield(get_tree().create_timer(0.1), "timeout")
+		modulate = Color.red
+		yield(get_tree().create_timer(0.1), "timeout")
+		modulate = Color.gray
+		yield(get_tree().create_timer(0.25), "timeout")
+		modulate = Color.white
+		invincible = false
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && body.get("spawned_by") != "player":

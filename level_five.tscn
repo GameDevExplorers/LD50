@@ -387,7 +387,8 @@ spawn_index = 4
 [node name="player" parent="." instance=ExtResource( 10 )]
 position = Vector2( 293, 183 )
 speed = 250
-max_health = 150
+health = 200
+max_health = 200
 
 [node name="Timer" type="Timer" parent="."]
 

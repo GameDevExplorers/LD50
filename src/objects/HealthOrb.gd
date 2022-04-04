@@ -2,14 +2,19 @@ extends Area2D
 
 onready var timer = $Timer
 
-func _ready() -> void:
-	timer.start(20)
+var pickedup = false
 
 func _on_HealthOrb_body_entered(body: Node) -> void:
-	if body.has_method("heal"):
+	if body.has_method("heal") and not pickedup:
+		pickedup = true
+		$AudioStreamPlayer2D.play()
+		visible = false
 		body.heal()
-		queue_free()
 
 
 func _on_Timer_timeout() -> void:
+	queue_free()
+
+
+func _on_AudioStreamPlayer2D_finished():
 	queue_free()
