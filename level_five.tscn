@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Assets/Sprites/Ground Palletes/Ground-Stone-Pallete.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprites/Ground Palletes/Ground-Grass-Yellow-Pallete.png" type="Texture" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://src/objects/boulder1.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/objects/boulder7.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/objects/flipped.gd" type="Script" id=20]
+[ext_resource path="res://src/objects/HealthOrb.tscn" type="PackedScene" id=21]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Ground-Stone-Pallete.png 0"
@@ -385,6 +386,7 @@ spawn_index = 4
 [node name="player" parent="." instance=ExtResource( 10 )]
 position = Vector2( 293, 183 )
 speed = 250
+max_health = 150
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -397,6 +399,9 @@ mix_target = 2
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Area2D" type="Area2D" parent="."]
+
+[node name="HealthOrb" parent="." instance=ExtResource( 21 )]
+position = Vector2( 106, 14 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
