@@ -4,12 +4,16 @@ export (Array, int) var spawn_count = [10, 10, 15, 20, 20, 25, 1, 1, 25, 25, 30,
 export var spawn_timer = 7
 var Demon = load("res://src/actors/Demon.tscn")
 
+var demon_instance = null
+
 signal demon_summoned
 
 signal spawn_skeles(spawn_arr)
 
 var rng = RandomNumberGenerator.new()
 var tick_count = 0
+
+var sigil_lock_count = 0
 
 func _ready():
 	Game.reset()
@@ -32,9 +36,11 @@ func _on_Timer_timeout():
 
 	if time <= 0 and Game.demon_summoned == false:
 		Game.demon_summoned = true
-		var d = Demon.instance()
-		d.position = $EternalSigil.position
-		add_child(d)
+		demon_instance = Demon.instance()
+		demon_instance.max_health = demon_instance.max_health + (sigil_lock_count * demon_instance.sigil_buff)
+		demon_instance.health = demon_instance.max_health
+		demon_instance.position = $EternalSigil.position
+		add_child(demon_instance)
 		emit_signal("demon_summoned")
 
 func handle_spawns():
@@ -59,3 +65,10 @@ func handle_spawns():
 
 func _on_AudioStreamPlayer_finished():
 	$AudioStreamPlayer.play()
+
+func _on_sigil_lock():
+	sigil_lock_count = sigil_lock_count + 1
+	if demon_instance:
+		demon_instance.max_health = demon_instance.max_health + demon_instance.sigil_buff
+		demon_instance.health = demon_instance.health + demon_instance.sigil_buff
+		demon_instance.set_health_bar()

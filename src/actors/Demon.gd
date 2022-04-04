@@ -5,6 +5,7 @@ export (int) var bullet_speed = 100
 export (int) var spread = 10
 export (int) var health = 10000
 export (int) var max_health = 10000
+export (int) var sigil_buff = 2000
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var velocity:Vector2 = Vector2()
@@ -19,14 +20,15 @@ var attack_progress = -5
 
 onready var health_bar = get_node("CanvasLayer/Healthbar")
 
+
 # The demon has a Timer which fires an event every second
 # In the callback, it will decide if its time to attack again, pick an attack and commit to it.
 # Then reset the timer
 
 func _ready():
-	health_bar.set_max_health(max_health)
-	health_bar.set_health(health)
 	$Timer.start(2)
+	set_health_bar()
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -68,11 +70,15 @@ func _process(_delta):
 func _physics_process(delta):
 	velocity = move_and_slide(velocity * delta)
 
-
-func absorb_souls():
-	print("absorb the soul")
-	health += 10
+func set_health_bar():
+	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
+	
+func absorb_souls():
+	health += 10
+	if health > max_health:
+		max_health = health
+	set_health_bar()
 
 func fire():
 	var b = Bullet.instance()
@@ -110,7 +116,9 @@ func assign_attack():
 
 func take_damage(damage) -> void:
 	health = health - damage
-	health_bar.set_health(health)
+	print(str(max_health))
+	print(str(health))
+	set_health_bar()
 	modulate = Color.white
 	yield(get_tree().create_timer(0.1), "timeout")
 	modulate = Color.black
@@ -121,8 +129,8 @@ func take_damage(damage) -> void:
 	yield(get_tree().create_timer(0.1), "timeout")
 	modulate = Color.white
 
-	#if health <= 0:
-		#trigger_death()
+	if health <= 0:
+		get_tree().change_scene("res://victory.tscn")
 
 func _on_Area2D_body_exited(body:Node):
 	if body.get_name() == "player":
