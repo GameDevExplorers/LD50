@@ -1,7 +1,7 @@
 extends Node2D
 
-export (Array, int) var spawn_count = [10, 10, 15, 1, 1, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
-export var spawn_timer = 10
+export (Array, int) var spawn_count = [10, 10, 15, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
+export var spawn_timer = 7
 var Demon = load("res://src/actors/Demon.tscn")
 
 signal demon_summoned
@@ -28,7 +28,7 @@ func _on_Timer_timeout():
 		add_child(d)
 
 func handle_spawns():
-	if tick_count % spawn_timer == 0:
+	if tick_count % spawn_timer == 0 || tick_count == 1:
 		var new_arr = [0, 0, 0, 0, 0]
 		
 		rng.randomize()
