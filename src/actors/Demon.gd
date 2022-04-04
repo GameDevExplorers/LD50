@@ -3,9 +3,9 @@ extends KinematicBody2D
 export (int) var speed = 400
 export (int) var bullet_speed = 100
 export (int) var spread = 10
-export (int) var health = 10000
-export (int) var max_health = 10000
-export (int) var sigil_buff = 2000
+export (int) var health = 2500
+export (int) var max_health = 2500
+export (int) var sigil_buff = 500
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var velocity:Vector2 = Vector2()
