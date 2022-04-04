@@ -841,5 +841,10 @@ mix_target = 2
 [node name="HealthOrb" parent="." instance=ExtResource( 21 )]
 position = Vector2( 106, 14 )
 
+[connection signal="on_lock" from="Sigil-Red" to="." method="_on_sigil_lock"]
+[connection signal="on_lock" from="Sigil-Green" to="." method="_on_sigil_lock"]
+[connection signal="on_lock" from="Sigil-Blue" to="." method="_on_sigil_lock"]
+[connection signal="on_lock" from="Sigil-Purple" to="." method="_on_sigil_lock"]
+[connection signal="on_lock" from="Sigil-Gold" to="." method="_on_sigil_lock"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="finished" from="AudioStreamPlayer" to="." method="_on_AudioStreamPlayer_finished"]
