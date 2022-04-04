@@ -444,8 +444,10 @@ position = Vector2( 0, -4 )
 current = true
 editor_draw_limits = true
 
+[node name="CasingContainer" type="Node" parent="."]
+
 [node name="Timer" type="Timer" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
