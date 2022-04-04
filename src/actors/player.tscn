@@ -39,7 +39,6 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 5.5, 12 )
 
-
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 48, 32 )
@@ -73,11 +72,12 @@ margin_top = 14.0
 margin_right = 192.0
 margin_bottom = 27.0
 rect_rotation = -360.0
-rect_scale = Vector2( 0.25, 0.5 )
+rect_scale = Vector2( 0.0733683, 0.323427 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.00275, 1 )
 frames = SubResource( 1 )
+frame = 1
 playing = true
 
 [node name="Sprite" type="Sprite" parent="AnimatedSprite"]
@@ -144,5 +144,4 @@ editor_draw_limits = true
 
 [connection signal="finished" from="GunAltFire" to="." method="_on_GunFire_finished"]
 [connection signal="finished" from="GunReload" to="." method="_on_GunReload_finished"]
-[connection signal="finished" from="Walk" to="." method="_on_Walk_finished"]
 [connection signal="body_entered" from="BulletCollider" to="." method="_on_BulletCollider_body_entered"]

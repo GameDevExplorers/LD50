@@ -29,7 +29,7 @@ func _ready():
 	$Timer.start(5)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	var dir = Vector2.ZERO
 	if !player_nearby:
 		if Game.player_location:
@@ -68,6 +68,11 @@ func _process(delta):
 func _physics_process(delta):
 	velocity = move_and_slide(velocity * delta)
 
+
+func absorb_souls():
+	print("absorb the soul")
+	health += 10
+	health_bar.set_health(health)
 
 func fire():
 	var b = Bullet.instance()

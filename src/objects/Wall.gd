@@ -5,6 +5,7 @@ onready var repair_plate = $RepairPlate
 
 export var health: = 4000
 var _velocity: = Vector2.ZERO
+var _broken = false
 
 func _ready():
 	repair_plate.connect("repaired", self, "_on_repaired")
@@ -19,6 +20,8 @@ func repair() -> void:
 	$CollisionShape2D.disabled = false
 	health = 4000
 	anim.set_animation("solid")
+	$Repaired.play()
+	_broken = false
 
 func take_damage() -> void:
 	$Hit.play()
@@ -26,9 +29,11 @@ func take_damage() -> void:
 	if health < 3500:
 		anim.set_animation("damaged")
 		repair_plate.visible = true
-	if health <= 0:
-		repair_plate.visible = true
 		repair_plate.set_process(true)
+	if health <= 0:
+		if _broken == false:
+			$Broken.play()
+			_broken = true
 		anim.set_animation("broken")
 		$CollisionShape2D.disabled = true
 
