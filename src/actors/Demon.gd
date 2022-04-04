@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export (int) var speed = 400
+export (int) var speed = 800
 export (int) var bullet_speed = 100
 export (int) var spread = 10
 export (int) var health = 2500
@@ -26,7 +26,7 @@ onready var health_bar = get_node("CanvasLayer/Healthbar")
 # Then reset the timer
 
 func _ready():
-	$Timer.start(2)
+	$Timer.start(1)
 	set_health_bar()
 
 
@@ -43,7 +43,7 @@ func _process(_delta):
 
 	if state == State.ATTACKING:
 		if attack == Attack.SPIRAL:
-			var count = 10
+			var count = 20
 			var radius = Vector2(10, 0)
 			var step = 2 * PI / count
 			var b = Bullet.instance()
@@ -73,9 +73,9 @@ func _physics_process(delta):
 func set_health_bar():
 	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
-	
+
 func absorb_souls():
-	health += 10
+	health += 15
 	if health > max_health:
 		max_health = health
 	set_health_bar()
@@ -100,7 +100,7 @@ func _on_Timer_timeout():
 			# If attack progress is 10, this attack is done. go back to idle.
 			attack_progress = 0
 			state = State.IDLE
-			$Timer.start(2)
+			$Timer.start(1)
 
 func assign_attack():
 	$AudioRoar.play()
@@ -140,7 +140,6 @@ func _on_Area2D_body_exited(body:Node):
 
 func _on_Area2D_body_entered(body:Node):
 	if body.get_name() == "player":
-		modulate = Color.red
 		player_nearby = true
 
 
