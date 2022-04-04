@@ -8,6 +8,8 @@ export var spawn_index: int
 onready var anim = $sigil_base
 onready var fire_anim = $sigil_fire
 
+var repeat = false
+
 signal on_lock
 
 func _ready() -> void:
@@ -18,6 +20,7 @@ func _ready() -> void:
 func _on_spawn(arr):
 	if arr[spawn_index] > 0:
 		fire_anim.play(color)
+		repeat = true
 	else:
 		fire_anim.play("blank")
 
@@ -29,12 +32,13 @@ func _on_Sigil_body_entered(body: Node) -> void:
 		if charge == 100:
 			lock()
 		body.trigger_death()
-#		fire_anim.set_frame(0)
-#		fire_anim.play(color)
+		fire_anim.set_frame(0)
+		fire_anim.play(color)
 
 func lock() -> void:
 	anim.set_frame(10)
 	$collider.disabled = true
+	$Locked.play()
 	locked = true
 	Game.sigil_locked()
 	emit_signal("on_lock")
@@ -42,8 +46,12 @@ func lock() -> void:
 
 func _on_sigil_fire_animation_finished() -> void:
 	pass
-#	if locked:
-#		fire_anim.set_frame(0)
-#		fire_anim.play(color)
-#	else:
-#		fire_anim.set_animation("blank")
+	if locked:
+		fire_anim.set_frame(0)
+		fire_anim.play(color)
+	else:
+		if repeat == true:
+			fire_anim.play(color)
+			repeat = false
+		else:
+			fire_anim.set_animation("blank")

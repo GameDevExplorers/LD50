@@ -39,7 +39,6 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=10]
 extents = Vector2( 5.5, 12 )
 
-
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 48, 32 )
@@ -73,7 +72,7 @@ margin_top = 14.0
 margin_right = 192.0
 margin_bottom = 27.0
 rect_rotation = -360.0
-rect_scale = Vector2( 0.25, 0.5 )
+rect_scale = Vector2( 0.0733683, 0.323427 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.00275, 1 )

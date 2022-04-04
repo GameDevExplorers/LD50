@@ -29,13 +29,13 @@ func _on_RepairPlate_body_exited(body: Node) -> void:
 
 func _on_Timer_timeout() -> void:
 	timer_feedback()
-		
+
 func timer_feedback() -> void:
 	count = count + 1
 	progress_bar.value = count
 	if count == 30:
 		emit_signal("repaired")
-		
+
 func reset_frame() -> void:
 	repair_anim.set_frame(2)
 
