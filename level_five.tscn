@@ -400,6 +400,8 @@ volume_db = -10.0
 autoplay = true
 mix_target = 2
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
 [node name="Area2D" type="Area2D" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
