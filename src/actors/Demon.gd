@@ -47,7 +47,7 @@ func _process(_delta):
 			var radius = Vector2(10, 0)
 			var step = 2 * PI / count
 			var b = Bullet.instance()
-			b.start(position + radius.rotated(step * attack_progress), 0, "demon", bullet_speed)
+			b.start(position + radius.rotated(step * attack_progress), (step * attack_progress) + 5, "demon", bullet_speed)
 			b.set_animation("demon")
 			get_parent().add_child(b)
 			state = State.ATTACK_PAUSE
@@ -84,8 +84,9 @@ func fire():
 	var b = Bullet.instance()
 	b.start(position, 0, "demon", bullet_speed)
 	b.set_animation("demon")
-	get_parent().add_child(b)
 	b.set_target(Game.player_location)
+	get_parent().add_child(b)
+	
 
 func _on_Timer_timeout():
 	if state == State.IDLE:
@@ -95,7 +96,7 @@ func _on_Timer_timeout():
 		if attack_progress < 10:
 			attack_progress += 1
 			state = State.ATTACKING
-			$Timer.start(0.4)
+			$Timer.start(0.2)
 		else:
 			# If attack progress is 10, this attack is done. go back to idle.
 			attack_progress = 0
