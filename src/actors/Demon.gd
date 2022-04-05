@@ -6,6 +6,7 @@ export (int) var spread = 10
 export (int) var health = 2500
 export (int) var max_health = 2500
 export (int) var sigil_buff = 500
+export var demo = false
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var velocity:Vector2 = Vector2()
@@ -28,10 +29,14 @@ onready var health_bar = get_node("CanvasLayer/Healthbar")
 func _ready():
 	$Timer.start(1)
 	set_health_bar()
+	if demo:
+		health_bar.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if demo:
+		return
 	var dir = Vector2.ZERO
 	if !player_nearby:
 		if Game.player_location:
