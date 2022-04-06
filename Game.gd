@@ -6,6 +6,8 @@ var mobs_killed = 0
 var mobs_sacrificed = 0
 var sigils = 0
 
+var crosshair:Vector2 = Vector2(0,0)
+
 export var paused = false
 export var player_health:int = 10
 export var player_location:Vector2 = Vector2(0,0)
@@ -22,6 +24,8 @@ func current_scene():
 func reset():
 	start_time = OS.get_unix_time()
 	summon_timer = 280
+	demon_summoned = false
+
 	sigils = 0
 
 
@@ -54,6 +58,19 @@ func activated_sigils():
 	return sigils
 
 func _input(event):
+	var input = Input.get_vector("nav-left", "nav-right", "nav-up", "nav-down")
+	if input:
+		print(input)
+		crosshair += input * 400 * get_process_delta_time()
+		if crosshair.x < 0:
+			crosshair.x = 0
+		if crosshair.y < 0:
+			crosshair.y = 0
+		if crosshair.x > get_viewport().size.x:
+			crosshair.x = get_viewport().size.x
+		if crosshair.y > get_viewport().size.y:
+			crosshair.y = get_viewport().size.y
+		get_viewport().warp_mouse(crosshair + input)
 	if event.is_action_pressed("pause"):
 		if current_scene() != "main_menu":
 			if paused == false:

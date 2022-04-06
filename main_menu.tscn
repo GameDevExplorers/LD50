@@ -72,6 +72,10 @@ scroll_active = false
 margin_top = 47.0
 margin_right = 200.0
 margin_bottom = 95.0
+focus_neighbour_top = NodePath("../ExitBtn")
+focus_neighbour_bottom = NodePath("../ExitBtn")
+focus_next = NodePath("../ExitBtn")
+focus_previous = NodePath("../ExitBtn")
 theme = ExtResource( 2 )
 text = "START"
 
@@ -79,6 +83,8 @@ text = "START"
 margin_top = 99.0
 margin_right = 200.0
 margin_bottom = 147.0
+focus_next = NodePath("../StartBtn")
+focus_previous = NodePath("../StartBtn")
 theme = ExtResource( 2 )
 text = "QUIT"
 

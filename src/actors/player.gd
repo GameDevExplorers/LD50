@@ -11,12 +11,14 @@ var velocity:Vector2 = Vector2()
 var ready_to_fire = true
 var invincible = false
 
+var cross_hair:Vector2 = Vector2()
+
 onready var health_bar = $Healthbar
 
 func _ready():
 	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
-	#remove_child(health_bar)
+	cross_hair = get_global_mouse_position()
 	var _i = get_parent().connect("demon_summoned", self, "_on_demon_summoned")
 	var _x = get_parent().connect("repair_tick", self, "_on_repair_tick")
 
@@ -88,6 +90,14 @@ func get_input():
 		fire_projectile((spread / 3) * -1)
 
 func _physics_process(delta):
+	# var direction: Vector2 = Input.get_vector("nav-left", "nav-right", "nav-down", "nav-up")
+
+	# var movement = direction * delta * 500
+	# if (movement):
+		# cross_hair += movement
+		# get_viewport().warp_mouse(cross_hair)
+		# print("movement: ", movement)
+
 	get_input()
 	if velocity.length_squared() > 0:
 		if $Walk.playing == false:
@@ -136,8 +146,6 @@ func take_damage(damage) -> void:
 	$Hit.play()
 	invincible = true
 	health = health - damage
-	if health <= 0:
-		Engine.time_scale = 0.1
 	health_bar.set_health(health)
 
 	modulate = Color.white
@@ -147,7 +155,6 @@ func take_damage(damage) -> void:
 	modulate = Color.white
 
 	if health <= 0:
-		Engine.time_scale = 1
 		var result = get_tree().change_scene("res://game_over.tscn")
 		if result != OK:
 			print_debug("Failed to change scene: " + result)

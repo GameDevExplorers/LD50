@@ -2,6 +2,9 @@ extends Control
 
 export var start_scene:String = "res://level_five.tscn"
 
+func _ready():
+	$CenterContainer/VBoxContainer/StartBtn.grab_focus()
+
 func _on_StartBtn_pressed():
 	$Select.play()
 	yield(get_tree().create_timer(0.4), "timeout")

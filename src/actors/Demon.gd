@@ -91,7 +91,7 @@ func fire():
 	b.set_animation("demon")
 	b.set_target(Game.player_location)
 	get_parent().add_child(b)
-	
+
 
 func _on_Timer_timeout():
 	if state == State.IDLE:
