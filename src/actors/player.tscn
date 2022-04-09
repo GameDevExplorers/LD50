@@ -77,7 +77,6 @@ rect_scale = Vector2( 0.0733683, 0.323427 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.00275, 1 )
 frames = SubResource( 1 )
-frame = 1
 playing = true
 
 [node name="Sprite" type="Sprite" parent="AnimatedSprite"]
@@ -93,7 +92,6 @@ position = Vector2( -4.5, -1 )
 shape = SubResource( 10 )
 
 [node name="BulletSpawn" type="Node2D" parent="."]
-position = Vector2( 15, 0 )
 
 [node name="MuzzleFlash" type="AnimatedSprite" parent="BulletSpawn"]
 position = Vector2( 13, 0 )
