@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Assets/Sounds/Retro Impact Punch 07.wav" type="AudioStream" id=1]
 [ext_resource path="res://src/actors/Mob.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Sprites/Skeleton-attack-Sheet.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Sprites/Skeleton-die-Sheet.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Sounds/skeleton.wav" type="AudioStream" id=6]
+[ext_resource path="res://src/objects/offscreenmarker.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 13.1579, 33.8816 )
@@ -115,6 +116,7 @@ shape = SubResource( 1 )
 [node name="skele_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "walk"
+frame = 2
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]
@@ -136,6 +138,8 @@ volume_db = -17.259
 pitch_scale = 0.51
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="."]
+
+[node name="offscreenmarker" parent="." instance=ExtResource( 7 )]
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="animation_finished" from="skele_anim" to="." method="_on_skele_anim_finished"]
