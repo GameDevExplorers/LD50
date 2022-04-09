@@ -100,7 +100,7 @@ shape = SubResource( 1 )
 rotation = 0.0012719
 frames = SubResource( 2 )
 animation = "flying"
-frame = 2
+frame = 5
 playing = true
 
 [node name="Timer" type="Timer" parent="."]

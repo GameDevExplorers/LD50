@@ -15,7 +15,7 @@ signal on_lock
 func _ready() -> void:
 	anim.set_animation(color)
 	anim.set_frame(0)
-	get_parent().connect("spawn_skeles", self, "_on_spawn")
+	get_parent().connect("spawn_wave", self, "_on_spawn")
 
 func _on_spawn(arr):
 	if arr[spawn_index] > 0:
