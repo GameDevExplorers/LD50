@@ -23,6 +23,7 @@ func _ready():
 	var _x = get_parent().connect("repair_tick", self, "_on_repair_tick")
 
 func _process(_delta):
+	handle_directional_camera()
 	if get_global_mouse_position().x < global_position.x:
 		$AnimatedSprite.flip_h = true
 		$BulletSpawn.position.x = -22
@@ -39,10 +40,19 @@ func _process(_delta):
 func _on_demon_summoned():
 	add_child(health_bar)
 
+
 func _on_repair_tick():
 	if health > 1:
 		health -= 1
 		health_bar.set_health(health)
+
+
+func handle_directional_camera():
+	var x = (get_global_mouse_position().x - global_position.x) / 10
+	var y = (get_global_mouse_position().y - global_position.y) / 10
+	$Camera2D.offset.x = x
+	$Camera2D.offset.y = y
+
 
 func get_input():
 	velocity = Vector2()

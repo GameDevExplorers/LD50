@@ -55,7 +55,7 @@ animations = [ {
 radius = 15.7895
 height = 53.6842
 
-[node name="KinematicBody" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D"]
 z_index = 1
 collision_layer = 65
 script = ExtResource( 2 )
@@ -77,6 +77,7 @@ rect_scale = Vector2( 0.0733683, 0.323427 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 1.00275, 1 )
 frames = SubResource( 1 )
+frame = 3
 playing = true
 
 [node name="Sprite" type="Sprite" parent="AnimatedSprite"]
