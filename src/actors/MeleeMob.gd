@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
-onready var anim = $skele_anim
+class_name MeleeMob
+
+onready var anim
 onready var bullet_collider = $BulletCollider
 
 export var health: = 30
@@ -47,7 +49,7 @@ func _physics_process(delta) -> void:
 func handle_collision(collision) -> void:
 	if !collision:
 		_target = null
-		anim.animation = "walk"
+		anim.animation = "move"
 		return
 
 	var collider = collision.collider
@@ -99,7 +101,7 @@ func _on_Timer_timeout() -> void:
 	if _target:
 		attack()
 
-func _on_skele_anim_finished() -> void:
+func _on_anim_finished() -> void:
 	if anim.animation == "death":
 		rng.randomize()
 		var drop = rng.randi_range(1, 100)
