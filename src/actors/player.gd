@@ -8,11 +8,22 @@ export (int) var max_health = 400
 var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 var velocity:Vector2 = Vector2()
+var roll_vector:Vector2 = Vector2.ZERO
+
 var ready_to_fire = true
 var invincible = false
 
 var cross_hair:Vector2 = Vector2()
 
+enum {
+	MOVE,
+	ROLL
+}
+
+var state = MOVE
+
+onready var anim = $PlayerAnimation
+onready var player_shadow = $PlayerAnimation/PlayerShadow
 onready var health_bar = $Healthbar
 
 func _ready():
@@ -23,12 +34,13 @@ func _ready():
 	var _x = get_parent().connect("repair_tick", self, "_on_repair_tick")
 
 func _process(_delta):
+	handle_directional_camera()
 	if get_global_mouse_position().x < global_position.x:
-		$AnimatedSprite.flip_h = true
-		$AnimatedSprite/Sprite.position.x = 2
+		anim.flip_h = true
+		player_shadow.position.x = 2
 	else:
-		$AnimatedSprite.flip_h = false
-		$AnimatedSprite/Sprite.position.x = -3
+		anim.flip_h = false
+		player_shadow.position.x = -3
 
 	if fmod($BulletSpawn.rotation_degrees, 360) > 90 && fmod($BulletSpawn.rotation_degrees, 360) < 270:
 		$BulletSpawn/Gun.flip_v = true
@@ -43,6 +55,7 @@ func _process(_delta):
 func _on_demon_summoned():
 	add_child(health_bar)
 
+
 func _on_repair_tick():
 	if health > 1:
 		health -= 1
@@ -56,24 +69,52 @@ func get_input():
 		$BulletSpawn.look_at(input + global_position)
 	else:
 		$BulletSpawn.look_at(get_global_mouse_position())
-
-
-
 	velocity = Vector2()
+
+
+func handle_directional_camera():
+	var x = (get_global_mouse_position().x - global_position.x) / 10
+	var y = (get_global_mouse_position().y - global_position.y) / 10
+	$Camera2D.offset.x = x
+	$Camera2D.offset.y = y
+
+
+func move_state():
+	var input_vector = Vector2.ZERO
 	if Input.is_action_pressed("right"):
-		velocity.x += 1
+		input_vector.x += 1
 	if Input.is_action_pressed("left"):
-		velocity.x -= 1
+		input_vector.x -= 1
 	if Input.is_action_pressed("down"):
-		velocity.y += 1
+		input_vector.y += 1
 	if Input.is_action_pressed("up"):
-		velocity.y -= 1
+		input_vector.y -= 1
+		
+	velocity = input_vector.normalized() * speed
+	
+	if velocity.length_squared() > 0:
+		roll_vector = velocity
+		if $Walk.playing == false:
+			$Walk.play()
+		anim.play("move")
+	else:
+		anim.stop()
+		anim.frame = 0
 
-	velocity = velocity.normalized() * speed
+	handle_attack()
 
-	if invincible:
-		return
+	if Input.is_action_just_pressed("roll"):
+		state = ROLL
 
+func roll_state():
+	velocity = roll_vector.normalized() * speed * 1.75
+	handle_attack()
+	anim.play("roll")
+	invincible = true
+	modulate = Color.gray
+
+
+func handle_attack():
 	if Input.is_action_just_pressed("fire"):
 		$BulletSpawn/MuzzleFlash.frame = 1
 		$GunFire.play()
@@ -103,46 +144,41 @@ func get_input():
 		fire_projectile(0)
 		fire_projectile((spread / 3) * -1)
 
-func _physics_process(delta):
-	# var direction: Vector2 = Input.get_vector("nav-left", "nav-right", "nav-down", "nav-up")
-
-	# var movement = direction * delta * 500
-	# if (movement):
-		# cross_hair += movement
-		# get_viewport().warp_mouse(cross_hair)
-		# print("movement: ", movement)
-
-	get_input()
-	if velocity.length_squared() > 0:
-		if $Walk.playing == false:
-			$Walk.play()
-		$AnimatedSprite.play()
-	else:
-		$AnimatedSprite.stop()
-		$AnimatedSprite.frame = 0
-
+func _physics_process(_delta):
+	match state:
+		MOVE:
+			move_state()
+		
+		ROLL:
+			roll_state()
+		
 	velocity = move_and_slide(velocity)
 	Game.player_location = global_position
 	if health <= 0:
-		var result = get_tree().change_scene("res://game_over.tscn")
-		if result != OK:
-			print_debug("Failed to change scene: " + result)
+		game_over()
 
 func fire_projectile(offset:int):
 	if health <= 1:
 		return
-	var c = Casing.instance()
-	c.position = $CasingSpawn.global_position
-	if $AnimatedSprite.flip_h == true:
-		c.flip_h = true
-	$CasingContainer.add_child(c)
-	$BulletSpawn/MuzzleFlash.frame = 0
-	var b = Bullet.instance()
-	b.start($BulletSpawn.global_position, get_angle_to(get_global_mouse_position()) + deg2rad(offset), "player")
-	get_parent().add_child(b)
+
+	drop_casing()
+	show_bullet(offset)
+
 	health -= 1
 	health_bar.set_health(health)
 
+func drop_casing():
+	var casing = Casing.instance()
+	casing.position = $CasingSpawn.global_position
+	if anim.flip_h == true:
+		casing.flip_h = true
+	$CasingContainer.add_child(casing)
+
+func show_bullet(offset):
+	$BulletSpawn/MuzzleFlash.frame = 0
+	var bullet = Bullet.instance()
+	bullet.start($BulletSpawn.global_position, get_angle_to(get_global_mouse_position()) + deg2rad(offset), "player")
+	get_parent().add_child(bullet)
 
 func _on_GunFire_finished():
 	$GunReload.play()
@@ -169,9 +205,7 @@ func take_damage(damage) -> void:
 	modulate = Color.white
 
 	if health <= 0:
-		var result = get_tree().change_scene("res://game_over.tscn")
-		if result != OK:
-			print_debug("Failed to change scene: " + result)
+		game_over()
 	else:
 		yield(get_tree().create_timer(0.1), "timeout")
 		modulate = Color.red
@@ -181,8 +215,28 @@ func take_damage(damage) -> void:
 		modulate = Color.white
 		invincible = false
 
+
+func game_over():
+	for _i in range(5):
+		yield(get_tree().create_timer(0.1), "timeout")
+		modulate = Color.red
+		yield(get_tree().create_timer(0.1), "timeout")
+		modulate = Color.gray
+	yield(get_tree().create_timer(0.25), "timeout")
+	var result = get_tree().change_scene("res://game_over.tscn")
+	if result != OK:
+		print_debug("Failed to change scene: " + result)
+
+	
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && body.get("spawned_by") != "player":
 		body.queue_free()
 		if invincible == false:
 			take_damage(body.get("damage"))
+
+
+func _on_player_anim_finished() -> void:
+	state = MOVE
+	invincible = false
+	modulate = Color.white
+

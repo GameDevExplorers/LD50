@@ -1,9 +1,9 @@
 extends KinematicBody2D
 
-onready var anim = $skele_anim
+onready var anim = $hellhound_anim
 onready var bullet_collider = $BulletCollider
 
-export var health: = 30
+export var health: = 60
 
 export var drop_chance: = 20
 
@@ -12,7 +12,7 @@ var health_orb = load("res://src/objects/HealthOrb.tscn")
 
 var _sigil = null
 var _default_target = null
-var _speed = 55
+var _speed = 85
 var _velocity: = Vector2.ZERO
 var _target = null
 var _dead = false
@@ -31,7 +31,7 @@ func trigger_death(drop_loot = true) -> void:
 	bullet_collider.get_node("CollisionShape2D2").disabled = true
 	$Die.play()
 	_dead = true
-	anim.animation = "death"
+	anim.animation = "die"
 
 func _physics_process(delta) -> void:
 	if _sigil == null || _dead:
@@ -47,7 +47,7 @@ func _physics_process(delta) -> void:
 func handle_collision(collision) -> void:
 	if !collision:
 		_target = null
-		anim.animation = "walk"
+		anim.animation = "move"
 		return
 
 	var collider = collision.collider
@@ -74,7 +74,7 @@ func take_damage(damage) -> void:
 	_velocity = Vector2.ZERO
 
 	if anim.animation == "attack":
-		anim.animation = "walk"
+		anim.animation = "move"
 
 	$Hit.play()
 	health = health - damage
@@ -99,8 +99,8 @@ func _on_Timer_timeout() -> void:
 	if _target:
 		attack()
 
-func _on_skele_anim_finished() -> void:
-	if anim.animation == "death":
+func _on_hellhound_anim_finished() -> void:
+	if anim.animation == "die":
 		rng.randomize()
 		var drop = rng.randi_range(1, 100)
 		if drop < drop_chance && _drop_loot:

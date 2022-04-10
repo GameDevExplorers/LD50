@@ -8,7 +8,8 @@ var demon_instance = null
 
 signal demon_summoned
 
-signal spawn_skeles(spawn_arr)
+signal spawn_wave(spawn_arr)
+
 
 var rng = RandomNumberGenerator.new()
 var tick_count = 0
@@ -60,7 +61,7 @@ func handle_spawns():
 			var i = rng.randi_range(0, 4)
 			new_arr[i] = new_arr[i] + each_node
 
-		emit_signal("spawn_skeles", new_arr)
+		emit_signal("spawn_wave", new_arr)
 
 
 func _on_AudioStreamPlayer_finished():
