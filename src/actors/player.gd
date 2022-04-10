@@ -25,16 +25,20 @@ func _ready():
 func _process(_delta):
 	if get_global_mouse_position().x < global_position.x:
 		$AnimatedSprite.flip_h = true
-		$BulletSpawn.position.x = -22
-		$BulletSpawn/MuzzleFlash.flip_h = true
-		$BulletSpawn/MuzzleFlash.position.x = -20
 		$AnimatedSprite/Sprite.position.x = 2
 	else:
 		$AnimatedSprite.flip_h = false
-		$BulletSpawn.position.x = 22
-		$BulletSpawn/MuzzleFlash.flip_h = false
-		$BulletSpawn/MuzzleFlash.position.x = 20
 		$AnimatedSprite/Sprite.position.x = -3
+
+	if fmod($BulletSpawn.rotation_degrees, 360) > 90 && fmod($BulletSpawn.rotation_degrees, 360) < 270:
+		$BulletSpawn/Gun.flip_v = true
+	else:
+		$BulletSpawn/Gun.flip_v = false
+
+	if fmod($BulletSpawn.rotation_degrees, 360) < 0 && fmod($BulletSpawn.rotation_degrees, 360) > -140:
+		$BulletSpawn/Gun.z_index = -1
+	else:
+		$BulletSpawn/Gun.z_index = 1
 
 func _on_demon_summoned():
 	add_child(health_bar)
@@ -45,6 +49,16 @@ func _on_repair_tick():
 		health_bar.set_health(health)
 
 func get_input():
+	var input = Input.get_vector("nav-left", "nav-right", "nav-up", "nav-down")
+	if input:
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		$CrosshairContainer.look_at(input + global_position)
+		$BulletSpawn.look_at(input + global_position)
+	else:
+		$BulletSpawn.look_at(get_global_mouse_position())
+
+
+
 	velocity = Vector2()
 	if Input.is_action_pressed("right"):
 		velocity.x += 1
