@@ -60,16 +60,16 @@ func activated_sigils():
 func _input(event):
 	var input = Input.get_vector("nav-left", "nav-right", "nav-up", "nav-down")
 	if input:
-		print(input)
-		crosshair += input * 400 * get_process_delta_time()
-		if crosshair.x < 0:
-			crosshair.x = 0
-		if crosshair.y < 0:
-			crosshair.y = 0
-		if crosshair.x > get_viewport().size.x:
-			crosshair.x = get_viewport().size.x
-		if crosshair.y > get_viewport().size.y:
-			crosshair.y = get_viewport().size.y
+
+		# crosshair += input * 400 * get_process_delta_time()
+		# if crosshair.x < 0:
+		# 	crosshair.x = 0
+		# if crosshair.y < 0:
+		# 	crosshair.y = 0
+		# if crosshair.x > get_viewport().size.x:
+		# 	crosshair.x = get_viewport().size.x
+		# if crosshair.y > get_viewport().size.y:
+		# 	crosshair.y = get_viewport().size.y
 		get_viewport().warp_mouse(crosshair + input)
 	if event.is_action_pressed("pause"):
 		if current_scene() != "main_menu":
