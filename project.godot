@@ -23,6 +23,8 @@ Game="*res://Game.gd"
 
 window/size/width=512
 window/size/height=448
+window/size/test_width=1536
+window/size/test_height=1344
 mouse_cursor/custom_image="res://Assets/Sprites/cursor.png"
 mouse_cursor/custom_image_hotspot=Vector2( 32, 32 )
 window/stretch/mode="viewport"
@@ -31,6 +33,7 @@ window/stretch/aspect="keep"
 [global]
 
 full=false
+display=false
 
 [importer_defaults]
 
