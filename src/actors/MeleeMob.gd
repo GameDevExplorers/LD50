@@ -7,10 +7,14 @@ onready var bullet_collider = $BulletCollider
 
 export var health: = 30
 
-export var drop_chance: = 20
+export var HEALTH_DROP_CHANCE: = 10
+export var WEAPON_UP_CHANCE: = 10
 
 var rng = RandomNumberGenerator.new()
-var health_orb = load("res://src/objects/HealthOrb.tscn")
+var HealthOrb = load("res://src/objects/pickups/HealthOrb.tscn")
+var DamageUpOrb = load("res://src/objects/pickups/DamageUpOrb.tscn")
+var AmmoUpOrb = load("res://src/objects/pickups/AmmoUpOrb.tscn")
+
 
 var _sigil = null
 var _default_target = null
@@ -20,9 +24,11 @@ var _target = null
 var _dead = false
 var _drop_loot = true
 
+
 func set_sigils(t, default) -> void:
 	_sigil = t
 	_default_target = default
+
 
 func trigger_death(drop_loot = true) -> void:
 	_drop_loot = drop_loot
@@ -33,7 +39,9 @@ func trigger_death(drop_loot = true) -> void:
 	bullet_collider.get_node("CollisionShape2D2").disabled = true
 	$Die.play()
 	_dead = true
+	drop_items()
 	anim.animation = "death"
+
 
 func _physics_process(delta) -> void:
 	if _sigil == null || _dead:
@@ -45,6 +53,7 @@ func _physics_process(delta) -> void:
 	set_velocity()
 	var collision = move_and_collide(_velocity * delta)
 	handle_collision(collision)
+
 
 func handle_collision(collision) -> void:
 	if !collision:
@@ -64,12 +73,14 @@ func set_velocity() -> void:
 	_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
 	anim.flip_h = true if _velocity.x < 0 else false
 
+
 func attack() -> void:
 	$Timer.stop()
 	if _target && !_dead:
 		anim.animation = "attack"
 		_target.hit()
 		$Timer.start(2)
+
 
 func take_damage(damage) -> void:
 	var old_velocity = _velocity
@@ -101,14 +112,9 @@ func _on_Timer_timeout() -> void:
 	if _target:
 		attack()
 
+
 func _on_anim_finished() -> void:
 	if anim.animation == "death":
-		rng.randomize()
-		var drop = rng.randi_range(1, 100)
-		if drop < drop_chance && _drop_loot:
-			var h = health_orb.instance()
-			h.position = global_position
-			get_parent().get_node('ItemNode').add_child(h)
 		queue_free()
 
 
@@ -116,3 +122,22 @@ func _on_bullet_entered(body: Node) -> void:
 	if body.get("damage") && !_dead:
 		body.queue_free()
 		take_damage(body.get("damage"))
+
+
+func drop_items() -> void:
+	if Utils.percentage(WEAPON_UP_CHANCE) && _drop_loot:
+		var h = choose_weapon_upgrade()
+		h.position = global_position
+		get_parent().get_node('ItemNode').add_child(h)
+		return # If a weapon upgrade is dropped, don't also drop health
+	if Utils.percentage(HEALTH_DROP_CHANCE) && _drop_loot:
+		var h = HealthOrb.instance()
+		h.position = global_position
+		get_parent().get_node('ItemNode').add_child(h)
+
+
+func choose_weapon_upgrade():
+	if Utils.percentage(50): # choose between weapon upgrades
+		return DamageUpOrb.instance()
+	else:
+		return AmmoUpOrb.instance()

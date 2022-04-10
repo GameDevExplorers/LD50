@@ -1,6 +1,8 @@
 extends Node
 
-var summon_timer = 280
+const DEFAULT_SUMMON_TIMER = 300
+
+var summon_timer = DEFAULT_SUMMON_TIMER
 var start_time = 0
 var mobs_killed = 0
 var mobs_sacrificed = 0
@@ -23,7 +25,7 @@ func current_scene():
 
 func reset():
 	start_time = OS.get_unix_time()
-	summon_timer = 280
+	summon_timer = DEFAULT_SUMMON_TIMER
 	demon_summoned = false
 
 	sigils = 0
