@@ -19,10 +19,10 @@ func _on_Timer_timeout() -> void:
 	#spawn()
 	pass
 
-func _on_spawn(arr):
+func _on_spawn(arr) -> void:
 	var count = arr[spawn_index]
 	for i in range(count):
-		if percentage(90):
+		if Utils.percentage(90):
 			spawn("Skeleton")
 		else:
 			spawn("Hellhound")
@@ -45,7 +45,3 @@ func find_mob(type):
 
 	return Skeleton.instance()
 
-
-
-func percentage(n) -> bool:
-	return randf() <= n * .01

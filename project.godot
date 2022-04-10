@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "MeleeMob",
 "language": "GDScript",
 "path": "res://src/actors/MeleeMob.gd"
+}, {
+"base": "Reference",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://src/utils.gd"
 } ]
 _global_script_class_icons={
-"MeleeMob": ""
+"MeleeMob": "",
+"Utils": ""
 }
 
 [application]

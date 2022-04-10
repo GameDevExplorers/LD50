@@ -6,7 +6,7 @@ var speed = 850
 var velocity = Vector2()
 var target = Vector2();
 
-func start(pos, dir, spawner, bullet_speed = speed, dam = 30):
+func start(pos, dir, spawner, bullet_speed = speed, dam = damage):
 	rotation = dir
 	position = pos
 	speed    = bullet_speed
