@@ -4,12 +4,12 @@ onready var timer = $Timer
 
 var pickedup = false
 
-func _on_HealthOrb_body_entered(body: Node) -> void:
-	if body.has_method("heal") and not pickedup:
+func _on_body_entered(body: Node) -> void:
+	if body.has_method("damage_up") and not pickedup:
 		pickedup = true
 		$AudioStreamPlayer2D.play()
 		visible = false
-		body.heal()
+		body.damage_up()
 
 
 func _on_Timer_timeout() -> void:

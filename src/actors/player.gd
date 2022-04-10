@@ -1,9 +1,18 @@
 extends KinematicBody2D
 
 export (int) var speed = 200
-export (int) var spread = 10
+export (int) var spread = 5
 export (int) var health = 400
 export (int) var max_health = 400
+
+var bullet_speed = 850
+var bullet_damage = 30
+var ammo_count = 5
+
+const BULLET_DAMAGE_MOD = 30
+const AMMO_COUNT_MOD = 1
+const RELOAD_TIMER = 0.5
+const HEAL_AMOUNT = 30
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
@@ -112,6 +121,10 @@ func roll_state():
 	anim.play("roll")
 	invincible = true
 	modulate = Color.gray
+	yield(anim, "animation_finished")
+	state = MOVE
+	invincible = false
+	modulate = Color.white
 
 
 func handle_attack():
@@ -126,23 +139,20 @@ func handle_attack():
 	if Input.is_action_just_released("alt_fire") && ready_to_fire:
 		$BulletSpawn/MuzzleFlash.frame = 0
 		ready_to_fire = false
-		$GunAltFire.play()
+
+		for _i in range(ammo_count):
+			$GunFire.play()
+			fire_projectile(rand_range(-spread, spread))
+			$BulletSpawn/MuzzleFlash.frame = 1
+			yield(get_tree().create_timer(0.03), "timeout")
+			$BulletSpawn/MuzzleFlash.frame = 0
+	
+		yield(get_tree().create_timer(RELOAD_TIMER), "timeout")
+		$GunReload.play()
 		yield(get_tree().create_timer(0.1), "timeout")
-		fire_projectile(0)
-		fire_projectile(spread / 3)
-		$BulletSpawn/MuzzleFlash.frame = 1
-		yield(get_tree().create_timer(0.05), "timeout")
-		$BulletSpawn/MuzzleFlash.frame = 0
-		fire_projectile(spread / 2)
-		yield(get_tree().create_timer(0.05), "timeout")
-		fire_projectile((spread / 2) * -1)
-		yield(get_tree().create_timer(0.05), "timeout")
-		fire_projectile(spread * -1)
-		yield(get_tree().create_timer(0.05), "timeout")
-		fire_projectile(spread)
-		yield(get_tree().create_timer(0.05), "timeout")
-		fire_projectile(0)
-		fire_projectile((spread / 3) * -1)
+		ready_to_fire = true
+
+
 
 func _physics_process(_delta):
 	match state:
@@ -157,7 +167,7 @@ func _physics_process(_delta):
 	if health <= 0:
 		game_over()
 
-func fire_projectile(offset:int):
+func fire_projectile(offset:float):
 	if health <= 1:
 		return
 
@@ -167,30 +177,44 @@ func fire_projectile(offset:int):
 	health -= 1
 	health_bar.set_health(health)
 
-func drop_casing():
+
+func drop_casing() -> void:
 	var casing = Casing.instance()
 	casing.position = $CasingSpawn.global_position
 	if anim.flip_h == true:
 		casing.flip_h = true
 	$CasingContainer.add_child(casing)
 
-func show_bullet(offset):
+
+func show_bullet(offset) -> void:
 	$BulletSpawn/MuzzleFlash.frame = 0
 	var bullet = Bullet.instance()
-	bullet.start($BulletSpawn.global_position, get_angle_to(get_global_mouse_position()) + deg2rad(offset), "player")
+	bullet.start(
+		$BulletSpawn.global_position,
+		get_angle_to(get_global_mouse_position()) + deg2rad(offset),
+		"player",
+		bullet_speed,
+		bullet_damage
+	)
 	get_parent().add_child(bullet)
 
-func _on_GunFire_finished():
-	$GunReload.play()
-
-func _on_GunReload_finished():
-	ready_to_fire = true
 
 func heal() -> void:
-	health = health + 30
+	health = health + HEAL_AMOUNT
 	if health > max_health:
 		health = max_health
 	health_bar.set_health(health)
+
+
+func damage_up() -> void:
+	bullet_damage += BULLET_DAMAGE_MOD
+	spread += 1
+
+
+func ammo_up() -> void:
+	ammo_count += AMMO_COUNT_MOD
+	spread += 1
+
 
 func take_damage(damage) -> void:
 	$Hit.play()
@@ -216,7 +240,7 @@ func take_damage(damage) -> void:
 		invincible = false
 
 
-func game_over():
+func game_over() -> void:
 	for _i in range(5):
 		yield(get_tree().create_timer(0.1), "timeout")
 		modulate = Color.red
@@ -230,13 +254,7 @@ func game_over():
 	
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && body.get("spawned_by") != "player":
-		body.queue_free()
 		if invincible == false:
+			body.queue_free()
 			take_damage(body.get("damage"))
-
-
-func _on_player_anim_finished() -> void:
-	state = MOVE
-	invincible = false
-	modulate = Color.white
 

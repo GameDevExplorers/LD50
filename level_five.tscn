@@ -20,7 +20,7 @@
 [ext_resource path="res://src/objects/boulder1.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/objects/boulder7.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/objects/flipped.gd" type="Script" id=20]
-[ext_resource path="res://src/objects/HealthOrb.tscn" type="PackedScene" id=21]
+[ext_resource path="res://src/objects/pickups/HealthOrb.tscn" type="PackedScene" id=21]
 [ext_resource path="res://hud.tscn" type="PackedScene" id=22]
 
 [sub_resource type="TileSet" id=1]

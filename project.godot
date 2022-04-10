@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "MeleeMob",
+"language": "GDScript",
+"path": "res://src/actors/MeleeMob.gd"
+}, {
+"base": "Reference",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://src/utils.gd"
+} ]
+_global_script_class_icons={
+"MeleeMob": "",
+"Utils": ""
+}
+
 [application]
 
 config/name="Demon Sigil"

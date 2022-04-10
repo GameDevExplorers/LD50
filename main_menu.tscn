@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/Sounds/confirm_style_4_001.wav" type="AudioStream" id=3]
 [ext_resource path="res://Assets/Music/Menu Theme.wav" type="AudioStream" id=4]
 [ext_resource path="res://src/actors/Demon.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/actors/Mob.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/actors/melee_mobs/Skeleton.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Sprites/Ground Palletes/Ground-Stone-Pallete.png" type="Texture" id=7]
 
 [sub_resource type="Shader" id=2]
@@ -292,13 +292,13 @@ scale = Vector2( 5.42257, 6.46669 )
 z_index = -1
 demo = true
 
-[node name="Mob" parent="." instance=ExtResource( 6 )]
+[node name="Skeleton" parent="." instance=ExtResource( 6 )]
 position = Vector2( 188.443, 372.136 )
 
-[node name="Mob2" parent="." instance=ExtResource( 6 )]
+[node name="Skeleton2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 220.966, 373.031 )
 
-[node name="Mob3" parent="." instance=ExtResource( 6 )]
+[node name="Skeleton3" parent="." instance=ExtResource( 6 )]
 position = Vector2( 275.49, 373.031 )
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
