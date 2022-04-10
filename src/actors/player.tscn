@@ -100,7 +100,7 @@ rect_scale = Vector2( 0.0733683, 0.323427 )
 scale = Vector2( 1.00275, 1 )
 frames = SubResource( 1 )
 animation = "roll"
-frame = 3
+frame = 2
 playing = true
 
 [node name="PlayerShadow" type="Sprite" parent="PlayerAnimation"]

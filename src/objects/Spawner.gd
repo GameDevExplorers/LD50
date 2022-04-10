@@ -4,8 +4,8 @@ export var defaultTarget: NodePath
 export var target: NodePath
 export var spawn_index: int
 
-var Mob = load("res://src/actors/Mob.tscn")
-var Hellhound = load("res://src/actors/Hellhound.tscn")
+var Skeleton = load("res://src/actors/melee_mobs/Skeleton.tscn")
+var Hellhound = load("res://src/actors/melee_mobs/Hellhound.tscn")
 var rng = RandomNumberGenerator.new()
 
 onready var default_target_node = get_node(defaultTarget)
@@ -23,7 +23,7 @@ func _on_spawn(arr):
 	var count = arr[spawn_index]
 	for i in range(count):
 		if percentage(90):
-			spawn("Mob")
+			spawn("Skeleton")
 		else:
 			spawn("Hellhound")
 	
@@ -43,7 +43,7 @@ func find_mob(type):
 	if type == "Hellhound":
 		return Hellhound.instance()
 
-	return Mob.instance()
+	return Skeleton.instance()
 
 
 
