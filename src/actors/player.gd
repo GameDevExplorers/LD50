@@ -44,7 +44,7 @@ func _ready():
 
 func _process(_delta):
 	handle_directional_camera()
-	if get_global_mouse_position().x < global_position.x:
+	if cross_hair.x < global_position.x:
 		anim.flip_h = true
 		player_shadow.position.x = 2
 	else:
@@ -70,20 +70,30 @@ func _on_repair_tick():
 		health -= 1
 		health_bar.set_health(health)
 
+func _input(event):
+	if event is InputEventMouseMotion:
+		$CrosshairContainer.visible = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		cross_hair = get_global_mouse_position()
+
+
 func get_input():
 	var input = Input.get_vector("nav-left", "nav-right", "nav-up", "nav-down")
 	if input:
+		$CrosshairContainer.visible = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		cross_hair = $CrosshairContainer/Crosshair.global_position
 		$CrosshairContainer.look_at(input + global_position)
-		$BulletSpawn.look_at(input + global_position)
-	else:
-		$BulletSpawn.look_at(get_global_mouse_position())
+
+	$BulletSpawn.look_at(cross_hair)
 	velocity = Vector2()
 
 
 func handle_directional_camera():
-	var x = (get_global_mouse_position().x - global_position.x) / 10
-	var y = (get_global_mouse_position().y - global_position.y) / 10
+	if $CrosshairContainer.visible == true:
+		return
+	var x = (cross_hair.x - global_position.x) / 10
+	var y = (cross_hair.y - global_position.y) / 10
 	$Camera2D.offset.x = x
 	$Camera2D.offset.y = y
 
@@ -98,9 +108,9 @@ func move_state():
 		input_vector.y += 1
 	if Input.is_action_pressed("up"):
 		input_vector.y -= 1
-		
+
 	velocity = input_vector.normalized() * speed
-	
+
 	if velocity.length_squared() > 0:
 		roll_vector = velocity
 		if $Walk.playing == false:
@@ -146,22 +156,21 @@ func handle_attack():
 			$BulletSpawn/MuzzleFlash.frame = 1
 			yield(get_tree().create_timer(0.03), "timeout")
 			$BulletSpawn/MuzzleFlash.frame = 0
-	
+
 		yield(get_tree().create_timer(RELOAD_TIMER), "timeout")
 		$GunReload.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		ready_to_fire = true
 
-
-
 func _physics_process(_delta):
+	get_input()
 	match state:
 		MOVE:
 			move_state()
-		
+
 		ROLL:
 			roll_state()
-		
+
 	velocity = move_and_slide(velocity)
 	Game.player_location = global_position
 	if health <= 0:
@@ -191,7 +200,7 @@ func show_bullet(offset) -> void:
 	var bullet = Bullet.instance()
 	bullet.start(
 		$BulletSpawn.global_position,
-		get_angle_to(get_global_mouse_position()) + deg2rad(offset),
+		get_angle_to(cross_hair) + deg2rad(offset),
 		"player",
 		bullet_speed,
 		bullet_damage
@@ -251,7 +260,7 @@ func game_over() -> void:
 	if result != OK:
 		print_debug("Failed to change scene: " + result)
 
-	
+
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && body.get("spawned_by") != "player":
 		if invincible == false:
