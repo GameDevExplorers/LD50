@@ -6,6 +6,7 @@ export var spawn_index: int
 
 var Skeleton = load("res://src/actors/melee_mobs/Skeleton.tscn")
 var Hellhound = load("res://src/actors/melee_mobs/Hellhound.tscn")
+var Hellpup = load("res://src/actors/melee_mobs/Hellpup.tscn")
 var rng = RandomNumberGenerator.new()
 
 onready var default_target_node = get_node(defaultTarget)
@@ -22,8 +23,11 @@ func _on_Timer_timeout() -> void:
 func _on_spawn(arr) -> void:
 	var count = arr[spawn_index]
 	for i in range(count):
-		if Utils.percentage(90):
-			spawn("Skeleton")
+		if Utils.percentage(95):
+			if Utils.percentage(50):
+				spawn("Skeleton")
+			else:
+				spawn("Hellpup")
 		else:
 			spawn("Hellhound")
 	
@@ -40,8 +44,10 @@ func spawn(type) -> void:
 
 
 func find_mob(type):
-	if type == "Hellhound":
-		return Hellhound.instance()
-
-	return Skeleton.instance()
-
+	match type:
+		"Hellhound":
+			return Hellhound.instance()
+		"Hellpup":
+			return Hellpup.instance()
+		"Skeleton":
+			return Skeleton.instance()
