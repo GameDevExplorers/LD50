@@ -49,6 +49,7 @@ window/stretch/aspect="keep"
 [global]
 
 full=false
+display=false
 
 [importer_defaults]
 
