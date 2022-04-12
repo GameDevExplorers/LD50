@@ -13,9 +13,11 @@ const BULLET_DAMAGE_MOD = 30
 const AMMO_COUNT_MOD = 1
 const RELOAD_TIMER = 0.5
 const HEAL_AMOUNT = 30
+var ALLIES = ["player", "turret"]
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
+var Turret = load("res://src/objects/turret.tscn")
 var velocity:Vector2 = Vector2()
 var roll_vector:Vector2 = Vector2.ZERO
 
@@ -122,6 +124,9 @@ func move_state():
 
 	handle_attack()
 
+	if Input.is_action_just_pressed("special"):
+		place_turret()
+
 	if Input.is_action_just_pressed("roll"):
 		state = ROLL
 
@@ -175,6 +180,13 @@ func _physics_process(_delta):
 	Game.player_location = global_position
 	if health <= 0:
 		game_over()
+
+
+func place_turret():
+	var turret = Turret.instance()
+	turret.position = $TurretSpawn.global_position
+	$TurretContainer.add_child(turret)
+
 
 func fire_projectile(offset:float):
 	if health <= 1:
@@ -262,7 +274,7 @@ func game_over() -> void:
 
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
-	if body.get("damage") && body.get("spawned_by") != "player":
+	if body.get("damage") && !ALLIES.has(body.get("spawned_by")):
 		if invincible == false:
 			body.queue_free()
 			take_damage(body.get("damage"))
