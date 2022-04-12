@@ -18,11 +18,14 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = damage):
 		var ran = rand_range(0.5, 2.0)
 		scale = Vector2(1 * ran, 1 * ran)
 
+
 func set_animation(anim: String):
 	$AnimatedSprite.animation = anim
 
+
 func set_velocity(vel: Vector2):
 	velocity = vel * speed
+
 
 func set_target(pos: Vector2):
 	target = pos
@@ -38,12 +41,15 @@ func _physics_process(delta):
 		if collision.collider.has_method("hit"):
 			collision.collider.hit()
 
+
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
+
 
 func _on_Timer_timeout():
 	if spawned_by != "demon":
 		queue_free()
+
 
 func _on_Hitbox_body_entered(body):
 	print(body)
