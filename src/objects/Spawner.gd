@@ -40,7 +40,7 @@ func spawn(type) -> void:
 	var ran_1 = rng.randf_range(-100.0, 100.0)
 	var ran_2 = rng.randf_range(-100.0, 100.0)
 	mob.global_position = global_position + Vector2(ran_1, ran_2)
-	get_parent().add_child(mob)
+	get_parent().get_node("EnemyNode").add_child(mob)
 
 
 func find_mob(type):

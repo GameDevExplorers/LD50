@@ -128,12 +128,12 @@ func drop_items() -> void:
 	if Utils.percentage(WEAPON_UP_CHANCE) && _drop_loot:
 		var h = choose_weapon_upgrade()
 		h.position = global_position
-		get_parent().get_node('ItemNode').add_child(h)
+		get_parent().get_parent().get_node('ItemNode').add_child(h)
 		return # If a weapon upgrade is dropped, don't also drop health
 	if Utils.percentage(HEALTH_DROP_CHANCE) && _drop_loot:
 		var h = HealthOrb.instance()
 		h.position = global_position
-		get_parent().get_node('ItemNode').add_child(h)
+		get_parent().get_parent().get_node('ItemNode').add_child(h)
 
 
 func choose_weapon_upgrade():
