@@ -87,7 +87,7 @@ func take_damage(damage) -> void:
 	_velocity = Vector2.ZERO
 
 	if anim.animation == "attack":
-		anim.animation = "walk"
+		anim.animation = "move"
 
 	$Hit.play()
 	health = health - damage

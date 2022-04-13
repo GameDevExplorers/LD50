@@ -31,7 +31,6 @@ func _process(_delta):
 		anim.frame = 0
 
 
-
 func fire_projectile(offset:float):
 	cross_hair = enemy_position
 	can_fire = false
@@ -62,14 +61,10 @@ func show_bullet(offset) -> void:
 	get_parent().add_child(bullet)
 
 
-
 func _on_Radar_body_entered(body:Node):
-	print(body.get_instance_id())
 	enemies_in_range[body.get_instance_id()] = body.get_position()
 	enemy_in_range = true
 	enemy_position = body.get_position()
-	print(enemies_in_range)
-
 
 
 func _on_Radar_body_exited(body:Node):
