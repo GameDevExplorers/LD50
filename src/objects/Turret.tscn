@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Assets/Sprites/turret-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sounds/Retro Gun SingleShot 04.wav" type="AudioStream" id=2]
@@ -45,6 +45,9 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="CircleShape2D" id=10]
+radius = 180.003
+
 [node name="Turret" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 2
@@ -74,3 +77,13 @@ script = ExtResource( 5 )
 
 [node name="CasingSpawn" type="Node2D" parent="."]
 position = Vector2( -2, -1 )
+
+[node name="Radar" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Radar"]
+shape = SubResource( 10 )
+
+[connection signal="body_entered" from="Radar" to="." method="_on_Radar_body_entered"]
+[connection signal="body_exited" from="Radar" to="." method="_on_Radar_body_exited"]
