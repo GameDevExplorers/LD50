@@ -1,5 +1,11 @@
 extends KinematicBody2D
 
+const BULLET_DAMAGE_MOD = 30
+const AMMO_COUNT_MOD = 1
+const RELOAD_TIMER = 0.5
+const HEAL_AMOUNT = 30
+const ALLIES = ["player", "turret"]
+
 export (int) var speed = 200
 export (int) var spread = 5
 export (int) var health = 400
@@ -8,23 +14,18 @@ export (int) var max_health = 400
 var bullet_speed = 850
 var bullet_damage = 30
 var ammo_count = 5
-
-const BULLET_DAMAGE_MOD = 30
-const AMMO_COUNT_MOD = 1
-const RELOAD_TIMER = 0.5
-const HEAL_AMOUNT = 30
-var ALLIES = ["player", "turret"]
-
-var Bullet = load("res://src/objects/bullet.tscn")
-var Casing = load("res://src/objects/casing.tscn")
-var Turret = load("res://src/objects/turret.tscn")
-var velocity:Vector2 = Vector2()
-var roll_vector:Vector2 = Vector2.ZERO
+var available_turrets = 3
 
 var ready_to_fire = true
 var invincible = false
 
+var velocity:Vector2 = Vector2()
+var roll_vector:Vector2 = Vector2.ZERO
 var cross_hair:Vector2 = Vector2()
+
+var Bullet = load("res://src/objects/bullet.tscn")
+var Casing = load("res://src/objects/casing.tscn")
+var Turret = load("res://src/objects/turret.tscn")
 
 enum {
 	MOVE,
@@ -183,9 +184,12 @@ func _physics_process(_delta):
 
 
 func place_turret():
-	var turret = Turret.instance()
-	turret.position = $TurretSpawn.global_position
-	$TurretContainer.add_child(turret)
+	if available_turrets > 0:
+		var turret = Turret.instance()
+		turret.position = $TurretSpawn.global_position
+		$TurretContainer.add_child(turret)
+		available_turrets -= 1
+		$".."/CanvasLayer/hud/HBoxContainer2/AvailableTurrets.text = "Available Turrets: " + str(available_turrets)
 
 
 func fire_projectile(offset:float):

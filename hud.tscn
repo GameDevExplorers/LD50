@@ -22,34 +22,56 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchor_right = 1.0
+anchor_right = 1.441
 anchor_bottom = 1.0
+margin_right = 0.207947
+margin_bottom = -433.0
+grow_horizontal = 0
 grow_vertical = 0
-size_flags_horizontal = 3
 
 [node name="DemonTimer" type="RichTextLabel" parent="HBoxContainer"]
 margin_right = 330.0
-margin_bottom = 448.0
+margin_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 330, 100 )
+rect_min_size = Vector2( 330, 15 )
 rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
 theme = ExtResource( 1 )
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_text = "Your death is in 300 seconds"
 text = "Your death is in 300 seconds"
-fit_content_height = true
 scroll_active = false
 
 [node name="Sigils" type="RichTextLabel" parent="HBoxContainer"]
-margin_left = 334.0
-margin_right = 534.0
-margin_bottom = 448.0
-rect_min_size = Vector2( 200, 100 )
+margin_left = 371.0
+margin_right = 546.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 175, 15 )
 rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
 theme = ExtResource( 1 )
 custom_fonts/normal_font = SubResource( 3 )
-bbcode_text = "Your death is in 300 seconds"
-text = "Your death is in 300 seconds"
-fit_content_height = true
+bbcode_text = "Activated Demon Sigils: 0"
+text = "Activated Demon Sigils: 0"
+scroll_active = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+margin_top = 15.0
+margin_right = 200.0
+margin_bottom = 55.0
+
+[node name="AvailableTurrets" type="RichTextLabel" parent="HBoxContainer2"]
+margin_right = 200.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 200, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_text = "Available Turrets: 3"
+text = "Available Turrets: 3"
 scroll_active = false

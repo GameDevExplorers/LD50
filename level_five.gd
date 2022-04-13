@@ -21,6 +21,7 @@ func _ready():
 	$Timer.start(1)
 
 
+
 func _on_Timer_timeout():
 	tick_count = tick_count + 1
 	handle_spawns()
@@ -28,7 +29,9 @@ func _on_Timer_timeout():
 	var time = Game.summon_timer - Game.elapsed_time()
 	$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is in " + str(time) + " seconds"
 	$CanvasLayer/hud/HBoxContainer/Sigils.text = "Activated Demon Sigils: " + str(Game.activated_sigils())
+	
 	print("time:" + str(time))
+
 
 	if time < 8:
 		$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is soon"
