@@ -189,7 +189,7 @@ func place_turret():
 		turret.position = $TurretSpawn.global_position
 		$TurretContainer.add_child(turret)
 		available_turrets -= 1
-		$".."/CanvasLayer/hud/HBoxContainer2/AvailableTurrets.text = "Available Turrets: " + str(available_turrets)
+		$"../CanvasLayer/hud/HBoxContainer2/AvailableTurrets".text = "Available Turrets: " + str(available_turrets)
 
 
 func fire_projectile(offset:float):
