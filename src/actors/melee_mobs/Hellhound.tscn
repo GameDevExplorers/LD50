@@ -114,7 +114,7 @@ autostart = true
 position = Vector2( 0, -11 )
 frames = SubResource( 18 )
 animation = "death"
-frame = 6
+frame = 2
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]
