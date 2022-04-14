@@ -277,8 +277,14 @@ func game_over() -> void:
 		print_debug("Failed to change scene: " + result)
 
 
+func hit() -> void:
+	if invincible == false:
+		take_damage(10)
+
+
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && !ALLIES.has(body.get("spawned_by")):
+		print(body.get_name())
 		if invincible == false:
 			body.queue_free()
 			take_damage(body.get("damage"))

@@ -1,6 +1,7 @@
 extends Node2D
 
 export (Array, int) var spawn_count = [10, 10, 15, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
+# export (Array, int) var spawn_count = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 export var spawn_timer = 7
 var Demon = load("res://src/actors/Demon.tscn")
 
@@ -19,7 +20,6 @@ var sigil_lock_count = 0
 func _ready():
 	Game.reset()
 	$Timer.start(1)
-
 
 
 func _on_Timer_timeout():
@@ -60,7 +60,7 @@ func handle_spawns():
 		var spawns = spawn_count[index]
 		var each_node = spawns / divide
 
-		for n in range(divide):
+		for _n in range(divide):
 			var i = rng.randi_range(0, 4)
 			new_arr[i] = new_arr[i] + each_node
 
