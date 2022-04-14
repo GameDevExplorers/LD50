@@ -12,6 +12,8 @@ extents = Vector2( 48.9766, 3.49573 )
 extents = Vector2( 38.5, 11.5 )
 
 [node name="Boulder5" type="StaticBody2D"]
+collision_layer = 64
+collision_mask = 64
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -24,7 +26,6 @@ shape = SubResource( 1 )
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2( 5.0285, 18.7982 )
 rotation = -0.00864373
-scale = Vector2( 1, 1 )
 shape = SubResource( 2 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="."]

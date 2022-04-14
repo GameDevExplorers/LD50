@@ -11,9 +11,9 @@ var Casing = load("res://src/objects/casing.tscn")
 
 var cross_hair:Vector2 = Vector2()
 var can_fire = true
-var enemy_in_range = false
-var enemy_position = Vector2()
-var enemies_in_range = {}
+var target_in_range = false
+var target_position = Vector2()
+var targets_in_range = {}
 
 onready var anim = $TurretAnimation
 
@@ -22,7 +22,7 @@ func _ready():
 	pass
 
 func _process(_delta):
-	if can_fire && enemy_in_range:
+	if can_fire && target_in_range:
 		fire_projectile(1)
 
 	if cross_hair.x < global_position.x:
@@ -32,7 +32,7 @@ func _process(_delta):
 
 
 func fire_projectile(offset:float):
-	cross_hair = enemy_position
+	cross_hair = target_position
 	can_fire = false
 	drop_casing()
 	show_bullet(offset)
@@ -62,15 +62,15 @@ func show_bullet(offset) -> void:
 
 
 func _on_Radar_body_entered(body:Node):
-	enemies_in_range[body.get_instance_id()] = body.get_position()
-	enemy_in_range = true
-	enemy_position = body.get_position()
+	targets_in_range[body.get_instance_id()] = body.get_position()
+	target_in_range = true
+	target_position = body.get_position()
 
 
 func _on_Radar_body_exited(body:Node):
-	enemies_in_range.erase(body.get_instance_id())
-	if enemies_in_range.empty():
-		enemy_in_range = false
-		enemy_position = Vector2()
+	targets_in_range.erase(body.get_instance_id())
+	if targets_in_range.empty():
+		target_in_range = false
+		target_position = Vector2()
 	else:
-		enemy_position = enemies_in_range.values().front()
+		target_position = targets_in_range.values().front()

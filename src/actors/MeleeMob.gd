@@ -16,18 +16,29 @@ var DamageUpOrb = load("res://src/objects/pickups/DamageUpOrb.tscn")
 var AmmoUpOrb = load("res://src/objects/pickups/AmmoUpOrb.tscn")
 
 
-var _sigil = null
-var _default_target = null
+var target_in_range = false
+var target = Vector2()
+var targets_in_range = []
+
+var sigil = null
+var default_target = null
+var collision_target = null
+
+
 var _speed = 55
-var _velocity: = Vector2.ZERO
-var _target = null
+var velocity: = Vector2.ZERO
 var _dead = false
 var _drop_loot = true
 
 
+
+func _ready():
+	target = sigil
+
+
 func set_sigils(t, default) -> void:
-	_sigil = t
-	_default_target = default
+	sigil = t
+	default_target = default
 
 
 func trigger_death(drop_loot = true) -> void:
@@ -35,8 +46,8 @@ func trigger_death(drop_loot = true) -> void:
 	set_collision_layer_bit(1, false)
 	set_collision_mask_bit(0, false)
 	set_collision_mask_bit(1, false)
-	get_node("CollisionShape2D").disabled = true
-	bullet_collider.get_node("CollisionShape2D2").disabled = true
+	remove_child(get_node("CollisionShape2D"))
+	remove_child(bullet_collider.get_node("CollisionShape2D2"))
 	$Die.play()
 	_dead = true
 	drop_items()
@@ -44,47 +55,45 @@ func trigger_death(drop_loot = true) -> void:
 
 
 func _physics_process(delta) -> void:
-	if _sigil == null || _dead:
+	if sigil == null || _dead:
 		return
 
-	if _sigil.locked:
-		_sigil = _default_target
-
 	set_velocity()
-	var collision = move_and_collide(_velocity * delta)
+	var collision = move_and_collide(velocity * delta)
 	handle_collision(collision)
 
 
 func handle_collision(collision) -> void:
 	if !collision:
-		_target = null
+		collision_target = null
 		anim.animation = "move"
 		return
 
 	var collider = collision.collider
 
 	if collider.has_method("hit"):
-		if _target == null:
-			_target = collision.collider
+		if collision_target == null:
+			collision_target = collision.collider
 			$Timer.start(0.1)
 
 
 func set_velocity() -> void:
-	_velocity = position.direction_to(_sigil.position) * _speed if !_dead else Vector2.ZERO
-	anim.flip_h = true if _velocity.x < 0 else false
+	if target:
+		velocity = position.direction_to(target.get_position()) * _speed if !_dead else Vector2.ZERO
+		anim.flip_h = true if velocity.x < 0 else false
 
 
 func attack() -> void:
 	$Timer.stop()
-	if _target && !_dead:
+	if collision_target && !_dead:
 		anim.animation = "attack"
-		_target.hit()
+		collision_target.hit()
 		$Timer.start(2)
 
 
 func take_damage(damage) -> void:
-	var old_velocity = _velocity
-	_velocity = Vector2.ZERO
+	var old_velocity = velocity
+	velocity = Vector2.ZERO
 
 	if anim.animation == "attack":
 		anim.animation = "move"
@@ -104,12 +113,12 @@ func take_damage(damage) -> void:
 	modulate = Color.white
 
 	yield(get_tree().create_timer(0.5), "timeout")
-	_velocity = old_velocity
+	velocity = old_velocity
 
 
 
 func _on_Timer_timeout() -> void:
-	if _target:
+	if collision_target:
 		attack()
 
 
@@ -141,3 +150,18 @@ func choose_weapon_upgrade():
 		return DamageUpOrb.instance()
 	else:
 		return AmmoUpOrb.instance()
+
+func _on_Radar_body_entered(body:Node):
+	targets_in_range.push_back(body)
+	target = targets_in_range.back()
+
+
+func _on_Radar_body_exited(body:Node):
+	targets_in_range.erase(body)
+	if targets_in_range.empty():
+		if sigil != null && sigil.locked:
+			target = default_target
+		else:
+			target = sigil
+	else:
+		target = targets_in_range.front()

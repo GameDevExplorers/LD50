@@ -9,6 +9,8 @@ extents = Vector2( 36.5, 18.5 )
 extents = Vector2( 17, 9.5 )
 
 [node name="Boulder3" type="StaticBody2D"]
+collision_layer = 64
+collision_mask = 64
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
