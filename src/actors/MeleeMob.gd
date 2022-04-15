@@ -53,7 +53,7 @@ func trigger_death(drop_loot = true) -> void:
 	set_collision_layer_bit(1, false)
 	set_collision_mask_bit(0, false)
 	set_collision_mask_bit(1, false)
-	remove_child(get_node("CollisionShape2D"))
+	remove_child(get_node("CollisionPolygon2D"))
 	remove_child(bullet_collider.get_node("CollisionShape2D2"))
 	$Die.play()
 	_dead = true
