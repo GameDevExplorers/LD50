@@ -40,7 +40,7 @@ var _drop_loot = true
 
 func _ready():
 	movement_target = sigil
-	player = get_tree().root.get_node("player")
+	player = get_tree().get_current_scene().get_node("player")
 
 
 func set_sigils(t, default) -> void:
@@ -153,7 +153,7 @@ func _on_CooldownTimer_timeout() -> void:
 func _on_AttackArea_body_entered(body:Node) -> void:
 	attack_targets.push_back(body)
 	if attack_target == null:
-		attack_target = attack_targets.front()
+		attack_target = attack_targets.back()
 		attack_timer.start(.1)
 
 
@@ -199,6 +199,7 @@ func _on_bullet_entered(body: Node) -> void:
 	if body.get("damage") && !_dead:
 		body.queue_free()
 		take_damage(body.get("damage"))
+
 		if movement_targets_in_range.has(player):
 			movement_target = player
 			## TODO: This not working :(
@@ -206,4 +207,3 @@ func _on_bullet_entered(body: Node) -> void:
 				attack_target = player
 			else:
 				attack_target = null
-
