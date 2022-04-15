@@ -277,8 +277,8 @@ func game_over() -> void:
 		print_debug("Failed to change scene: " + result)
 
 
-func hit() -> void:
-	take_damage(10)
+func hit(damage) -> void:
+	take_damage(damage)
 
 
 func _on_BulletCollider_body_entered(body: Node) -> void:

@@ -31,7 +31,7 @@ func _process(_delta):
 		anim.frame = 0
 
 
-func hit():
+func hit(_damage):
 	pass
 
 

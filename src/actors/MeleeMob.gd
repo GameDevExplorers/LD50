@@ -7,12 +7,13 @@ onready var bullet_collider = $BulletCollider
 onready var attack_timer = $AttackTimer
 onready var cooldown_timer = $CooldownTimer
 
-export var health: = 30
+var health: int = 30
+var _speed: int = 55
+var attack_damage: int = 0
+var cooldown_length: float = 0
 
 export var HEALTH_DROP_CHANCE: = 10
 export var WEAPON_UP_CHANCE: = 10
-
-export var COOLDOWN_LENGTH = 0
 
 var rng = RandomNumberGenerator.new()
 var HealthOrb = load("res://src/objects/pickups/HealthOrb.tscn")
@@ -32,7 +33,6 @@ var sigil = null
 var default_target = null
 
 
-var _speed = 55
 var velocity: = Vector2.ZERO
 var _dead = false
 var _drop_loot = true
@@ -80,8 +80,8 @@ func attack() -> void:
 
 	if !_dead:
 		anim.animation = "attack"
-		attack_target.hit()
-		attack_timer.start(COOLDOWN_LENGTH)
+		attack_target.hit(attack_damage)
+		attack_timer.start(cooldown_length)
 
 
 func take_damage(damage) -> void:
@@ -167,7 +167,7 @@ func _on_AttackArea_body_exited(body:Node) -> void:
 	# Start cooldown to prevent stutter-step damage
 	if attack_targets.empty():
 		can_attack = false
-		cooldown_timer.start(COOLDOWN_LENGTH)
+		cooldown_timer.start(cooldown_length)
 
 
 # If mob isn't attacking anyone, move towards new thing that it identifies
@@ -201,6 +201,7 @@ func _on_bullet_entered(body: Node) -> void:
 		take_damage(body.get("damage"))
 		if movement_targets_in_range.has(player):
 			movement_target = player
+			## TODO: This not working :(
 			if attack_targets.has(player):
 				attack_target = player
 			else:

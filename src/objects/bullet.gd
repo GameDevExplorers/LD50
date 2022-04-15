@@ -39,7 +39,7 @@ func _physics_process(delta):
 	if collision:
 		velocity = velocity.bounce(collision.normal)
 		if collision.collider.has_method("hit"):
-			collision.collider.hit()
+			collision.collider.hit(damage)
 
 
 func _on_VisibilityNotifier2D_screen_exited():

@@ -110,7 +110,6 @@ height = 0.0
 collision_layer = 2
 collision_mask = 15
 script = ExtResource( 6 )
-COOLDOWN_LENGTH = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -4, 4 )
@@ -119,7 +118,7 @@ shape = SubResource( 19 )
 [node name="hellpup_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 18 )
 animation = "attack"
-frame = 4
+frame = 2
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]
