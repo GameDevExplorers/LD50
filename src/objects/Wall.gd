@@ -3,7 +3,7 @@ extends KinematicBody2D
 onready var anim = $gate_anim
 onready var repair_plate = $RepairPlate
 
-export var health: = 500000
+export var health: = 5000
 var _velocity: = Vector2.ZERO
 var _broken = false
 

@@ -25,7 +25,7 @@ var cross_hair:Vector2 = Vector2()
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
-var Turret = load("res://src/objects/turret.tscn")
+var Turret = load("res://src/objects/Turret.tscn")
 
 enum {
 	MOVE,
@@ -278,14 +278,11 @@ func game_over() -> void:
 
 
 func hit() -> void:
-	if invincible == false:
-		take_damage(10)
+	take_damage(10)
 
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && !ALLIES.has(body.get("spawned_by")):
-		print(body.get_name())
-		if invincible == false:
-			body.queue_free()
-			take_damage(body.get("damage"))
+		body.queue_free()
+		take_damage(body.get("damage"))
 

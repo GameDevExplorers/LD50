@@ -1,7 +1,6 @@
 extends Node2D
 
 export (Array, int) var spawn_count = [10, 10, 15, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
-# export (Array, int) var spawn_count = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 export var spawn_timer = 7
 var Demon = load("res://src/actors/Demon.tscn")
 
