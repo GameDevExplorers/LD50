@@ -170,6 +170,7 @@ special={
 2d_physics/layer_4="sigil"
 2d_physics/layer_5="boss"
 2d_physics/layer_6="projectile"
+2d_physics/layer_9="radar"
 
 [physics]
 

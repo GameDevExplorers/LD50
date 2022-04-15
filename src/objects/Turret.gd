@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 var bullet_speed = 850
 var bullet_damage = 60
-var fire_speed = 1
+var fire_speed = .2
 
 var kill_radius = 5
 
@@ -31,12 +31,16 @@ func _process(_delta):
 		anim.frame = 0
 
 
+func hit():
+	pass
+
+
 func fire_projectile(offset:float):
 	cross_hair = target_position
 	can_fire = false
 	drop_casing()
 	show_bullet(offset)
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(fire_speed), "timeout")
 	can_fire = true
 
 

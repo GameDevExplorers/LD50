@@ -21,7 +21,6 @@ func _ready():
 	$Timer.start(1)
 
 
-
 func _on_Timer_timeout():
 	tick_count = tick_count + 1
 	handle_spawns()
@@ -60,7 +59,7 @@ func handle_spawns():
 		var spawns = spawn_count[index]
 		var each_node = spawns / divide
 
-		for n in range(divide):
+		for _n in range(divide):
 			var i = rng.randi_range(0, 4)
 			new_arr[i] = new_arr[i] + each_node
 
