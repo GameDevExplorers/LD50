@@ -23,9 +23,9 @@ func repair() -> void:
 	$Repaired.play()
 	_broken = false
 
-func take_damage() -> void:
+func take_damage(damage) -> void:
 	$Hit.play()
-	health -= 80
+	health -= damage
 	if health < 3700:
 		anim.set_animation("damaged")
 		repair_plate.visible = true
@@ -37,5 +37,5 @@ func take_damage() -> void:
 		anim.set_animation("broken")
 		$CollisionShape2D.disabled = true
 
-func hit() -> void:
-	take_damage()
+func hit(damage) -> void:
+	take_damage(damage)

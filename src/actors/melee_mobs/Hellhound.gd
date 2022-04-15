@@ -4,6 +4,7 @@ func _ready():
 	anim = $hellhound_anim
 	health = 500
 	_speed = 25
-	COOLDOWN_LENGTH = 2
+	attack_damage = 30
+	cooldown_length = 2
 	HEALTH_DROP_CHANCE = 20
 	WEAPON_UP_CHANCE = 10
