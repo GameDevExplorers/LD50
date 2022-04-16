@@ -72,7 +72,8 @@ func _on_Radar_body_entered(body:Node):
 
 
 func _on_Radar_body_exited(body:Node):
-	targets_in_range.erase(body.get_instance_id())
+	if targets_in_range.size() > 0:
+		targets_in_range.erase(body.get_instance_id())
 	if targets_in_range.empty():
 		target_in_range = false
 		target_position = Vector2()

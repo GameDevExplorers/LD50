@@ -19,6 +19,8 @@ var available_turrets = 3
 var ready_to_fire = true
 var invincible = false
 
+var MASS_FACTOR: float = 5.0
+
 var velocity:Vector2 = Vector2()
 var roll_vector:Vector2 = Vector2.ZERO
 var cross_hair:Vector2 = Vector2()
@@ -45,6 +47,7 @@ func _ready():
 	var _i = get_parent().connect("demon_summoned", self, "_on_demon_summoned")
 	var _x = get_parent().connect("repair_tick", self, "_on_repair_tick")
 
+
 func _process(_delta):
 	handle_directional_camera()
 	if cross_hair.x < global_position.x:
@@ -63,6 +66,26 @@ func _process(_delta):
 		$BulletSpawn/Gun.z_index = -1
 	else:
 		$BulletSpawn/Gun.z_index = 1
+
+
+func _physics_process(delta):
+	get_input()
+	match state:
+		MOVE:
+			move_state()
+
+		ROLL:
+			roll_state()
+
+	var collision = move_and_collide(velocity * delta)
+	if collision && collision.collider.is_in_group("movable"):
+		collision.collider.move_and_slide(velocity * Utils.calculate_resistance(self, collision.collider))
+
+
+	Game.player_location = global_position
+	if health <= 0:
+		game_over()
+
 
 func _on_demon_summoned():
 	add_child(health_bar)
@@ -167,20 +190,6 @@ func handle_attack():
 		$GunReload.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		ready_to_fire = true
-
-func _physics_process(_delta):
-	get_input()
-	match state:
-		MOVE:
-			move_state()
-
-		ROLL:
-			roll_state()
-
-	velocity = move_and_slide(velocity)
-	Game.player_location = global_position
-	if health <= 0:
-		game_over()
 
 
 func place_turret():

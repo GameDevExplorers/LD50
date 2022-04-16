@@ -283,6 +283,8 @@ shader_param/vignette_opacity = 0.5
 material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
 rect_scale = Vector2( 1.04541, 1.11787 )
 script = ExtResource( 1 )
 

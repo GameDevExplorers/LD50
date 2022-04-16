@@ -5,6 +5,8 @@ func _ready():
 	health = 100
 	_speed = 180
 	attack_damage = 5
-	cooldown_length = 0.2
+	cooldown_length = 0.3
+	MASS_FACTOR = 0.5
 	HEALTH_DROP_CHANCE = 10
 	WEAPON_UP_CHANCE = 0
+

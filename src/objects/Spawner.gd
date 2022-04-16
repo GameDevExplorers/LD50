@@ -22,6 +22,7 @@ func _on_Timer_timeout() -> void:
 
 func _on_spawn(arr) -> void:
 	var count = arr[spawn_index]
+
 	for _i in range(count):
 		if Utils.percentage(95):
 			if Utils.percentage(50):
