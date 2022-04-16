@@ -103,7 +103,7 @@ radius = 180.003
 radius = 18.0
 height = 30.0
 
-[node name="Hellhound" type="KinematicBody2D"]
+[node name="Hellhound" type="KinematicBody2D" groups=["movable"]]
 collision_layer = 2
 collision_mask = 15
 script = ExtResource( 6 )
@@ -117,6 +117,7 @@ polygon = PoolVector2Array( -5, -14, -5, 15, 8, 15, 8, -14 )
 position = Vector2( 0, -11 )
 frames = SubResource( 18 )
 animation = "move"
+frame = 3
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]

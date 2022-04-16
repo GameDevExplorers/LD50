@@ -12,6 +12,8 @@ var _speed: int = 55
 var attack_damage: int = 0
 var cooldown_length: float = 0
 
+export var MASS_FACTOR: float = 1.0
+
 export var HEALTH_DROP_CHANCE: = 10
 export var WEAPON_UP_CHANCE: = 10
 
@@ -42,7 +44,6 @@ func _ready():
 	movement_target = sigil
 	player = get_tree().get_current_scene().get_node("player")
 
-
 func set_sigils(t, default) -> void:
 	sigil = t
 	default_target = default
@@ -66,7 +67,9 @@ func _physics_process(delta) -> void:
 		return
 
 	set_velocity()
-	move_and_collide(velocity * delta)
+	var collision = move_and_collide(velocity * delta)
+	if collision && collision.collider.is_in_group("movable"):
+		collision.collider.move_and_slide(velocity * Utils.calculate_resistance(self, collision.collider))
 
 
 func set_velocity() -> void:

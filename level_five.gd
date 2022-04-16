@@ -24,6 +24,7 @@ func _ready():
 func _on_Timer_timeout():
 	tick_count = tick_count + 1
 	handle_spawns()
+	# handle_spawns_demo()
 	$Timer.start(1)
 	var time = Game.summon_timer - Game.elapsed_time()
 	$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is in " + str(time) + " seconds"
@@ -63,6 +64,11 @@ func handle_spawns():
 			var i = rng.randi_range(0, 4)
 			new_arr[i] = new_arr[i] + each_node
 
+		emit_signal("spawn_wave", new_arr)
+
+func handle_spawns_demo():
+	if tick_count % spawn_timer == 0 || tick_count == 1:
+		var new_arr = [2, 0, 0, 0, 0]
 		emit_signal("spawn_wave", new_arr)
 
 
