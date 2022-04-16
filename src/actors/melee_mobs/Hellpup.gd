@@ -9,3 +9,4 @@ func _ready():
 	MASS_FACTOR = 0.5
 	HEALTH_DROP_CHANCE = 10
 	WEAPON_UP_CHANCE = 0
+

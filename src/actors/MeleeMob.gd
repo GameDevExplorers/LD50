@@ -7,6 +7,9 @@ onready var bullet_collider = $BulletCollider
 onready var attack_timer = $AttackTimer
 onready var cooldown_timer = $CooldownTimer
 
+var movables_in_range := []
+var separation_factor: float = 2
+
 var health: int = 30
 var _speed: int = 55
 var attack_damage: int = 0
@@ -65,17 +68,36 @@ func trigger_death(drop_loot = true) -> void:
 func _physics_process(delta) -> void:
 	if sigil == null || _dead:
 		return
+	
+	if movables_in_range.size() > 0:
+		bounce()
+	else:
+		set_velocity()
+	velocity = move_and_slide(velocity)
 
-	set_velocity()
-	var collision = move_and_collide(velocity * delta)
-	if collision && collision.collider.is_in_group("movable"):
-		collision.collider.move_and_slide(velocity * Utils.calculate_resistance(self, collision.collider))
+
+func bounce():
+	var steerAway := Vector2.ZERO
+
+	for movable in movables_in_range:
+		steerAway -= (movable.global_position - global_position) * (separation_factor / (global_position - movable.global_position).length())
+
+	velocity += steerAway
 
 
 func set_velocity() -> void:
 	if movement_target:
 		velocity = position.direction_to(movement_target.get_position()) * _speed if !_dead else Vector2.ZERO
 		anim.flip_h = true if velocity.x < 0 else false
+
+
+func _on_vision_area_entered(area:Area2D):
+	if area != self && area.is_in_group("bounceable"):
+		movables_in_range.append(area)
+
+func _on_vision_area_exited(area:Area2D):
+	if area && movables_in_range.size() > 0:
+		movables_in_range.erase(area)
 
 
 func attack() -> void:
@@ -163,14 +185,15 @@ func _on_AttackArea_body_entered(body:Node) -> void:
 func _on_AttackArea_body_exited(body:Node) -> void:
 	attack_targets.erase(body)
 
-	# Assign new target if former target leaves
-	if attack_target == body:
-		attack_target = attack_targets.front()
-
 	# Start cooldown to prevent stutter-step damage
 	if attack_targets.empty():
+		attack_target = null
 		can_attack = false
 		cooldown_timer.start(cooldown_length)
+	# Assign new target if former target leaves
+	elif attack_target == body:
+		attack_target = attack_targets.front()
+
 
 
 # If mob isn't attacking anyone, move towards new thing that it identifies
