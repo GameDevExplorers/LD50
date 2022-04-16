@@ -17,7 +17,7 @@ func _on_repaired():
 
 func repair() -> void:
 	repair_plate.reset()
-	$CollisionShape2D.disabled = false
+	$CollisionPolygon2D.disabled = false
 	health = 5000
 	anim.set_animation("solid")
 	$Repaired.play()
@@ -35,7 +35,7 @@ func take_damage(damage) -> void:
 			$Broken.play()
 			_broken = true
 		anim.set_animation("broken")
-		$CollisionShape2D.disabled = true
+		$CollisionPolygon2D.disabled = true
 
 func hit(damage) -> void:
 	take_damage(damage)
