@@ -32,7 +32,7 @@ var trial_boon = "special-laser-turrets"
 
 func _ready() -> void:
 	root_scene = self.owner # root scene
-	root_scene.connect("spawn_boons", self, "_on_spawn")
+	root_scene.connect("spawn_boons", self, "_on_Boon_spawn")
 	
 	player = root_scene.get_node("player")
 
@@ -44,7 +44,7 @@ func _on_Timer_timeout() -> void:
 	#spawn()
 	pass
 
-func _on_spawn() -> void:
+func _on_Boon_spawn() -> void:
 	boon1.boons_enabled = true
 	boon2.boons_enabled = true
 	boon3.boons_enabled = true

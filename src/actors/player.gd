@@ -5,6 +5,7 @@ const AMMO_COUNT_MOD = 1
 const HEAL_AMOUNT = 30
 const ALLIES = ["player", "turret"]
 
+export (int) var level = 1
 export (int) var speed = 200
 export (int) var health = 400
 export (int) var max_health = 400

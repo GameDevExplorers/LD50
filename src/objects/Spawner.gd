@@ -36,6 +36,7 @@ func spawn(type) -> void:
 	rng.randomize()
 
 	var mob = find_mob(type)
+	mob.connect("gain_experience", get_parent(), "_on_Experience_gain")
 
 	mob.set_sigils(target_node, default_target_node)
 	var ran_1 = rng.randf_range(-100.0, 100.0)

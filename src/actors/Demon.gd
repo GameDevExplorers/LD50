@@ -122,8 +122,6 @@ func assign_attack():
 
 func take_damage(damage) -> void:
 	health = health - damage
-	print(str(max_health))
-	print(str(health))
 	set_health_bar()
 	modulate = Color.white
 	yield(get_tree().create_timer(0.1), "timeout")
