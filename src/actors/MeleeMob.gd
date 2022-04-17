@@ -15,6 +15,8 @@ var _speed: int = 55
 var attack_damage: int = 0
 var cooldown_length: float = 0
 
+var EXPERIENCE = 50
+
 export var MASS_FACTOR: float = 1.0
 
 export var HEALTH_DROP_CHANCE: = 10
@@ -54,6 +56,9 @@ func set_sigils(t, default) -> void:
 
 func trigger_death(drop_loot = true) -> void:
 	_drop_loot = drop_loot
+	Game.score += EXPERIENCE
+	print(get_parent().get_parent())
+	get_parent().get_parent().get_node("CanvasLayer/hud/HBoxContainer2/Experience").text = "Experience: " + str(Game.score)
 	set_collision_layer_bit(1, false)
 	set_collision_mask_bit(0, false)
 	set_collision_mask_bit(1, false)

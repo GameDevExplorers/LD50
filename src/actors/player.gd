@@ -2,19 +2,30 @@ extends KinematicBody2D
 
 const BULLET_DAMAGE_MOD = 30
 const AMMO_COUNT_MOD = 1
-const RELOAD_TIMER = 0.5
 const HEAL_AMOUNT = 30
 const ALLIES = ["player", "turret"]
 
 export (int) var speed = 200
-export (int) var spread = 5
 export (int) var health = 400
 export (int) var max_health = 400
 
+var primary_bullet_spread: int = 2
+var primary_bullet_count: int = 1
+
+var secondary_bullet_spread: int = 5
+var secondary_bullet_count: int = 5
+var secondary_weapon_cooldown: float = 0.5
+
 var bullet_speed = 850
 var bullet_damage = 30
-var ammo_count = 5
+var bullet_size: float = 1.0
+
 var available_turrets = 3
+var turret_bullet_type = "none"
+var turret_bullet_size: float = 1.0
+
+var blood_loss = 0
+var has_shield = false
 
 var ready_to_fire = true
 var invincible = false
@@ -171,7 +182,11 @@ func handle_attack():
 		$BulletSpawn/MuzzleFlash.frame = 1
 		$GunFire.play()
 		yield(get_tree().create_timer(0.05), "timeout")
-		fire_projectile(0)
+		if primary_bullet_count > 1:
+			for _i in range(primary_bullet_count):
+				fire_projectile(rand_range(-primary_bullet_spread, primary_bullet_spread))
+		else:
+			fire_projectile(0)
 		$BulletSpawn/MuzzleFlash.frame = 0
 
 
@@ -179,14 +194,14 @@ func handle_attack():
 		$BulletSpawn/MuzzleFlash.frame = 0
 		ready_to_fire = false
 
-		for _i in range(ammo_count):
+		for _i in range(secondary_bullet_count):
 			$GunFire.play()
-			fire_projectile(rand_range(-spread, spread))
+			fire_projectile(rand_range(-secondary_bullet_spread, secondary_bullet_spread))
 			$BulletSpawn/MuzzleFlash.frame = 1
 			yield(get_tree().create_timer(0.03), "timeout")
 			$BulletSpawn/MuzzleFlash.frame = 0
 
-		yield(get_tree().create_timer(RELOAD_TIMER), "timeout")
+		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
 		$GunReload.play()
 		yield(get_tree().create_timer(0.1), "timeout")
 		ready_to_fire = true
@@ -195,6 +210,7 @@ func handle_attack():
 func place_turret():
 	if available_turrets > 0:
 		var turret = Turret.instance()
+		turret.init(turret_bullet_type, turret_bullet_size)
 		turret.position = $TurretSpawn.global_position
 		$TurretContainer.add_child(turret)
 		available_turrets -= 1
@@ -208,7 +224,7 @@ func fire_projectile(offset:float):
 	drop_casing()
 	show_bullet(offset)
 
-	health -= 1
+	health -= blood_loss
 	health_bar.set_health(health)
 
 
@@ -223,12 +239,14 @@ func drop_casing() -> void:
 func show_bullet(offset) -> void:
 	$BulletSpawn/MuzzleFlash.frame = 0
 	var bullet = Bullet.instance()
+	bullet.set_animation("default")
 	bullet.start(
 		$BulletSpawn.global_position,
 		get_angle_to(cross_hair) + deg2rad(offset),
 		"player",
 		bullet_speed,
-		bullet_damage
+		bullet_damage,
+		bullet_size
 	)
 	get_parent().add_child(bullet)
 
@@ -242,12 +260,12 @@ func heal() -> void:
 
 func damage_up() -> void:
 	bullet_damage += BULLET_DAMAGE_MOD
-	spread += 1
+	secondary_bullet_spread += 1
 
 
 func ammo_up() -> void:
-	ammo_count += AMMO_COUNT_MOD
-	spread += 1
+	secondary_bullet_count += secondary_bullet_count
+	secondary_bullet_spread += 1
 
 
 func take_damage(damage) -> void:

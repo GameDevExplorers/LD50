@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/objects/bullet.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/fireball.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Sprites/bullet.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/laser.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 5.0
@@ -10,6 +11,10 @@ radius = 5.0
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 8, 8 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
@@ -20,6 +25,11 @@ animations = [ {
 "frames": [ SubResource( 3 ) ],
 "loop": true,
 "name": "default",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "laser",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 4 ) ],

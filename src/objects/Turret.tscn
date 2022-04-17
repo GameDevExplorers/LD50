@@ -48,7 +48,7 @@ animations = [ {
 [sub_resource type="CircleShape2D" id=10]
 radius = 180.003
 
-[node name="Turret" type="KinematicBody2D"]
+[node name="Turret" type="KinematicBody2D" groups=["turrets"]]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 3 )

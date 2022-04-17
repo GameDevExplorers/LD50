@@ -60,7 +60,7 @@ scroll_active = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 margin_top = 15.0
-margin_right = 200.0
+margin_right = 512.0
 margin_bottom = 55.0
 
 [node name="AvailableTurrets" type="RichTextLabel" parent="HBoxContainer2"]
@@ -74,4 +74,18 @@ theme = ExtResource( 1 )
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_text = "Available Turrets: 3"
 text = "Available Turrets: 3"
+scroll_active = false
+
+[node name="Experience" type="RichTextLabel" parent="HBoxContainer2"]
+margin_left = 258.0
+margin_right = 458.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 200, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_text = "Experience: 0"
+text = "Experience: 0"
 scroll_active = false

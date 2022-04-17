@@ -2,6 +2,7 @@ extends Node2D
 
 export (Array, int) var spawn_count = [10, 10, 15, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
 export var spawn_timer = 7
+export var boon_timer = 5
 var Demon = load("res://src/actors/Demon.tscn")
 
 var demon_instance = null
@@ -9,6 +10,7 @@ var demon_instance = null
 signal demon_summoned
 
 signal spawn_wave(spawn_arr)
+signal spawn_boons()
 
 
 var rng = RandomNumberGenerator.new()
@@ -19,11 +21,13 @@ var sigil_lock_count = 0
 func _ready():
 	Game.reset()
 	$Timer.start(1)
+	emit_signal("spawn_boons")
 
 
 func _on_Timer_timeout():
 	tick_count = tick_count + 1
 	handle_spawns()
+	handle_boons()
 	$Timer.start(1)
 	var time = Game.summon_timer - Game.elapsed_time()
 	$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is in " + str(time) + " seconds"
@@ -64,6 +68,11 @@ func handle_spawns():
 			new_arr[i] = new_arr[i] + each_node
 
 		emit_signal("spawn_wave", new_arr)
+
+
+func handle_boons():
+	if Game.score > 100:
+		emit_signal("spawn_boons")
 
 
 func _on_AudioStreamPlayer_finished():
