@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://game_theme.tres" type="Theme" id=1]
+[ext_resource path="res://hud.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://Assets/Fonts/Kenney Pixel.ttf"
@@ -20,6 +21,7 @@ fallback/0 = SubResource( 1 )
 [node name="Control" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 2 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchor_right = 1.441
@@ -30,11 +32,11 @@ grow_horizontal = 0
 grow_vertical = 0
 
 [node name="DemonTimer" type="RichTextLabel" parent="HBoxContainer"]
-margin_right = 330.0
+margin_right = 370.0
 margin_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-rect_min_size = Vector2( 330, 15 )
+rect_min_size = Vector2( 370, 15 )
 rect_clip_content = false
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -45,8 +47,8 @@ text = "Your death is in 300 seconds"
 scroll_active = false
 
 [node name="Sigils" type="RichTextLabel" parent="HBoxContainer"]
-margin_left = 370.0
-margin_right = 545.0
+margin_left = 374.0
+margin_right = 549.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 175, 15 )
 rect_clip_content = false
@@ -60,13 +62,13 @@ scroll_active = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="."]
 margin_top = 15.0
-margin_right = 200.0
+margin_right = 512.0
 margin_bottom = 55.0
 
 [node name="AvailableTurrets" type="RichTextLabel" parent="HBoxContainer2"]
-margin_right = 200.0
+margin_right = 370.0
 margin_bottom = 15.0
-rect_min_size = Vector2( 200, 15 )
+rect_min_size = Vector2( 370, 15 )
 rect_clip_content = false
 size_flags_horizontal = 2
 size_flags_vertical = 2
@@ -74,4 +76,80 @@ theme = ExtResource( 1 )
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_text = "Available Turrets: 3"
 text = "Available Turrets: 3"
+scroll_active = false
+
+[node name="Experience" type="RichTextLabel" parent="HBoxContainer2"]
+margin_left = 374.0
+margin_right = 516.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 142, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_text = "Experience: 0"
+text = "Experience: 0"
+scroll_active = false
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="."]
+margin_top = 30.0
+margin_right = 512.0
+margin_bottom = 55.0
+custom_constants/separation = 0
+
+[node name="Empty" type="RichTextLabel" parent="HBoxContainer3"]
+margin_right = 375.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 375, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+scroll_active = false
+
+[node name="NextLevel" type="RichTextLabel" parent="HBoxContainer3"]
+margin_left = 375.0
+margin_right = 517.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 142, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_text = "Next Level: 0"
+text = "Next Level: 0"
+scroll_active = false
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="."]
+margin_top = 45.0
+margin_right = 512.0
+margin_bottom = 55.0
+custom_constants/separation = 0
+
+[node name="Empty" type="RichTextLabel" parent="HBoxContainer4"]
+margin_right = 375.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 375, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+scroll_active = false
+
+[node name="Level" type="RichTextLabel" parent="HBoxContainer4"]
+margin_left = 375.0
+margin_right = 517.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 142, 15 )
+rect_clip_content = false
+size_flags_horizontal = 2
+size_flags_vertical = 2
+theme = ExtResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_text = "Level: 0"
+text = "Level: 0"
 scroll_active = false

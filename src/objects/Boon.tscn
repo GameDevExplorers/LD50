@@ -1,0 +1,122 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Assets/Sprites/Boons/boon-bigger-bullets.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-blood-bullets.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-cooldown-reduction.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-faster-bullets.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-frost-bullets.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/Boons/boon-special-more-turrets.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-more-bullets.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/Boons/boon-special-lazer-turrets.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/Boons/boon-defensive-speed-up.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprites/Boons/boon-defensive-shield.png" type="Texture" id=10]
+[ext_resource path="res://src/objects/Boon.gd" type="Script" id=11]
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "weapon-blood-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "weapon-cooldown-reduction",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "weapon-bigger-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 7 ) ],
+"loop": true,
+"name": "weapon-faster-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 8 ) ],
+"loop": true,
+"name": "weapon-frost-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "special-more-turrets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "weapon-more-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "special-laser-turrets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 13 ) ],
+"loop": true,
+"name": "defensive-shield",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "defensive-speed-up",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 11, 11 )
+
+[node name="Boon" type="Area2D"]
+script = ExtResource( 11 )
+
+[node name="Animation" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "defensive-shield"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
+[connection signal="body_entered" from="." to="." method="_on_Boon_body_entered"]

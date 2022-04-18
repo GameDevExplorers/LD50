@@ -3,20 +3,28 @@ extends KinematicBody2D
 export var damage: = 30
 export var spawned_by: = ""
 var speed = 850
+var size = 1.0
 var velocity = Vector2()
 var target = Vector2();
 
-func start(pos, dir, spawner, bullet_speed = speed, dam = damage):
+func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = size):
 	rotation = dir
 	position = pos
 	speed    = bullet_speed
 	damage   = dam
 	spawned_by = spawner
 	z_index = 3
+	size = bullet_size
 	velocity = Vector2(speed, 0).rotated(rotation)
-	if spawned_by == "demon":
-		var ran = rand_range(0.5, 2.0)
-		scale = Vector2(1 * ran, 1 * ran)
+	match spawned_by:
+		"player":
+			scale = Vector2(size, size)
+		"turret":
+			scale = Vector2(size, size)
+		"demon":
+			var ran = rand_range(0.5, 2.0)
+			scale = Vector2(1.0 * ran, 1.0 * ran)
+	
 
 
 func set_animation(anim: String):

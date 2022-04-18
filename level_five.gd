@@ -2,6 +2,7 @@ extends Node2D
 
 export (Array, int) var spawn_count = [10, 10, 15, 20, 20, 25, 1, 1, 25, 25, 30, 1, 0, 20, 20, 25, 25, 30, 30]
 export var spawn_timer = 7
+export var boon_timer = 5
 var Demon = load("res://src/actors/Demon.tscn")
 
 var demon_instance = null
@@ -9,6 +10,7 @@ var demon_instance = null
 signal demon_summoned
 
 signal spawn_wave(spawn_arr)
+signal spawn_boons()
 
 
 var rng = RandomNumberGenerator.new()
@@ -16,9 +18,18 @@ var tick_count = 0
 
 var sigil_lock_count = 0
 
+var player
+var hud
+
 func _ready():
 	Game.reset()
 	$Timer.start(1)
+	emit_signal("spawn_boons")
+
+	player = get_tree().get_current_scene().get_node("player")
+	hud = $CanvasLayer/hud
+	hud.update_experience_for_next_level(calculate_level_formula(player.level))
+
 
 
 func _on_Timer_timeout():
@@ -26,16 +37,10 @@ func _on_Timer_timeout():
 	handle_spawns()
 	$Timer.start(1)
 	var time = Game.summon_timer - Game.elapsed_time()
-	$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is in " + str(time) + " seconds"
-	$CanvasLayer/hud/HBoxContainer/Sigils.text = "Activated Demon Sigils: " + str(Game.activated_sigils())
+	hud.update_demon_timer(time)
+	hud.update_sigils()
 	
 	print("time:" + str(time))
-
-
-	if time < 8:
-		$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is soon"
-	if time <= 2:
-		$CanvasLayer/hud/HBoxContainer/DemonTimer.text = " Your Death is now!"
 
 	if time <= 0 and Game.demon_summoned == false:
 		Game.demon_summoned = true
@@ -66,6 +71,7 @@ func handle_spawns():
 		emit_signal("spawn_wave", new_arr)
 
 
+
 func _on_AudioStreamPlayer_finished():
 	$AudioStreamPlayer.play()
 
@@ -75,3 +81,23 @@ func _on_sigil_lock():
 		demon_instance.max_health = demon_instance.max_health + demon_instance.sigil_buff
 		demon_instance.health = demon_instance.health + demon_instance.sigil_buff
 		demon_instance.set_health_bar()
+
+
+func _on_Experience_gain(experience) -> void:
+	Game.score += experience
+	hud.update_experience()
+	if Game.score >= calculate_level_formula(player.level):
+		player.level += 1
+		hud.update_player_level(player)
+		hud.update_experience_for_next_level(calculate_level_formula(player.level))
+		emit_signal("spawn_boons")
+
+
+func calculate_level_formula(level):
+	var a = 4 # ^ will make leveling more difficult
+	var b = 2 # ^ will make leveling dramatically more difficult
+	var c = 5 # ^ will make leveling easier
+	var d = 1_000 # degree mod
+
+	return ((a * pow(level, b)) / c) * d
+

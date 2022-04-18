@@ -7,6 +7,7 @@ var start_time = 0
 var mobs_killed = 0
 var mobs_sacrificed = 0
 var sigils = 0
+var score = 0
 
 var crosshair:Vector2 = Vector2(0,0)
 

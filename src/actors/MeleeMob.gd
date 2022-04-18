@@ -15,6 +15,8 @@ var _speed: int = 55
 var attack_damage: int = 0
 var cooldown_length: float = 0
 
+var EXPERIENCE = 50
+
 export var MASS_FACTOR: float = 1.0
 
 export var HEALTH_DROP_CHANCE: = 10
@@ -42,6 +44,7 @@ var velocity: = Vector2.ZERO
 var _dead = false
 var _drop_loot = true
 
+signal gain_experience(experience)
 
 func _ready():
 	movement_target = sigil
@@ -54,6 +57,7 @@ func set_sigils(t, default) -> void:
 
 func trigger_death(drop_loot = true) -> void:
 	_drop_loot = drop_loot
+	emit_signal("gain_experience", EXPERIENCE)
 	set_collision_layer_bit(1, false)
 	set_collision_mask_bit(0, false)
 	set_collision_mask_bit(1, false)

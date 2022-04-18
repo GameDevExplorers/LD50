@@ -2,6 +2,9 @@ extends KinematicBody2D
 
 var bullet_speed = 850
 var bullet_damage = 60
+var bullet_size = 1.0
+var bullet_type
+
 var fire_speed = .2
 
 var kill_radius = 5
@@ -20,6 +23,12 @@ onready var anim = $TurretAnimation
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+
+
+func init(turret_bullet_type = "default", turret_bullet_size = bullet_size) -> void:
+	bullet_type = turret_bullet_type
+	bullet_size = turret_bullet_size
+
 
 func _process(_delta):
 	if can_fire && target_in_range:
@@ -55,12 +64,14 @@ func drop_casing() -> void:
 func show_bullet(offset) -> void:
 	$BulletSpawn/MuzzleFlash.frame = 0
 	var bullet = Bullet.instance()
+	bullet.set_animation(bullet_type)
 	bullet.start(
 		$BulletSpawn.global_position,
 		get_angle_to(cross_hair) + deg2rad(offset),
 		"turret",
 		bullet_speed,
-		bullet_damage
+		bullet_damage,
+		bullet_size
 	)
 	get_parent().add_child(bullet)
 

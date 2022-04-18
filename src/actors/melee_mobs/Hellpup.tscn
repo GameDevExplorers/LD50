@@ -117,7 +117,7 @@ script = ExtResource( 6 )
 [node name="hellpup_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 18 )
 animation = "attack"
-frame = 5
+frame = 4
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]
