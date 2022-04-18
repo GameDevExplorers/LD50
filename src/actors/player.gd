@@ -225,13 +225,15 @@ func handle_gun_attack() -> void:
 func handle_sword_attack() -> void:
 	if Input.is_action_just_pressed("fire"):
 		var sword = Sword.instance()
-		sword.start(get_global_mouse_position().angle_to_point(position), "player")
+		sword.start(get_global_mouse_position().angle_to_point(position), "player", 60)
 		sword.global_position = $BulletCollider.global_position
 		get_parent().add_child(sword)
 
-	# if Input.is_action_just_released("alt_fire") && ready_to_fire:
-	# 	for target in sword_targets:
-	# 		target.take_damage(100)
+	if Input.is_action_just_released("alt_fire") && ready_to_fire:
+		var sword = Sword.instance()
+		sword.start(get_global_mouse_position().angle_to_point(position), "player", 120)
+		sword.global_position = $BulletCollider.global_position
+		get_parent().add_child(sword)
 
 func place_turret():
 	if available_turrets > 0:
