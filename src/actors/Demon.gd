@@ -154,5 +154,5 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && body.get("spawned_by") != "demon":
-		body.queue_free()
+		body.hit_triggered()
 		take_damage(body.get("damage"))

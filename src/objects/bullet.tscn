@@ -53,4 +53,6 @@ frames = SubResource( 2 )
 wait_time = 2.0
 autostart = true
 
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -31,8 +31,6 @@ var has_shield = false
 var ready_to_fire = true
 var invincible = false
 
-var sword_targets = []
-
 var MASS_FACTOR: float = 5.0
 
 var velocity:Vector2 = Vector2()
@@ -40,6 +38,7 @@ var roll_vector:Vector2 = Vector2.ZERO
 var cross_hair:Vector2 = Vector2()
 
 var Bullet = load("res://src/objects/bullet.tscn")
+var Sword = load("res://src/objects/sword_anim.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 var Turret = load("res://src/objects/Turret.tscn")
 
@@ -71,10 +70,10 @@ func _ready():
 func _process(_delta):
 	handle_directional_camera()
 	if cross_hair.x < global_position.x:
-		scale.x = -1
+		anim.flip_h = true
 		player_shadow.position.x = 2
 	else:
-		scale.x = 1
+		anim.flip_h = false
 		player_shadow.position.x = -3
 
 	if fmod($BulletSpawn.rotation_degrees, 360) > 90 && fmod($BulletSpawn.rotation_degrees, 360) < 270:
@@ -225,11 +224,16 @@ func handle_gun_attack() -> void:
 
 func handle_sword_attack() -> void:
 	if Input.is_action_just_pressed("fire"):
-		for target in sword_targets:
-			target.take_damage(30)
+		var sword = Sword.instance()
+		sword.start(get_global_mouse_position().angle_to_point(position), "player", 60)
+		sword.global_position = $BulletCollider.global_position
+		get_parent().add_child(sword)
+
 	if Input.is_action_just_released("alt_fire") && ready_to_fire:
-		for target in sword_targets:
-			target.take_damage(100)
+		var sword = Sword.instance()
+		sword.start(get_global_mouse_position().angle_to_point(position), "player", 120)
+		sword.global_position = $BulletCollider.global_position
+		get_parent().add_child(sword)
 
 func place_turret():
 	if available_turrets > 0:
@@ -334,15 +338,5 @@ func hit(damage) -> void:
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
 	if body.get("damage") && !ALLIES.has(body.get("spawned_by")):
-		body.queue_free()
+		body.hit_triggered()
 		take_damage(body.get("damage"))
-
-
-func _on_SwordRange_body_exited(body:Node):
-	if body.is_in_group("enemy"):
-		sword_targets.erase(body)
-
-
-func _on_SwordRange_body_entered(body:Node):
-	if body.is_in_group("enemy"):
-		sword_targets.push_back(body)

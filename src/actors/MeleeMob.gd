@@ -227,7 +227,7 @@ func _on_Radar_body_exited(body:Node) -> void:
 # If player in movement range but not colliding, no attack
 func _on_bullet_entered(body: Node) -> void:
 	if body.get("damage") && !_dead:
-		body.queue_free()
+		body.hit_triggered()
 		take_damage(body.get("damage"))
 
 		if movement_targets_in_range.has(player):
