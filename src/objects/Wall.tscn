@@ -31,6 +31,10 @@ region = Rect2( 640, 32, 160, 32 )
 atlas = ExtResource( 3 )
 region = Rect2( 800, 32, 160, 32 )
 
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 64, 160, 32 )
+
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 160, 32 )
@@ -55,10 +59,6 @@ region = Rect2( 640, 0, 160, 32 )
 atlas = ExtResource( 3 )
 region = Rect2( 800, 0, 160, 32 )
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 64, 160, 32 )
-
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
 "frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
@@ -66,15 +66,15 @@ animations = [ {
 "name": "damaged",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
-"loop": true,
-"name": "solid",
-"speed": 6.0
-}, {
 "frames": [ SubResource( 20 ) ],
 "loop": true,
 "name": "broken",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "solid",
+"speed": 6.0
 } ]
 
 [node name="Wall" type="KinematicBody2D"]

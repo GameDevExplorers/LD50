@@ -61,3 +61,6 @@ func _on_Timer_timeout():
 
 func _on_Hitbox_body_entered(body):
 	print(body)
+
+func hit_triggered():
+	queue_free()
