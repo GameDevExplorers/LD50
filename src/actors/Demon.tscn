@@ -88,7 +88,7 @@ radius = 176.003
 radius = 52.6316
 height = 0.0
 
-[node name="Demon" type="KinematicBody2D"]
+[node name="Demon" type="KinematicBody2D" groups=["enemy"]]
 z_index = 2
 collision_layer = 16
 script = ExtResource( 1 )
@@ -100,7 +100,7 @@ shape = SubResource( 1 )
 rotation = 0.0012719
 frames = SubResource( 2 )
 animation = "flying"
-frame = 4
+frame = 3
 playing = true
 
 [node name="Timer" type="Timer" parent="."]

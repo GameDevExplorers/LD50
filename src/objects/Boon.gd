@@ -28,7 +28,7 @@ const WEAPON_BOONS = [
 	"weapon-more-bullets"
 ]
 
-var trial_boon = "special-laser-turrets"
+var trial_boon = "weapon-frost-bullets"
 
 func _ready() -> void:
 	root_scene = self.owner # root scene
@@ -57,7 +57,7 @@ func _on_Boon_spawn() -> void:
 	var picked_boons = all_boons.slice(0, 2)
 
 	if trial_boon:
-		boon1.get_node("Animation").animation = "special-laser-turrets"
+		boon1.get_node("Animation").animation = trial_boon
 	else:
 		boon1.get_node("Animation").animation = picked_boons[0]
 	boon2.get_node("Animation").animation = picked_boons[1]
@@ -98,7 +98,8 @@ func activate_boon():
 		"weapon-faster-bullets":
 			faster_bullets()
 		"weapon-frost-bullets":
-			frost_bullets()
+			# frost_bullets()
+			equip_sword()
 		"weapon-more-bullets":
 			more_bullets()
 		_:
@@ -159,3 +160,7 @@ func more_bullets() -> void:
 	print("more_bullets")
 	player.primary_bullet_count += 1
 	player.secondary_bullet_count += 2
+
+func equip_sword() -> void:
+	print("equip sword")
+	player.weapon_state = player.Weapon.SWORD

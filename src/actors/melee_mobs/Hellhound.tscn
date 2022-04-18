@@ -110,7 +110,7 @@ height = 30.0
 [sub_resource type="CapsuleShape2D" id=27]
 height = 18.0
 
-[node name="Hellhound" type="KinematicBody2D" groups=["movable"]]
+[node name="Hellhound" type="KinematicBody2D" groups=["enemy", "movable"]]
 collision_layer = 2
 collision_mask = 15
 script = ExtResource( 6 )
@@ -123,7 +123,7 @@ shape = SubResource( 29 )
 position = Vector2( 0, -11 )
 frames = SubResource( 18 )
 animation = "move"
-frame = 2
+frame = 1
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]

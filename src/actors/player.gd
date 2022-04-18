@@ -31,6 +31,8 @@ var has_shield = false
 var ready_to_fire = true
 var invincible = false
 
+var sword_targets = []
+
 var MASS_FACTOR: float = 5.0
 
 var velocity:Vector2 = Vector2()
@@ -41,12 +43,18 @@ var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 var Turret = load("res://src/objects/Turret.tscn")
 
-enum {
+enum Action {
 	MOVE,
 	ROLL
 }
 
-var state = MOVE
+enum Weapon {
+	GUN,
+	SWORD
+}
+
+var action_state = Action.MOVE
+var weapon_state = Weapon.GUN
 
 onready var anim = $PlayerAnimation
 onready var player_shadow = $PlayerAnimation/PlayerShadow
@@ -63,10 +71,10 @@ func _ready():
 func _process(_delta):
 	handle_directional_camera()
 	if cross_hair.x < global_position.x:
-		anim.flip_h = true
+		scale.x = -1
 		player_shadow.position.x = 2
 	else:
-		anim.flip_h = false
+		scale.x = 1
 		player_shadow.position.x = -3
 
 	if fmod($BulletSpawn.rotation_degrees, 360) > 90 && fmod($BulletSpawn.rotation_degrees, 360) < 270:
@@ -82,11 +90,11 @@ func _process(_delta):
 
 func _physics_process(delta):
 	get_input()
-	match state:
-		MOVE:
+	match action_state:
+		Action.MOVE:
 			move_state()
 
-		ROLL:
+		Action.ROLL:
 			roll_state()
 
 	var collision = move_and_collide(velocity * delta)
@@ -164,7 +172,8 @@ func move_state():
 		place_turret()
 
 	if Input.is_action_just_pressed("roll"):
-		state = ROLL
+		action_state = Action.ROLL
+
 
 func roll_state():
 	velocity = roll_vector.normalized() * speed * 1.75
@@ -173,12 +182,19 @@ func roll_state():
 	invincible = true
 	modulate = Color.gray
 	yield(anim, "animation_finished")
-	state = MOVE
+	action_state = Action.MOVE
 	invincible = false
 	modulate = Color.white
 
 
 func handle_attack():
+	match weapon_state:
+		Weapon.GUN:
+			handle_gun_attack()
+		Weapon.SWORD:
+			handle_sword_attack()
+
+func handle_gun_attack() -> void:
 	if Input.is_action_just_pressed("fire"):
 		$BulletSpawn/MuzzleFlash.frame = 1
 		$GunFire.play()
@@ -207,6 +223,13 @@ func handle_attack():
 		yield(get_tree().create_timer(0.1), "timeout")
 		ready_to_fire = true
 
+func handle_sword_attack() -> void:
+	if Input.is_action_just_pressed("fire"):
+		for target in sword_targets:
+			target.take_damage(30)
+	if Input.is_action_just_released("alt_fire") && ready_to_fire:
+		for target in sword_targets:
+			target.take_damage(100)
 
 func place_turret():
 	if available_turrets > 0:
@@ -232,7 +255,7 @@ func fire_projectile(offset:float):
 func drop_casing() -> void:
 	var casing = Casing.instance()
 	casing.position = $CasingSpawn.global_position
-	if anim.flip_h == true:
+	if scale.x == -1:
 		casing.flip_h = true
 	$CasingContainer.add_child(casing)
 
@@ -314,3 +337,12 @@ func _on_BulletCollider_body_entered(body: Node) -> void:
 		body.queue_free()
 		take_damage(body.get("damage"))
 
+
+func _on_SwordRange_body_exited(body:Node):
+	if body.is_in_group("enemy"):
+		sword_targets.erase(body)
+
+
+func _on_SwordRange_body_entered(body:Node):
+	if body.is_in_group("enemy"):
+		sword_targets.push_back(body)

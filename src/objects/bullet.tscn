@@ -12,13 +12,13 @@ radius = 5.0
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 16, 16 )
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 8, 8 )
-
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 8, 8 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -27,14 +27,14 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 5 ) ],
-"loop": true,
-"name": "laser",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 4 ) ],
 "loop": true,
 "name": "demon",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "laser",
 "speed": 5.0
 } ]
 

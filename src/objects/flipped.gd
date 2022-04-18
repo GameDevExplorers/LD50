@@ -15,6 +15,6 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if flipped:
-		$Sprite.flip_h = true
+		$Sprite.scale.x = -1
 	else:
-		$Sprite.flip_h = false
+		$Sprite.scale.x = 1
