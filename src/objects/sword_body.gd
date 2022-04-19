@@ -5,3 +5,6 @@ export var spawned_by: = ""
 
 func hit_triggered():
 	pass
+
+func _on_Slash_animation_finished():
+	queue_free()
