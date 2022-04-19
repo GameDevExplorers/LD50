@@ -44,6 +44,9 @@ var velocity: = Vector2.ZERO
 var _dead = false
 var _drop_loot = true
 
+var knocked_back = false
+
+
 signal gain_experience(experience)
 
 func _ready():
@@ -73,6 +76,9 @@ func _physics_process(delta) -> void:
 	if sigil == null || _dead:
 		return
 	
+	if knocked_back:
+		return
+
 	if movables_in_range.size() > 0:
 		bounce()
 	else:
@@ -230,10 +236,20 @@ func _on_bullet_entered(body: Node) -> void:
 		body.hit_triggered()
 		take_damage(body.get("damage"))
 
+		knockback_target(body)
+
 		if movement_targets_in_range.has(player):
 			movement_target = player
-			## TODO: This not working :(
 			if attack_targets.has(player):
 				attack_target = player
 			else:
 				attack_target = null
+
+
+func knockback_target(body):
+	if body.get_name() == "sword_body":
+		position = position.move_toward(get_global_mouse_position(), 20)
+		knocked_back = true
+		yield(get_tree().create_timer(0.1), "timeout")
+		knocked_back = false
+

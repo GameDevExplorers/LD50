@@ -55,6 +55,8 @@ enum Weapon {
 var action_state = Action.MOVE
 var weapon_state = Weapon.GUN
 
+var slash_frame = "slash2"
+
 onready var anim = $PlayerAnimation
 onready var player_shadow = $PlayerAnimation/PlayerShadow
 onready var health_bar = $Healthbar
@@ -100,8 +102,7 @@ func _physics_process(delta):
 	if collision && collision.collider.is_in_group("movable"):
 		collision.collider.move_and_slide(velocity * Utils.calculate_resistance(self, collision.collider))
 
-
-	Game.player_location = global_position
+	Game.player_location = cross_hair
 	if health <= 0:
 		game_over()
 
@@ -223,17 +224,28 @@ func handle_gun_attack() -> void:
 		ready_to_fire = true
 
 func handle_sword_attack() -> void:
-	if Input.is_action_just_pressed("fire"):
+
+	if Input.is_action_just_pressed("fire") && ready_to_fire:
+		ready_to_fire = false
+		slash_frame = "slash2" if slash_frame == "slash1" else "slash2"
+
 		var sword = Sword.instance()
-		sword.start(get_global_mouse_position().angle_to_point(position), "player", 60)
-		sword.global_position = $BulletCollider.global_position
-		get_parent().add_child(sword)
+		sword.start(get_global_mouse_position().angle_to_point(position), self, "player", slash_frame, 60)
+		add_child(sword)
+		yield(get_tree().create_timer(secondary_weapon_cooldown / 2), "timeout")
+		ready_to_fire = true
 
 	if Input.is_action_just_released("alt_fire") && ready_to_fire:
+		ready_to_fire = false
+
 		var sword = Sword.instance()
-		sword.start(get_global_mouse_position().angle_to_point(position), "player", 120)
-		sword.global_position = $BulletCollider.global_position
-		get_parent().add_child(sword)
+		slash_frame = "slash2" if slash_frame == "slash1" else "slash2"
+
+		sword.start(get_global_mouse_position().angle_to_point(position), self, "player", slash_frame, 300)
+		add_child(sword)
+		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
+		ready_to_fire = true
+
 
 func place_turret():
 	if available_turrets > 0:
