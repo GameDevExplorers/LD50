@@ -38,7 +38,7 @@ var roll_vector:Vector2 = Vector2.ZERO
 var cross_hair:Vector2 = Vector2()
 
 var Bullet = load("res://src/objects/bullet.tscn")
-var Sword = load("res://src/objects/sword_anim.tscn")
+var Sword = load("res://src/objects/sword_root.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 var Turret = load("res://src/objects/Turret.tscn")
 
@@ -227,7 +227,7 @@ func handle_sword_attack() -> void:
 
 	if Input.is_action_just_pressed("fire") && ready_to_fire:
 		ready_to_fire = false
-		slash_frame = "slash2" if slash_frame == "slash1" else "slash2"
+		slash_frame = "slash2" if slash_frame == "slash1" else "slash1"
 
 		var sword = Sword.instance()
 		sword.start(get_global_mouse_position().angle_to_point(position), self, "player", slash_frame, 60)
