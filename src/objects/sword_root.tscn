@@ -1,0 +1,135 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://src/objects/sword_root.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sprites/sword-slash-1-Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/sword-slash-2-Sheet.png" type="Texture" id=3]
+[ext_resource path="res://src/objects/sword_body.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 54, 69 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 54, 0, 54, 69 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 108, 0, 54, 69 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 162, 0, 54, 69 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 216, 0, 54, 69 )
+
+[sub_resource type="SpriteFrames" id=21]
+animations = [ {
+"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "default",
+"speed": 30.0
+} ]
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 3 )
+region = Rect2( 192, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=22]
+animations = [ {
+"frames": [ SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"loop": true,
+"name": "default",
+"speed": 30.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=23]
+extents = Vector2( 35, 8 )
+
+[sub_resource type="Animation" id=24]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("sword_body:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 90.0 ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "Slash"
+length = 0.16
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("sword_body:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.04, 0.16 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 90.0, 0.0, -90.0 ]
+}
+
+[node name="sword_root" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": "This node is only there so the sword_body can rotate around the center of this scene"
+}
+
+[node name="sword_body" type="KinematicBody2D" parent="."]
+rotation = 1.5708
+collision_layer = 32
+collision_mask = 0
+script = ExtResource( 4 )
+
+[node name="Slash1" type="AnimatedSprite" parent="sword_body"]
+visible = false
+position = Vector2( 5.39651, 17.9776 )
+rotation = -3.09915
+scale = Vector2( 1.07015, 1.3226 )
+frames = SubResource( 21 )
+centered = false
+offset = Vector2( -58.4797, -34.8381 )
+flip_h = true
+
+[node name="Slash2" type="AnimatedSprite" parent="sword_body"]
+visible = false
+position = Vector2( 21.9999, -28.0001 )
+rotation = 0.446983
+frames = SubResource( 22 )
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sword_body"]
+position = Vector2( 35, -0.000125885 )
+shape = SubResource( 23 )
+__meta__ = {
+"_editor_description_": "Sword Hitbox"
+}
+
+[node name="HitboxRotator" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 24 )
+anims/Slash = SubResource( 25 )
+
+[connection signal="animation_finished" from="HitboxRotator" to="." method="_on_HitboxRotator_animation_finished"]
