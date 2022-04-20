@@ -90,6 +90,9 @@ func bounce():
 	var steerAway := Vector2.ZERO
 
 	for movable in movables_in_range:
+		var relative_position = global_position - movable.global_position
+		if relative_position.x == 0 || relative_position.y == 0:
+			return
 		steerAway -= (movable.global_position - global_position) * (separation_factor / (global_position - movable.global_position).length())
 
 	velocity += steerAway
