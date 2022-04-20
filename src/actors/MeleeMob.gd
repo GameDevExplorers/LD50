@@ -46,12 +46,12 @@ var _drop_loot = true
 
 var knocked_back = false
 
-
 signal gain_experience(experience)
 
 func _ready():
 	movement_target = sigil
 	player = get_tree().get_current_scene().get_node("player")
+
 
 func set_sigils(t, default) -> void:
 	sigil = t
@@ -115,11 +115,11 @@ func attack() -> void:
 
 	if !_dead:
 		anim.animation = "attack"
-		attack_target.hit(attack_damage)
+		attack_target.hit(attack_damage, self)
 		attack_timer.start(cooldown_length)
 
 
-func take_damage(damage) -> void:
+func take_damage(damage, owner = null) -> void:
 	var old_velocity = velocity
 	velocity = Vector2.ZERO
 

@@ -21,6 +21,7 @@ var attack_progress = -5
 
 onready var health_bar = get_node("CanvasLayer/Healthbar")
 
+var has_piercing = false
 
 # The demon has a Timer which fires an event every second
 # In the callback, it will decide if its time to attack again, pick an attack and commit to it.
@@ -52,7 +53,7 @@ func _process(_delta):
 			var radius = Vector2(10, 0)
 			var step = 2 * PI / count
 			var b = Bullet.instance()
-			b.start(position + radius.rotated(step * attack_progress), (step * attack_progress) + 5, "demon", bullet_speed)
+			b.start(position + radius.rotated(step * attack_progress), (step * attack_progress) + 5, self, bullet_speed)
 			b.set_animation("demon")
 			get_parent().add_child(b)
 			state = State.ATTACK_PAUSE
@@ -65,7 +66,7 @@ func _process(_delta):
 			var vecs = [Vector2(0, -1), Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0.5, 0.5), Vector2(-0.5, 0.5), Vector2(0.5, -0.5), Vector2(-0.5, -0.5)]
 			var vel = vecs[attack_progress % vecs.size()]
 			var b = Bullet.instance()
-			b.start(position, 0, "demon", bullet_speed)
+			b.start(position, 0, self, bullet_speed)
 			b.set_animation("demon")
 			b.set_velocity(vel)
 			get_parent().add_child(b)
@@ -87,7 +88,7 @@ func absorb_souls():
 
 func fire():
 	var b = Bullet.instance()
-	b.start(position, 0, "demon", bullet_speed)
+	b.start(position, 0, self, bullet_speed)
 	b.set_animation("demon")
 	b.set_target(Game.player_location)
 	get_parent().add_child(b)
@@ -120,7 +121,7 @@ func assign_attack():
 		else:
 			attack = Attack.BLAST
 
-func take_damage(damage) -> void:
+func take_damage(damage, owner = null) -> void:
 	health = health - damage
 	set_health_bar()
 	modulate = Color.white
@@ -135,6 +136,7 @@ func take_damage(damage) -> void:
 
 	if health <= 0:
 		get_tree().change_scene("res://victory.tscn")
+
 
 func _on_Area2D_body_exited(body:Node):
 	if body.get_name() == "player":
@@ -153,6 +155,6 @@ func _on_AnimatedSprite_animation_finished():
 
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
-	if body.get("damage") && body.get("spawned_by") != "demon":
+	if body.get("damage") && body.get("spawned_by").get_name() != "Demon":
 		body.hit_triggered()
 		take_damage(body.get("damage"))

@@ -1,6 +1,6 @@
 extends Node
 
-const DEFAULT_SUMMON_TIMER = 200
+const DEFAULT_SUMMON_TIMER = 2
 
 var summon_timer = DEFAULT_SUMMON_TIMER
 var start_time = 0

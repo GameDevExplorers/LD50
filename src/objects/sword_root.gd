@@ -1,16 +1,19 @@
 extends Node2D
 
-var source
+var spawned_by
+var damage
 var sword_body
 var hitbox_rotator
 var slash
 
-func start(r, s, spawned_by, slash_frame, damage):
+func start(r, spawner, _slash_frame, d):
+	print("Sword Starting")
 	load_nodes()
 	rotation = r
-	source = s
+	spawned_by = spawner
+	damage = d
 	
-	set_sword_body_data(spawned_by, damage)
+	set_sword_body_data()
 	play_animations()
 
 func _on_HitboxRotator_animation_finished(_anim_name: String) -> void:
@@ -22,7 +25,7 @@ func load_nodes():
 	sword_body = $sword_body
 	slash = $sword_body/Slash1
 	
-func set_sword_body_data(spawned_by, damage):
+func set_sword_body_data():
 	sword_body.spawned_by = spawned_by
 	sword_body.damage = damage
 

@@ -40,7 +40,7 @@ func _process(_delta):
 		anim.frame = 0
 
 
-func hit(_damage):
+func hit(_damage, _owner = null) -> void:
 	pass
 
 
@@ -68,7 +68,7 @@ func show_bullet(offset) -> void:
 	bullet.start(
 		$BulletSpawn.global_position,
 		get_angle_to(cross_hair) + deg2rad(offset),
-		"turret",
+		self,
 		bullet_speed,
 		bullet_damage,
 		bullet_size

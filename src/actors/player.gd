@@ -3,7 +3,7 @@ extends KinematicBody2D
 const BULLET_DAMAGE_MOD = 30
 const AMMO_COUNT_MOD = 1
 const HEAL_AMOUNT = 30
-const ALLIES = ["player", "turret"]
+const ALLIES = ["player", "Turret"]
 
 export (int) var level = 1
 export (int) var speed = 200
@@ -55,11 +55,27 @@ enum Weapon {
 var action_state = Action.MOVE
 var weapon_state = Weapon.GUN
 
-var slash_frame = "slash2"
-
 onready var anim = $PlayerAnimation
 onready var player_shadow = $PlayerAnimation/PlayerShadow
 onready var health_bar = $Healthbar
+
+## For Boons
+# Idle Heal
+var has_idle_heal_boon = false
+var idle_time_limit = 3
+var idle_heal_amount = 0
+var is_idle = false
+
+# Thorns
+var has_thorns = false
+
+# Sword
+var slash_frame = "slash2"
+
+# Piercing
+var has_piercing = false
+var piercing_amount = 0
+
 
 func _ready():
 	health_bar.set_max_health(max_health)
@@ -148,12 +164,16 @@ func move_state():
 	var input_vector = Vector2.ZERO
 	if Input.is_action_pressed("right"):
 		input_vector.x += 1
+		set_idle_timer()
 	if Input.is_action_pressed("left"):
 		input_vector.x -= 1
+		set_idle_timer()
 	if Input.is_action_pressed("down"):
 		input_vector.y += 1
+		set_idle_timer()
 	if Input.is_action_pressed("up"):
 		input_vector.y -= 1
+		set_idle_timer()
 
 	velocity = input_vector.normalized() * speed
 
@@ -173,6 +193,7 @@ func move_state():
 
 	if Input.is_action_just_pressed("roll"):
 		action_state = Action.ROLL
+	
 
 
 func roll_state():
@@ -224,13 +245,12 @@ func handle_gun_attack() -> void:
 		ready_to_fire = true
 
 func handle_sword_attack() -> void:
-
 	if Input.is_action_just_pressed("fire") && ready_to_fire:
 		ready_to_fire = false
 		slash_frame = "slash2" if slash_frame == "slash1" else "slash1"
 
 		var sword = Sword.instance()
-		sword.start(get_global_mouse_position().angle_to_point(position), self, "player", slash_frame, 60)
+		sword.start(get_global_mouse_position().angle_to_point(position), self, slash_frame, 60)
 		add_child(sword)
 		yield(get_tree().create_timer(secondary_weapon_cooldown / 2), "timeout")
 		ready_to_fire = true
@@ -241,7 +261,7 @@ func handle_sword_attack() -> void:
 		var sword = Sword.instance()
 		slash_frame = "slash2" if slash_frame == "slash1" else "slash2"
 
-		sword.start(get_global_mouse_position().angle_to_point(position), self, "player", slash_frame, 300)
+		sword.start(get_global_mouse_position().angle_to_point(position), self, slash_frame, 300)
 		add_child(sword)
 		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
 		ready_to_fire = true
@@ -283,7 +303,7 @@ func show_bullet(offset) -> void:
 	bullet.start(
 		$BulletSpawn.global_position,
 		get_angle_to(cross_hair) + deg2rad(offset),
-		"player",
+		self,
 		bullet_speed,
 		bullet_damage,
 		bullet_size
@@ -307,8 +327,14 @@ func ammo_up() -> void:
 	secondary_bullet_count += secondary_bullet_count
 	secondary_bullet_spread += 1
 
+	
+func hit(damage, owner = null) -> void:
+	take_damage(damage)
+	if has_thorns && owner:
+		owner.take_damage(damage * 0.5)
 
-func take_damage(damage) -> void:
+
+func take_damage(damage, _owner = null) -> void:
 	$Hit.play()
 	invincible = true
 	health = health - damage
@@ -344,11 +370,24 @@ func game_over() -> void:
 		print_debug("Failed to change scene: " + result)
 
 
-func hit(damage) -> void:
-	take_damage(damage)
+func set_idle_timer() -> void:
+	if has_idle_heal_boon:
+		$IdleTimer.start(idle_time_limit)
+		is_idle = false
 
 
 func _on_BulletCollider_body_entered(body: Node) -> void:
-	if body.get("damage") && !ALLIES.has(body.get("spawned_by")):
+	if body.get("damage") && !ALLIES.has(body.get("spawned_by").get_name()):
 		body.hit_triggered()
 		take_damage(body.get("damage"))
+
+
+func _on_IdleTimer_timeout():
+	is_idle = true
+	$IdleTimer.stop()
+	while is_idle:
+		if health < max_health:
+			health += idle_heal_amount
+			health_bar.set_health(health)
+			print(health)
+		yield(get_tree().create_timer(1), "timeout")

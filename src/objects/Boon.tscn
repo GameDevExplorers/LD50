@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://Assets/Sprites/Boons/boon-bigger-bullets.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprites/Boons/boon-weapon-blood-bullets.png" type="Texture" id=2]
@@ -11,21 +11,31 @@
 [ext_resource path="res://Assets/Sprites/Boons/boon-defensive-speed-up.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Sprites/Boons/boon-defensive-shield.png" type="Texture" id=10]
 [ext_resource path="res://src/objects/Boon.gd" type="Script" id=11]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-attack-speed-up.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Sprites/Boons/boon-defensive-idle-healing.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Sprites/Boons/boon-critical-damage.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-homing.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-explode-on-death.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Sprites/Boons/boon-defensive-thorns.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Sprites/Boons/boon-defensive-magic-reflect.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-saw-blade.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-sword.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Sprites/Boons/boon-weapon-piercing-bullets.png" type="Texture" id=21]
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 1 )
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 10 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
@@ -36,42 +46,82 @@ region = Rect2( 0, 0, 22, 24 )
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 8 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 10 )
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 18 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 22, 24 )
 
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 17 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 19 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 20 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 21 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 13 )
+region = Rect2( 0, 0, 22, 24 )
+
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ SubResource( 5 ) ],
+"frames": [ SubResource( 10 ) ],
 "loop": true,
-"name": "weapon-blood-bullets",
+"name": "weapon-more-bullets",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 6 ) ],
+"frames": [ SubResource( 13 ) ],
 "loop": true,
-"name": "weapon-cooldown-reduction",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 4 ) ],
-"loop": true,
-"name": "weapon-bigger-bullets",
+"name": "defensive-shield",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 7 ) ],
 "loop": true,
 "name": "weapon-faster-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "special-laser-turrets",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 8 ) ],
@@ -84,24 +134,74 @@ animations = [ {
 "name": "special-more-turrets",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 10 ) ],
+"frames": [ SubResource( 20 ) ],
 "loop": true,
-"name": "weapon-more-bullets",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 11 ) ],
-"loop": true,
-"name": "special-laser-turrets",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 13 ) ],
-"loop": true,
-"name": "defensive-shield",
+"name": "defensive-magic-reflect",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 12 ) ],
 "loop": true,
 "name": "defensive-speed-up",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "weapon-critical-damage",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 14 ) ],
+"loop": true,
+"name": "weapon-homing-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "weapon-bigger-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ) ],
+"loop": true,
+"name": "weapon-attack-speed-up",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 19 ) ],
+"loop": true,
+"name": "defensive-thorns",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "weapon-blood-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "weapon-cooldown-reduction",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 21 ) ],
+"loop": true,
+"name": "weapon-saw-blades",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 18 ) ],
+"loop": true,
+"name": "weapon-enemy-explode-on-death",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 22 ) ],
+"loop": true,
+"name": "weapon-sword",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 23 ) ],
+"loop": true,
+"name": "weapon-piercing-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 16 ) ],
+"loop": true,
+"name": "defensive-idle-heal",
 "speed": 5.0
 } ]
 
@@ -113,7 +213,7 @@ script = ExtResource( 11 )
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "defensive-shield"
+animation = "weapon-piercing-bullets"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
