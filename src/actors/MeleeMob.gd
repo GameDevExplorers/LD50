@@ -115,11 +115,11 @@ func attack() -> void:
 
 	if !_dead:
 		anim.animation = "attack"
-		attack_target.hit(attack_damage, self)
+		attack_target.hit(attack_damage, false, self)
 		attack_timer.start(cooldown_length)
 
 
-func take_damage(damage, owner = null) -> void:
+func take_damage(damage, attacker = null) -> void:
 	var old_velocity = velocity
 	velocity = Vector2.ZERO
 
@@ -231,12 +231,12 @@ func _on_Radar_body_exited(body:Node) -> void:
 # If player isn't in movement range, then no aggro
 # If player in movement range and is colliding, then attack
 # If player in movement range but not colliding, no attack
-func _on_bullet_entered(body: Node) -> void:
-	if body.get("damage") && !_dead:
-		body.hit_triggered()
-		take_damage(body.get("damage"))
+func hit(damage, knockback = false, _attacker = null) -> void:
+	if damage && !_dead:
+		take_damage(damage)
 
-		knockback_target(body)
+		if knockback:
+			knockback_target()
 
 		if movement_targets_in_range.has(player):
 			movement_target = player
@@ -246,10 +246,9 @@ func _on_bullet_entered(body: Node) -> void:
 				attack_target = null
 
 
-func knockback_target(body):
-	if body.get_name() == "sword_body":
-		position = position.move_toward(get_global_mouse_position(), 20)
-		knocked_back = true
-		yield(get_tree().create_timer(0.1), "timeout")
-		knocked_back = false
+func knockback_target():
+	position = position.move_toward(get_global_mouse_position(), 20)
+	knocked_back = true
+	yield(get_tree().create_timer(0.1), "timeout")
+	knocked_back = false
 

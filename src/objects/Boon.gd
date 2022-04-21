@@ -23,7 +23,6 @@ const BOONS = [
 	"weapon-cooldown-reduction",
 	"weapon-critical-damage",
 	"weapon-enemy-explode-on-death",
-	"weapon-faster-bullets",
 	"weapon-frost-bullets",
 	"weapon-homing-bullets",
 	"weapon-more-bullets",
@@ -32,7 +31,7 @@ const BOONS = [
 	"weapon-sword",
 ]
 
-var trial_boon = "weapon-piercing-bullets"
+var trial_boon = "weapon-sword"
 
 func _ready() -> void:
 	root_scene = self.owner # root scene
@@ -84,6 +83,7 @@ func _on_Boon_body_entered(body:Node):
 
 
 func activate_boon():
+	print("boon: ", get_node("Animation").animation)
 	match get_node("Animation").animation:
 		"defensive-idle-heal":
 			idle_heal()
@@ -111,8 +111,6 @@ func activate_boon():
 			critical_damage()
 		"weapon-enemies-explode-on-death":
 			explode_on_death()
-		"weapon-faster-bullets":
-			faster_bullets()
 		"weapon-frost-bullets":
 			frost_bullets()
 		"weapon-homing-bullets":
@@ -131,34 +129,29 @@ func activate_boon():
 
 
 func idle_heal() -> void:
-	print("idle_heal")
 	player.has_idle_heal_boon = true
 	player.idle_heal_amount += 1
 	player.set_idle_timer()
 
 	
 func magic_reflect() -> void:
-	print("magic_reflect")
 	pass
 
 
 func shield() -> void:
-	print("shield")
 	player.has_shield = true
 
 
 func speed_up() -> void:
-	print("speed_up")
-	player.speed *= 1.5
+	# 10% faster
+	player.speed *= 1.1
 
 
 func thorns() -> void:
-	print("thorns")
 	player.has_thorns = true
 
 
 func laser_turrets() -> void:
-	print("laser_turrets")
 	var size = 5.0
 	player.turret_bullet_type = "laser"
 	player.turret_bullet_size = size
@@ -170,70 +163,57 @@ func laser_turrets() -> void:
 
 
 func more_turrets() -> void:
-	print("more_turrets")
 	player.available_turrets += 2
 
 
 func attack_speed_up() -> void:
-	print("attack_speed_up")
-	pass
+	# 10% faster
+	player.primary_weapon_cooldown -= player.primary_weapon_cooldown * 0.1
 
 
 func bigger_bullets() -> void:
-	print("Bigger Bullets!")
-	player.bullet_size *= 2
+	# 10% larger
+	player.bullet_size *= 1.1
 
 		
 func blood_bullets() -> void:
-	print("blood_bullets")
+	# 100% stronger
 	player.bullet_damage *= 2
 	player.blood_loss += 1
 	
 func cooldown_reduction() -> void:
-	print("cooldown_reduction")
-	player.secondary_weapon_cooldown -= .2
+	# 20% faster
+	player.primary_weapon_cooldown -= player.primary_weapon_cooldown * 0.2
 
 func critical_damage() -> void:
-	print("critical_damage")
 	pass
 
 
 func explode_on_death() -> void:
-	print("explode_on_death")
 	pass
 
 
-func faster_bullets() -> void:
-	print("faster_bullets")
-	player.bullet_speed *= 2
-
-	
 func frost_bullets() -> void:
-	print("frost_bullets NEED TO IMPLEMENT!")
+	pass
 
 
 func homing_bullets() -> void:
-	print("homing_bullets")
 	pass
 
 
 func more_bullets() -> void:
-	print("more_bullets")
 	player.primary_bullet_count += 1
 	player.secondary_bullet_count += 2
 
 
 func piercing_bullets() -> void:
-	print("piercing_bullets")
 	player.piercing_amount += 1
 	player.has_piercing = true
 
 
 func equip_sword() -> void:
-	print("equip sword")
 	player.weapon_state = player.Weapon.SWORD
 
 
 func saw_blades() -> void:
-	print("saw_blades")
 	pass

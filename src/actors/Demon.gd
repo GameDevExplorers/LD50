@@ -22,6 +22,7 @@ var attack_progress = -5
 onready var health_bar = get_node("CanvasLayer/Healthbar")
 
 var has_piercing = false
+var knocked_back = false
 
 # The demon has a Timer which fires an event every second
 # In the callback, it will decide if its time to attack again, pick an attack and commit to it.
@@ -121,7 +122,7 @@ func assign_attack():
 		else:
 			attack = Attack.BLAST
 
-func take_damage(damage, owner = null) -> void:
+func take_damage(damage, attacker = null) -> void:
 	health = health - damage
 	set_health_bar()
 	modulate = Color.white
@@ -138,6 +139,20 @@ func take_damage(damage, owner = null) -> void:
 		get_tree().change_scene("res://victory.tscn")
 
 
+func hit(damage, knockback = false, _attacker = null) -> void:
+	if damage:
+		take_damage(damage)
+
+		if knockback:
+			knockback_target()
+
+func knockback_target():
+	position = position.move_toward(get_global_mouse_position(), 20)
+	knocked_back = true
+	yield(get_tree().create_timer(0.1), "timeout")
+	knocked_back = false
+
+
 func _on_Area2D_body_exited(body:Node):
 	if body.get_name() == "player":
 		modulate = Color.white
@@ -152,9 +167,3 @@ func _on_Area2D_body_entered(body:Node):
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == "jumping":
 		$AnimatedSprite.play("flying")
-
-
-func _on_BulletCollider_body_entered(body: Node) -> void:
-	if body.get("damage") && body.get("spawned_by").get_name() != "Demon":
-		body.hit_triggered()
-		take_damage(body.get("damage"))

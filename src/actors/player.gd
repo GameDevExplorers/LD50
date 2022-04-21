@@ -10,12 +10,15 @@ export (int) var speed = 200
 export (int) var health = 400
 export (int) var max_health = 400
 
-var primary_bullet_spread: int = 2
+var primary_bullet_spread: int = 4
 var primary_bullet_count: int = 1
+var primary_weapon_cooldown: float = 0.25
+var primary_ready = true
 
 var secondary_bullet_spread: int = 5
 var secondary_bullet_count: int = 5
-var secondary_weapon_cooldown: float = 0.5
+var secondary_weapon_cooldown: float = 2
+var secondary_ready = true
 
 var bullet_speed = 850
 var bullet_damage = 30
@@ -28,7 +31,6 @@ var turret_bullet_size: float = 1.0
 var blood_loss = 0
 var has_shield = false
 
-var ready_to_fire = true
 var invincible = false
 
 var MASS_FACTOR: float = 5.0
@@ -118,7 +120,7 @@ func _physics_process(delta):
 	if collision && collision.collider.is_in_group("movable"):
 		collision.collider.move_and_slide(velocity * Utils.calculate_resistance(self, collision.collider))
 
-	Game.player_location = cross_hair
+	Game.player_location = global_position
 	if health <= 0:
 		game_over()
 
@@ -216,8 +218,10 @@ func handle_attack():
 			handle_sword_attack()
 
 func handle_gun_attack() -> void:
-	if Input.is_action_just_pressed("fire"):
+	if Input.is_action_just_pressed("fire") && primary_ready:
 		$BulletSpawn/MuzzleFlash.frame = 1
+		primary_ready = false
+
 		$GunFire.play()
 		yield(get_tree().create_timer(0.05), "timeout")
 		if primary_bullet_count > 1:
@@ -226,11 +230,13 @@ func handle_gun_attack() -> void:
 		else:
 			fire_projectile(0)
 		$BulletSpawn/MuzzleFlash.frame = 0
+		yield(get_tree().create_timer(primary_weapon_cooldown), "timeout")
+		primary_ready = true
 
 
-	if Input.is_action_just_released("alt_fire") && ready_to_fire:
+	if Input.is_action_just_released("alt_fire") && secondary_ready:
 		$BulletSpawn/MuzzleFlash.frame = 0
-		ready_to_fire = false
+		secondary_ready = false
 
 		for _i in range(secondary_bullet_count):
 			$GunFire.play()
@@ -242,21 +248,21 @@ func handle_gun_attack() -> void:
 		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
 		$GunReload.play()
 		yield(get_tree().create_timer(0.1), "timeout")
-		ready_to_fire = true
+		secondary_ready = true
 
 func handle_sword_attack() -> void:
-	if Input.is_action_just_pressed("fire") && ready_to_fire:
-		ready_to_fire = false
+	if Input.is_action_just_pressed("fire") && primary_ready:
+		primary_ready = false
 		slash_frame = "slash2" if slash_frame == "slash1" else "slash1"
 
 		var sword = Sword.instance()
 		sword.start(get_global_mouse_position().angle_to_point(position), self, slash_frame, 60)
 		add_child(sword)
-		yield(get_tree().create_timer(secondary_weapon_cooldown / 2), "timeout")
-		ready_to_fire = true
+		yield(get_tree().create_timer(primary_weapon_cooldown), "timeout")
+		primary_ready = true
 
-	if Input.is_action_just_released("alt_fire") && ready_to_fire:
-		ready_to_fire = false
+	if Input.is_action_just_released("alt_fire") && secondary_ready:
+		secondary_ready = false
 
 		var sword = Sword.instance()
 		slash_frame = "slash2" if slash_frame == "slash1" else "slash2"
@@ -264,7 +270,7 @@ func handle_sword_attack() -> void:
 		sword.start(get_global_mouse_position().angle_to_point(position), self, slash_frame, 300)
 		add_child(sword)
 		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
-		ready_to_fire = true
+		secondary_ready = true
 
 
 func place_turret():
@@ -328,13 +334,18 @@ func ammo_up() -> void:
 	secondary_bullet_spread += 1
 
 	
-func hit(damage, owner = null) -> void:
+func hit(damage, knockback = false, attacker = null) -> void:
+	if ALLIES.has(attacker.get_name()):
+		return
+
 	take_damage(damage)
-	if has_thorns && owner:
-		owner.take_damage(damage * 0.5)
+	# TODO: prevent ranged from taking thorn damage
+	has_thorns = true
+	if has_thorns && attacker:
+		attacker.take_damage(damage * .5)
 
 
-func take_damage(damage, _owner = null) -> void:
+func take_damage(damage, _attacker = null) -> void:
 	$Hit.play()
 	invincible = true
 	health = health - damage
@@ -374,12 +385,6 @@ func set_idle_timer() -> void:
 	if has_idle_heal_boon:
 		$IdleTimer.start(idle_time_limit)
 		is_idle = false
-
-
-func _on_BulletCollider_body_entered(body: Node) -> void:
-	if body.get("damage") && !ALLIES.has(body.get("spawned_by").get_name()):
-		body.hit_triggered()
-		take_damage(body.get("damage"))
 
 
 func _on_IdleTimer_timeout():

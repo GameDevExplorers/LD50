@@ -9,6 +9,8 @@ var fire_speed = .2
 
 var kill_radius = 5
 
+var has_piercing = false
+
 var Bullet = load("res://src/objects/bullet.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 
@@ -40,7 +42,7 @@ func _process(_delta):
 		anim.frame = 0
 
 
-func hit(_damage, _owner = null) -> void:
+func hit(_damage, _knockback = false, _attacker = null) -> void:
 	pass
 
 

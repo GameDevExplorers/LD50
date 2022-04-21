@@ -22,28 +22,40 @@
 [ext_resource path="res://Assets/Sprites/Boons/boon-weapon-sword.png" type="Texture" id=20]
 [ext_resource path="res://Assets/Sprites/Boons/boon-weapon-piercing-bullets.png" type="Texture" id=21]
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 10 )
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 16 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 22, 24 )
 
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 22, 24 )
+
 [sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 17 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 6 )
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 7 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=20]
@@ -54,24 +66,32 @@ region = Rect2( 0, 0, 22, 24 )
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 14 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 15 )
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 10 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 12 )
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 15 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 17 )
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 21 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 20 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 19 )
+region = Rect2( 0, 0, 22, 24 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 13 )
 region = Rect2( 0, 0, 22, 24 )
 
 [sub_resource type="AtlasTexture" id=5]
@@ -82,41 +102,31 @@ region = Rect2( 0, 0, 22, 24 )
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 22, 24 )
 
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 19 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 16 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 20 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 21 )
-region = Rect2( 0, 0, 22, 24 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 13 )
-region = Rect2( 0, 0, 22, 24 )
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ SubResource( 10 ) ],
+"frames": [ SubResource( 18 ) ],
 "loop": true,
-"name": "weapon-more-bullets",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 13 ) ],
-"loop": true,
-"name": "defensive-shield",
+"name": "weapon-enemy-explode-on-death",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 7 ) ],
 "loop": true,
-"name": "weapon-faster-bullets",
+"name": "weapon-bouncy-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 17 ) ],
+"loop": true,
+"name": "weapon-critical-damage",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 15 ) ],
+"loop": true,
+"name": "weapon-attack-speed-up",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "special-more-turrets",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 11 ) ],
@@ -124,14 +134,19 @@ animations = [ {
 "name": "special-laser-turrets",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 19 ) ],
+"loop": true,
+"name": "defensive-thorns",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 8 ) ],
 "loop": true,
 "name": "weapon-frost-bullets",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 9 ) ],
+"frames": [ SubResource( 10 ) ],
 "loop": true,
-"name": "special-more-turrets",
+"name": "weapon-more-bullets",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 20 ) ],
@@ -144,14 +159,9 @@ animations = [ {
 "name": "defensive-speed-up",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 17 ) ],
+"frames": [ SubResource( 13 ) ],
 "loop": true,
-"name": "weapon-critical-damage",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 14 ) ],
-"loop": true,
-"name": "weapon-homing-bullets",
+"name": "defensive-shield",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 4 ) ],
@@ -159,14 +169,29 @@ animations = [ {
 "name": "weapon-bigger-bullets",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 15 ) ],
+"frames": [ SubResource( 14 ) ],
 "loop": true,
-"name": "weapon-attack-speed-up",
+"name": "weapon-homing-bullets",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 19 ) ],
+"frames": [ SubResource( 23 ) ],
 "loop": true,
-"name": "defensive-thorns",
+"name": "weapon-piercing-bullets",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 22 ) ],
+"loop": true,
+"name": "weapon-sword",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 21 ) ],
+"loop": true,
+"name": "weapon-saw-blades",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 16 ) ],
+"loop": true,
+"name": "defensive-idle-heal",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 5 ) ],
@@ -178,31 +203,6 @@ animations = [ {
 "loop": true,
 "name": "weapon-cooldown-reduction",
 "speed": 5.0
-}, {
-"frames": [ SubResource( 21 ) ],
-"loop": true,
-"name": "weapon-saw-blades",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 18 ) ],
-"loop": true,
-"name": "weapon-enemy-explode-on-death",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 22 ) ],
-"loop": true,
-"name": "weapon-sword",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 23 ) ],
-"loop": true,
-"name": "weapon-piercing-bullets",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 16 ) ],
-"loop": true,
-"name": "defensive-idle-heal",
-"speed": 5.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=3]
@@ -213,7 +213,7 @@ script = ExtResource( 11 )
 
 [node name="Animation" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "weapon-piercing-bullets"
+animation = "weapon-bouncy-bullets"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

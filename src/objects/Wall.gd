@@ -24,7 +24,7 @@ func repair() -> void:
 	$Repaired.play()
 	_broken = false
 
-func take_damage(damage, _owner = null) -> void:
+func take_damage(damage, _attacker = null) -> void:
 	$Hit.play()
 	health -= damage
 	if health < 3700:
@@ -38,7 +38,7 @@ func take_damage(damage, _owner = null) -> void:
 		anim.set_animation("broken")
 		$CollisionPolygon2D.disabled = true
 
-func hit(damage, owner = null) -> void:
+func hit(damage, knockback = false, attacker = null) -> void:
 	take_damage(damage)
-	if has_thorns && owner:
-		owner.take_damage(damage * 0.5)
+	if has_thorns && attacker:
+		attacker.take_damage(damage * 0.5)
