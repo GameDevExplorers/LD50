@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/objects/sword_root.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/sword-slash-1-Sheet.png" type="Texture" id=2]
@@ -59,6 +59,9 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 35, 8 )
+
+[sub_resource type="RectangleShape2D" id=26]
+extents = Vector2( 34.5, 8.00012 )
 
 [sub_resource type="Animation" id=24]
 length = 0.001
@@ -128,8 +131,17 @@ __meta__ = {
 "_editor_description_": "Sword Hitbox"
 }
 
+[node name="Hitbox" type="Area2D" parent="sword_body"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sword_body/Hitbox"]
+position = Vector2( 35.5, -0.000128748 )
+shape = SubResource( 26 )
+
 [node name="HitboxRotator" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 24 )
 anims/Slash = SubResource( 25 )
 
+[connection signal="body_entered" from="sword_body/Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="animation_finished" from="HitboxRotator" to="." method="_on_HitboxRotator_animation_finished"]

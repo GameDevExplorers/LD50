@@ -7,8 +7,10 @@ var size = 1.0
 var velocity = Vector2()
 var target = Vector2();
 var piercing_amount = 0
+var damage_type = "ranged"
+var knockback = false
 
-func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = size):
+func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = size, masks = []):
 	rotation = dir
 	position = pos
 	speed    = bullet_speed
@@ -17,6 +19,7 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = 
 	z_index = 3
 	size = bullet_size
 	velocity = Vector2(speed, 0).rotated(rotation)
+	set_mask(masks)
 	match spawned_by.get_name():
 		"player":
 			scale = Vector2(size, size)
@@ -33,6 +36,11 @@ func set_animation(anim: String):
 
 func set_velocity(vel: Vector2):
 	velocity = vel * speed
+
+
+func set_mask(masks: Array) -> void:
+	for m in masks:
+		get_node("Hitbox").set_collision_mask_bit(m, true)
 
 
 func set_target(pos: Vector2):
@@ -52,6 +60,11 @@ func can_pierce() -> bool:
 func take_damage(_damage) -> void:
 	pass
 
+
+func is_from_self_or_ally(body) -> bool:
+	return spawned_by.is_ally(body)
+
+
 func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
@@ -62,10 +75,10 @@ func _on_Timer_timeout():
 
 
 func _on_Hitbox_body_entered(body):
-	if body == spawned_by: #prevents people from shooting themselves
+	if is_from_self_or_ally(body): #prevents people from shooting themselves
 		return
 	piercing_amount += 1
-	body.hit(damage, false, self)
+	body.hit(spawned_by, self, damage, knockback)
 	if can_pierce():
 		pass
 	else:
