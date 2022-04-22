@@ -2,6 +2,7 @@ extends MeleeMob
 
 func _ready():
 	anim = $hellpup_anim
+	max_health = 100
 	health = 100
 	_speed = 180
 	attack_damage = 5
@@ -10,4 +11,5 @@ func _ready():
 	HEALTH_DROP_CHANCE = 10
 	WEAPON_UP_CHANCE = 0
 	EXPERIENCE = 50
-
+	
+	._ready()

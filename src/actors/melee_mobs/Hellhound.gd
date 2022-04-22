@@ -2,6 +2,7 @@ extends MeleeMob
 
 func _ready():
 	anim = $hellhound_anim
+	max_health = 500
 	health = 500
 	_speed = 25
 	attack_damage = 30
@@ -10,3 +11,5 @@ func _ready():
 	HEALTH_DROP_CHANCE = 20
 	WEAPON_UP_CHANCE = 10
 	EXPERIENCE = 300
+
+	._ready()

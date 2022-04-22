@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Assets/Sprites/Skeleton-die-Sheet.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Sprites/hellhound-run-Sheet.png" type="Texture" id=2]
@@ -6,10 +6,35 @@
 [ext_resource path="res://Assets/Sounds/Retro Impact Punch Hurt 01.wav" type="AudioStream" id=4]
 [ext_resource path="res://Assets/Sounds/fire_c.wav" type="AudioStream" id=5]
 [ext_resource path="res://src/actors/melee_mobs/Hellhound.gd" type="Script" id=6]
+[ext_resource path="res://src/objects/Healthbar.tscn" type="PackedScene" id=7]
 
 [sub_resource type="CapsuleShape2D" id=29]
 radius = 8.99997
 height = 18.0001
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 64, 0, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 128, 0, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 192, 0, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 256, 0, 64, 48 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 320, 0, 64, 48 )
 
 [sub_resource type="AtlasTexture" id=7]
 atlas = ExtResource( 1 )
@@ -55,32 +80,13 @@ region = Rect2( 128, 0, 64, 48 )
 atlas = ExtResource( 2 )
 region = Rect2( 192, 0, 64, 48 )
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 64, 48 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 64, 48 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 3 )
-region = Rect2( 128, 0, 64, 48 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 3 )
-region = Rect2( 192, 0, 64, 48 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 3 )
-region = Rect2( 256, 0, 64, 48 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 3 )
-region = Rect2( 320, 0, 64, 48 )
-
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "attack",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
 "name": "death",
@@ -89,11 +95,6 @@ animations = [ {
 "frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
 "loop": true,
 "name": "move",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
-"loop": true,
-"name": "attack",
 "speed": 5.0
 } ]
 
@@ -115,6 +116,13 @@ collision_layer = 2
 collision_mask = 15
 script = ExtResource( 6 )
 
+[node name="Healthbar" parent="." instance=ExtResource( 7 )]
+margin_left = -192.0
+margin_top = 14.0
+margin_right = 192.0
+margin_bottom = 27.0
+rect_scale = Vector2( 0.073, 0.323 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource( 29 )
@@ -123,7 +131,6 @@ shape = SubResource( 29 )
 position = Vector2( 0, -11 )
 frames = SubResource( 18 )
 animation = "move"
-frame = 1
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]
