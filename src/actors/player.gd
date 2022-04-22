@@ -250,39 +250,6 @@ func handle_gun_attack() -> void:
 		yield(get_tree().create_timer(0.1), "timeout")
 		secondary_ready = true
 
-func handle_sword_attack() -> void:
-	if Input.is_action_just_pressed("fire") && primary_ready:
-		primary_ready = false
-		slash_frame = "slash2" if slash_frame == "slash1" else "slash1"
-
-		var sword = Sword.instance()
-		sword.start(get_global_mouse_position().angle_to_point(position), self, slash_frame, 60)
-		add_child(sword)
-		yield(get_tree().create_timer(primary_weapon_cooldown), "timeout")
-		primary_ready = true
-
-	if Input.is_action_just_released("alt_fire") && secondary_ready:
-		secondary_ready = false
-
-		var sword = Sword.instance()
-		slash_frame = "slash2" if slash_frame == "slash1" else "slash2"
-
-		sword.start(get_global_mouse_position().angle_to_point(position), self, slash_frame, 300)
-		add_child(sword)
-		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
-		secondary_ready = true
-
-
-func place_turret():
-	if available_turrets > 0:
-		var turret = Turret.instance()
-		turret.init(turret_bullet_type, turret_bullet_size)
-		turret.position = $TurretSpawn.global_position
-		$TurretContainer.add_child(turret)
-		available_turrets -= 1
-		$"../CanvasLayer/hud/HBoxContainer2/AvailableTurrets".text = "Available Turrets: " + str(available_turrets)
-
-
 func fire_projectile(offset:float):
 	if health <= 1:
 		return
@@ -312,9 +279,50 @@ func show_bullet(offset) -> void:
 		self,
 		bullet_speed,
 		bullet_damage,
-		bullet_size
+		bullet_size,
+		[Game.Masks.MOB, Game.Masks.BOSS]
 	)
 	get_parent().add_child(bullet)
+
+
+func handle_sword_attack() -> void:
+	if Input.is_action_just_pressed("fire") && primary_ready:
+		primary_ready = false
+
+		var sword = Sword.instance()
+		slash_sword(sword, bullet_damage * 2)
+		add_child(sword)
+		yield(get_tree().create_timer(primary_weapon_cooldown), "timeout")
+		primary_ready = true
+
+	if Input.is_action_just_released("alt_fire") && secondary_ready:
+		secondary_ready = false
+
+		var sword = Sword.instance()
+		slash_sword(sword, bullet_damage * 10)
+		add_child(sword)
+		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
+		secondary_ready = true
+
+
+func slash_sword(sword, dmg) -> void:
+	sword.start(
+		get_global_mouse_position().angle_to_point(position),
+		self,
+		dmg,
+		bullet_size,
+		[Game.Masks.MOB, Game.Masks.BOSS]
+	)
+
+
+func place_turret():
+	if available_turrets > 0:
+		var turret = Turret.instance()
+		turret.init(turret_bullet_type, turret_bullet_size)
+		turret.position = $TurretSpawn.global_position
+		$TurretContainer.add_child(turret)
+		available_turrets -= 1
+		$"../CanvasLayer/hud/HBoxContainer2/AvailableTurrets".text = "Available Turrets: " + str(available_turrets)
 
 
 func heal() -> void:
@@ -333,19 +341,20 @@ func ammo_up() -> void:
 	secondary_bullet_count += secondary_bullet_count
 	secondary_bullet_spread += 1
 
-	
-func hit(damage, knockback = false, attacker = null) -> void:
-	if ALLIES.has(attacker.get_name()):
-		return
 
+func is_ally(source) -> bool:
+	return source.is_in_group("ally")
+
+
+func hit(source = null, weapon = null, damage = 0, _knockback = false) -> void:
 	take_damage(damage)
 	# TODO: prevent ranged from taking thorn damage
 	has_thorns = true
-	if has_thorns && attacker:
-		attacker.take_damage(damage * .5)
+	if has_thorns && weapon.damage_type == "melee":
+		source.take_damage(damage * .5)
 
 
-func take_damage(damage, _attacker = null) -> void:
+func take_damage(damage) -> void:
 	$Hit.play()
 	invincible = true
 	health = health - damage

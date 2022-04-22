@@ -18,6 +18,19 @@ export var demon_summoned = false
 
 var pause_scene:Control = load("res://pause_menu.tscn").instance()
 
+enum Masks {
+	PLAYER,
+	MOB,
+	WALL,
+	SIGIL,
+	BOSS,
+	PROJECTILE,
+	EMPTY,
+	EMPTY2,
+	RADAR
+}
+
+
 func _ready():
 	start_time = OS.get_unix_time()
 

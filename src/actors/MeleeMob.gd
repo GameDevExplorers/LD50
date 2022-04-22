@@ -27,6 +27,7 @@ var HealthOrb = load("res://src/objects/pickups/HealthOrb.tscn")
 var DamageUpOrb = load("res://src/objects/pickups/DamageUpOrb.tscn")
 var AmmoUpOrb = load("res://src/objects/pickups/AmmoUpOrb.tscn")
 
+var Strike = preload("res://src/objects/strike.gd").new()
 
 var movement_target = null
 var movement_targets_in_range = []
@@ -113,16 +114,20 @@ func _on_vision_area_exited(area:Area2D):
 		movables_in_range.erase(area)
 
 
+func is_ally(source) -> bool:
+	return source.is_in_group("enemy")
+
+
 func attack() -> void:
 	attack_timer.stop()
 
 	if !_dead:
 		anim.animation = "attack"
-		attack_target.hit(attack_damage, false, self)
+		Strike.start(self, attack_target, attack_damage)
 		attack_timer.start(cooldown_length)
 
 
-func take_damage(damage, attacker = null) -> void:
+func take_damage(damage) -> void:
 	var old_velocity = velocity
 	velocity = Vector2.ZERO
 
@@ -142,6 +147,32 @@ func take_damage(damage, attacker = null) -> void:
 
 	yield(get_tree().create_timer(0.5), "timeout")
 	velocity = old_velocity
+
+
+# Player shooting mob creates aggro
+# If player isn't in movement range, then no aggro
+# If player in movement range and is colliding, then attack
+# If player in movement range but not colliding, no attack
+func hit(_source = null, _weapon = null, damage = 0, knockback = false) -> void:
+	if damage && !_dead:
+		take_damage(damage)
+
+		if knockback:
+			knockback_target()
+
+		if movement_targets_in_range.has(player):
+			movement_target = player
+			if attack_targets.has(player):
+				attack_target = player
+			else:
+				attack_target = null
+
+
+func knockback_target():
+	position = position.move_toward(get_global_mouse_position(), 20)
+	knocked_back = true
+	yield(get_tree().create_timer(0.1), "timeout")
+	knocked_back = false
 
 
 func drop_items() -> void:
@@ -228,30 +259,4 @@ func _on_Radar_body_exited(body:Node) -> void:
 	# When the player leaves movement range, make sure enemy re-attacks the first thing in queue
 	if !attack_targets.empty():
 		attack_target = attack_targets.front()
-
-
-# Player shooting mob creates aggro
-# If player isn't in movement range, then no aggro
-# If player in movement range and is colliding, then attack
-# If player in movement range but not colliding, no attack
-func hit(damage, knockback = false, _attacker = null) -> void:
-	if damage && !_dead:
-		take_damage(damage)
-
-		if knockback:
-			knockback_target()
-
-		if movement_targets_in_range.has(player):
-			movement_target = player
-			if attack_targets.has(player):
-				attack_target = player
-			else:
-				attack_target = null
-
-
-func knockback_target():
-	position = position.move_toward(get_global_mouse_position(), 20)
-	knocked_back = true
-	yield(get_tree().create_timer(0.1), "timeout")
-	knocked_back = false
 

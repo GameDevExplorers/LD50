@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 export (int) var speed = 3000
 export (int) var bullet_speed = 200
+export (int) var bullet_damage = 30
+export (int) var bullet_size: float = 1.0
 export (int) var spread = 10
 export (int) var health = 2500
 export (int) var max_health = 2500
@@ -77,9 +79,15 @@ func _process(_delta):
 func _physics_process(delta):
 	velocity = move_and_slide(velocity * delta)
 
+
+func is_ally(source) -> bool:
+	return source.is_in_group("enemy")
+
+
 func set_health_bar():
 	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
+
 
 func absorb_souls():
 	health += 15
@@ -87,9 +95,10 @@ func absorb_souls():
 		max_health = health
 	set_health_bar()
 
+
 func fire():
 	var b = Bullet.instance()
-	b.start(position, 0, self, bullet_speed)
+	b.start(position, 0, self, bullet_speed, bullet_damage, bullet_size, [Game.Masks.PLAYER, Game.Masks.MOB])
 	b.set_animation("demon")
 	b.set_target(Game.player_location)
 	get_parent().add_child(b)
@@ -122,7 +131,7 @@ func assign_attack():
 		else:
 			attack = Attack.BLAST
 
-func take_damage(damage, attacker = null) -> void:
+func take_damage(damage) -> void:
 	health = health - damage
 	set_health_bar()
 	modulate = Color.white
@@ -139,12 +148,12 @@ func take_damage(damage, attacker = null) -> void:
 		get_tree().change_scene("res://victory.tscn")
 
 
-func hit(damage, knockback = false, _attacker = null) -> void:
+func hit(_source = null, _weapon = null, damage = 0, knockback = false) -> void:
 	if damage:
 		take_damage(damage)
-
 		if knockback:
 			knockback_target()
+
 
 func knockback_target():
 	position = position.move_toward(get_global_mouse_position(), 20)
