@@ -6,6 +6,7 @@ onready var repair_plate = $RepairPlate
 export var health: = 5000
 var _velocity: = Vector2.ZERO
 var _broken = false
+var has_thorns = false
 
 func _ready():
 	repair_plate.connect("repaired", self, "_on_repaired")
@@ -23,7 +24,7 @@ func repair() -> void:
 	$Repaired.play()
 	_broken = false
 
-func take_damage(damage) -> void:
+func take_damage(damage, _attacker = null) -> void:
 	$Hit.play()
 	health -= damage
 	if health < 3700:
@@ -37,5 +38,7 @@ func take_damage(damage) -> void:
 		anim.set_animation("broken")
 		$CollisionPolygon2D.disabled = true
 
-func hit(damage) -> void:
+func hit(damage, knockback = false, attacker = null) -> void:
 	take_damage(damage)
+	if has_thorns && attacker:
+		attacker.take_damage(damage * 0.5)

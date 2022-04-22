@@ -9,26 +9,29 @@ var boon3
 var player
 var boons_enabled = false
 
-const DEFENSIVE_BOONS = [
+const BOONS = [
+	"defensive-idle-heal",
+	"defensive-magic-reflect",
 	"defensive-shield",
-	"defensive-speed-up"
-]
-
-const SPECIAL_BOONS = [
+	"defensive-speed-up",
+	"defensive-thorns",
 	"special-laser-turrets",
 	"special-more-turrets",
-]
-
-const WEAPON_BOONS = [
+	"weapon-attack-speed-up",
 	"weapon-bigger-bullets",
 	"weapon-blood-bullets",
 	"weapon-cooldown-reduction",
-	"weapon-faster-bullets",
+	"weapon-critical-damage",
+	"weapon-enemy-explode-on-death",
 	"weapon-frost-bullets",
-	"weapon-more-bullets"
+	"weapon-homing-bullets",
+	"weapon-more-bullets",
+	"weapon-piercing-bullets",
+	"weapon-saw-blades",
+	"weapon-sword",
 ]
 
-var trial_boon = "weapon-frost-bullets"
+var trial_boon = "weapon-sword"
 
 func _ready() -> void:
 	root_scene = self.owner # root scene
@@ -49,7 +52,7 @@ func _on_Boon_spawn() -> void:
 	boon2.boons_enabled = true
 	boon3.boons_enabled = true
 	
-	var all_boons = DEFENSIVE_BOONS + SPECIAL_BOONS + WEAPON_BOONS
+	var all_boons = BOONS
 
 	randomize()
 	all_boons.shuffle()
@@ -80,43 +83,75 @@ func _on_Boon_body_entered(body:Node):
 
 
 func activate_boon():
+	print("boon: ", get_node("Animation").animation)
 	match get_node("Animation").animation:
+		"defensive-idle-heal":
+			idle_heal()
+		"defensive-magic-reflect":
+			magic_reflect()
 		"defensive-shield":
 			shield()
 		"defensive-speed-up":
 			speed_up()
+		"defensive-thorns":
+			thorns()
 		"special-laser-turrets":
 			laser_turrets()
 		"special-more-turrets":
 			more_turrets()
+		"weapon-attack-speed-up":
+			attack_speed_up()
 		"weapon-bigger-bullets":
 			bigger_bullets()
 		"weapon-blood-bullets":
 			blood_bullets()
 		"weapon-cooldown-reduction":
 			cooldown_reduction()
-		"weapon-faster-bullets":
-			faster_bullets()
+		"weapon-critical-damage":
+			critical_damage()
+		"weapon-enemies-explode-on-death":
+			explode_on_death()
 		"weapon-frost-bullets":
-			# frost_bullets()
-			equip_sword()
+			frost_bullets()
+		"weapon-homing-bullets":
+			homing_bullets()
 		"weapon-more-bullets":
 			more_bullets()
+		"weapon-piercing-bullets":
+			piercing_bullets()
+		"weapon-saw-blades":
+			saw_blades()
+		"weapon-sword":
+			equip_sword()
 		_:
 			print("Something else")
-		
+
+
+
+func idle_heal() -> void:
+	player.has_idle_heal_boon = true
+	player.idle_heal_amount += 1
+	player.set_idle_timer()
+
+	
+func magic_reflect() -> void:
+	pass
+
+
 func shield() -> void:
-	print("shield")
 	player.has_shield = true
 
 
 func speed_up() -> void:
-	print("speed_up")
-	player.speed *= 1.5
+	# 10% faster
+	player.speed *= 1.1
+
+
+func thorns() -> void:
+	player.has_thorns = true
 
 
 func laser_turrets() -> void:
-	print("laser_turrets")
 	var size = 5.0
 	player.turret_bullet_type = "laser"
 	player.turret_bullet_size = size
@@ -128,39 +163,57 @@ func laser_turrets() -> void:
 
 
 func more_turrets() -> void:
-	print("more_turrets")
 	player.available_turrets += 2
 
 
+func attack_speed_up() -> void:
+	# 10% faster
+	player.primary_weapon_cooldown -= player.primary_weapon_cooldown * 0.1
+
+
 func bigger_bullets() -> void:
-	print("Bigger Bullets!")
-	player.bullet_size *= 2
+	# 10% larger
+	player.bullet_size *= 1.1
 
 		
 func blood_bullets() -> void:
-	print("blood_bullets")
+	# 100% stronger
 	player.bullet_damage *= 2
 	player.blood_loss += 1
 	
 func cooldown_reduction() -> void:
-	print("cooldown_reduction")
-	player.secondary_weapon_cooldown -= .2
+	# 20% faster
+	player.primary_weapon_cooldown -= player.primary_weapon_cooldown * 0.2
 
-	
-func faster_bullets() -> void:
-	print("faster_bullets")
-	player.bullet_speed *= 2
+func critical_damage() -> void:
+	pass
 
-	
+
+func explode_on_death() -> void:
+	pass
+
+
 func frost_bullets() -> void:
-	print("frost_bullets NEED TO IMPLEMENT!")
+	pass
 
-	
+
+func homing_bullets() -> void:
+	pass
+
+
 func more_bullets() -> void:
-	print("more_bullets")
 	player.primary_bullet_count += 1
 	player.secondary_bullet_count += 2
 
+
+func piercing_bullets() -> void:
+	player.piercing_amount += 1
+	player.has_piercing = true
+
+
 func equip_sword() -> void:
-	print("equip sword")
 	player.weapon_state = player.Weapon.SWORD
+
+
+func saw_blades() -> void:
+	pass

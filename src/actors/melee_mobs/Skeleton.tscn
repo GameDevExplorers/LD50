@@ -125,7 +125,7 @@ shape = SubResource( 41 )
 [node name="skele_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 animation = "move"
-frame = 1
+frame = 2
 playing = true
 
 [node name="BulletCollider" type="Area2D" parent="."]
