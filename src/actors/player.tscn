@@ -92,7 +92,7 @@ animations = [ {
 radius = 15.7895
 height = 53.6842
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["ally"]]
 z_index = 1
 collision_layer = 65
 script = ExtResource( 2 )
