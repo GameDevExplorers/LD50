@@ -6,10 +6,12 @@ onready var anim
 onready var bullet_collider = $BulletCollider
 onready var attack_timer = $AttackTimer
 onready var cooldown_timer = $CooldownTimer
+onready var health_bar = $Healthbar
 
 var movables_in_range := []
 var separation_factor: float = 2
 
+var max_health: int = 30
 var health: int = 30
 var _speed: int = 55
 var attack_damage: int = 0
@@ -52,7 +54,9 @@ signal gain_experience(experience)
 func _ready():
 	movement_target = sigil
 	player = get_tree().get_current_scene().get_node("player")
-
+	health_bar.set_max_health(max_health)
+	health_bar.set_health(health)
+	health_bar.hide()
 
 func set_sigils(t, default) -> void:
 	sigil = t
@@ -133,7 +137,10 @@ func take_damage(damage) -> void:
 
 	$Hit.play()
 	health = health - damage
-	if health <= 0:
+	health_bar.set_health(health)
+	if health < max_health && health > 0:
+		health_bar.show()
+	elif health <= 0:
 		Game.mob_killed()
 		trigger_death()
 

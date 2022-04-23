@@ -2,6 +2,7 @@ extends MeleeMob
 
 func _ready():
 	anim = $skele_anim
+	max_health = 30
 	health = 30
 	_speed = 55
 	attack_damage = 10
@@ -10,3 +11,5 @@ func _ready():
 	HEALTH_DROP_CHANCE = 20
 	WEAPON_UP_CHANCE = 0
 	EXPERIENCE = 80
+	
+	._ready()

@@ -12,12 +12,12 @@ export (int) var max_health = 400
 
 var primary_bullet_spread: int = 4
 var primary_bullet_count: int = 1
-var primary_weapon_cooldown: float = 0.25
+var primary_weapon_cooldown: float = 0.15
 var primary_ready = true
 
 var secondary_bullet_spread: int = 5
 var secondary_bullet_count: int = 5
-var secondary_weapon_cooldown: float = 2
+var secondary_weapon_cooldown: float = 1
 var secondary_ready = true
 
 var bullet_speed = 850
