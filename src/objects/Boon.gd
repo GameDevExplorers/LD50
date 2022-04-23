@@ -124,7 +124,7 @@ func activate_boon():
 		"weapon-sword":
 			equip_sword()
 		_:
-			print("Something else")
+		    assert(false, "unknown boon")
 
 
 

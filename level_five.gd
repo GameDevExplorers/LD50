@@ -39,8 +39,6 @@ func _on_Timer_timeout():
 	var time = Game.summon_timer - Game.elapsed_time()
 	hud.update_demon_timer(time)
 	hud.update_sigils()
-	
-	print("time:" + str(time))
 
 	if time <= 0 and Game.demon_summoned == false:
 		Game.demon_summoned = true

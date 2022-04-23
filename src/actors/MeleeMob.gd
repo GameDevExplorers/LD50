@@ -73,10 +73,10 @@ func trigger_death(drop_loot = true) -> void:
 	anim.animation = "death"
 
 
-func _physics_process(delta) -> void:
+func _physics_process(_delta) -> void:
 	if sigil == null || _dead:
 		return
-	
+
 	if knocked_back:
 		return
 
@@ -179,12 +179,12 @@ func drop_items() -> void:
 	if Utils.percentage(WEAPON_UP_CHANCE) && _drop_loot:
 		var h = choose_weapon_upgrade()
 		h.position = global_position
-		get_parent().get_parent().get_node('ItemNode').add_child(h)
+		Events.emit_signal("loot_dropped", h)
 		return # If a weapon upgrade is dropped, don't also drop health
 	if Utils.percentage(HEALTH_DROP_CHANCE) && _drop_loot:
 		var h = HealthOrb.instance()
 		h.position = global_position
-		get_parent().get_parent().get_node('ItemNode').add_child(h)
+		Events.emit_signal("loot_dropped", h)
 
 
 func choose_weapon_upgrade():
@@ -255,7 +255,7 @@ func _on_Radar_body_exited(body:Node) -> void:
 		movement_target = move_to_sigil()
 	else:
 		movement_target = movement_targets_in_range.front()
-	
+
 	# When the player leaves movement range, make sure enemy re-attacks the first thing in queue
 	if !attack_targets.empty():
 		attack_target = attack_targets.front()
