@@ -2,7 +2,7 @@ extends Control
 
 
 func _ready():
-	pass
+	Events.connect("turret_count_changed", self, "_on_turret_count_changed")
 
 
 func update_demon_timer(time) -> void:
@@ -29,3 +29,6 @@ func update_experience_for_next_level(next_level) -> void:
 func update_player_level(player) -> void:
 	$HBoxContainer4/Level.text = "Level: " + str(player.level)
 
+
+func _on_turret_count_changed(n:int) -> void:
+	$HBoxContainer2/AvailableTurrets.text = "Available Turrets: " + str(n)

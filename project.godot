@@ -40,6 +40,7 @@ config/icon="res://Assets/icon.png"
 [autoload]
 
 Game="*res://Game.gd"
+Events="*res://src/Events.gd"
 
 [display]
 
@@ -177,6 +178,11 @@ special={
 2d_physics/layer_5="boss"
 2d_physics/layer_6="projectile"
 2d_physics/layer_9="radar"
+
+[node]
+
+name_num_separator=2
+name_casing=2
 
 [physics]
 

@@ -83,8 +83,8 @@ func _ready():
 	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
 	cross_hair = get_global_mouse_position()
-	var _i = get_parent().connect("demon_summoned", self, "_on_demon_summoned")
-	var _x = get_parent().connect("repair_tick", self, "_on_repair_tick")
+	get_parent().connect("demon_summoned", self, "_on_demon_summoned")
+	get_parent().connect("repair_tick", self, "_on_repair_tick")
 
 
 func _process(_delta):
@@ -195,7 +195,7 @@ func move_state():
 
 	if Input.is_action_just_pressed("roll"):
 		action_state = Action.ROLL
-	
+
 
 
 func roll_state():
@@ -322,7 +322,7 @@ func place_turret():
 		turret.position = $TurretSpawn.global_position
 		$TurretContainer.add_child(turret)
 		available_turrets -= 1
-		$"../CanvasLayer/hud/HBoxContainer2/AvailableTurrets".text = "Available Turrets: " + str(available_turrets)
+		Events.emit_signal("turret_count_changed", available_turrets)
 
 
 func heal() -> void:
@@ -403,5 +403,4 @@ func _on_IdleTimer_timeout():
 		if health < max_health:
 			health += idle_heal_amount
 			health_bar.set_health(health)
-			print(health)
 		yield(get_tree().create_timer(1), "timeout")

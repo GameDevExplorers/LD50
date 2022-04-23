@@ -28,7 +28,7 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = 
 		"Demon":
 			var ran = rand_range(1.5, 2.0)
 			scale = Vector2(ran, ran)
-	
+
 
 func set_animation(anim: String):
 	$AnimatedSprite.animation = anim

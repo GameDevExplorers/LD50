@@ -16,7 +16,7 @@ drive = 0.06
 post_gain = 1.28
 
 [resource]
-bus/0/volume_db = -3.49853
+bus/0/volume_db = -28.1657
 bus/1/name = "GunBus"
 bus/1/solo = false
 bus/1/mute = false

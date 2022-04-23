@@ -32,6 +32,7 @@ var knocked_back = false
 
 func _ready():
 	$Timer.start(1)
+	Events.connect("soul_absorbed", self, "absorb_souls")
 	set_health_bar()
 	if demo:
 		health_bar.visible = false
@@ -134,18 +135,20 @@ func assign_attack():
 func take_damage(damage) -> void:
 	health = health - damage
 	set_health_bar()
-	modulate = Color.white
-	yield(get_tree().create_timer(0.1), "timeout")
-	modulate = Color.black
-	yield(get_tree().create_timer(0.1), "timeout")
-	modulate = Color.white
-	yield(get_tree().create_timer(0.1), "timeout")
-	modulate = Color.black
-	yield(get_tree().create_timer(0.1), "timeout")
-	modulate = Color.white
-
+	flash()
 	if health <= 0:
 		get_tree().change_scene("res://victory.tscn")
+
+func flash():
+	modulate = Color.white
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.black
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.black
+	yield(get_tree().create_timer(0.1), "timeout")
+	modulate = Color.white
 
 
 func hit(_source = null, _weapon = null, damage = 0, knockback = false) -> void:
