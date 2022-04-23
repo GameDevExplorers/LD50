@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const INSTANCE_NAME = "turret"
+
 var bullet_speed = 850
 var bullet_damage = 10
 var bullet_size = 1.0

@@ -8,30 +8,6 @@
 [ext_resource path="res://Assets/Sounds/Retro Charge StereoUP 12.wav" type="AudioStream" id=6]
 [ext_resource path="res://src/objects/Healthbar.tscn" type="PackedScene" id=7]
 
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 3 )
-region = Rect2( 160, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 3 )
-region = Rect2( 320, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=24]
-atlas = ExtResource( 3 )
-region = Rect2( 480, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=25]
-atlas = ExtResource( 3 )
-region = Rect2( 640, 32, 160, 32 )
-
-[sub_resource type="AtlasTexture" id=26]
-atlas = ExtResource( 3 )
-region = Rect2( 800, 32, 160, 32 )
-
 [sub_resource type="AtlasTexture" id=20]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 64, 160, 32 )
@@ -60,13 +36,32 @@ region = Rect2( 640, 0, 160, 32 )
 atlas = ExtResource( 3 )
 region = Rect2( 800, 0, 160, 32 )
 
+[sub_resource type="AtlasTexture" id=21]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=22]
+atlas = ExtResource( 3 )
+region = Rect2( 160, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=23]
+atlas = ExtResource( 3 )
+region = Rect2( 320, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=24]
+atlas = ExtResource( 3 )
+region = Rect2( 480, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=25]
+atlas = ExtResource( 3 )
+region = Rect2( 640, 32, 160, 32 )
+
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 3 )
+region = Rect2( 800, 32, 160, 32 )
+
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
-"loop": true,
-"name": "damaged",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 20 ) ],
 "loop": true,
 "name": "broken",
@@ -76,6 +71,11 @@ animations = [ {
 "loop": true,
 "name": "solid",
 "speed": 6.0
+}, {
+"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ) ],
+"loop": true,
+"name": "damaged",
+"speed": 5.0
 } ]
 
 [node name="Wall" type="KinematicBody2D"]
@@ -89,6 +89,7 @@ polygon = PoolVector2Array( -48, -16, -47, -10, 47, -10, 48, -16, 80, -16, 80, 1
 [node name="gate_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 10 )
 animation = "solid"
+frame = 1
 playing = true
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="."]
@@ -100,13 +101,11 @@ pitch_scale = 1.41
 stream = ExtResource( 5 )
 volume_db = -11.185
 pitch_scale = 2.41
-bus = "GunBus"
 
 [node name="Repaired" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 volume_db = -9.207
 pitch_scale = 0.76
-bus = "GunBus"
 
 [node name="RepairPlate" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1, 49 )

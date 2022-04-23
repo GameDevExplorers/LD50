@@ -1,6 +1,6 @@
 extends Node
 
-const DEFAULT_SUMMON_TIMER = 200
+const DEFAULT_SUMMON_TIMER = 2
 
 var summon_timer = DEFAULT_SUMMON_TIMER
 var start_time = 0
@@ -19,15 +19,15 @@ export var demon_summoned = false
 var pause_scene:Control = load("res://pause_menu.tscn").instance()
 
 enum Masks {
-	PLAYER,
-	MOB,
-	WALL,
-	SIGIL,
-	BOSS,
-	PROJECTILE,
-	EMPTY,
-	EMPTY2,
-	RADAR
+	PLAYER,     #1
+	MOB, 	    #2
+	WALL,	    #3
+	SIGIL,	    #4
+	BOSS,	    #5
+	PROJECTILE, #6
+	BOULDERS,   #7
+	EMPTY2,     #8
+	RADAR,      #9
 }
 
 

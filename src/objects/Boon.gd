@@ -31,7 +31,7 @@ const BOONS = [
 	"weapon-sword",
 ]
 
-var trial_boon = "weapon-sword"
+var trial_boon = "weapon-laser-gun"
 
 func _ready() -> void:
 	root_scene = self.owner # root scene
@@ -115,6 +115,8 @@ func activate_boon():
 			frost_bullets()
 		"weapon-homing-bullets":
 			homing_bullets()
+		"weapon-laser-gun":
+			equip_laser()
 		"weapon-more-bullets":
 			more_bullets()
 		"weapon-piercing-bullets":
@@ -199,6 +201,10 @@ func frost_bullets() -> void:
 
 func homing_bullets() -> void:
 	pass
+
+
+func equip_laser() -> void:
+	player.weapon_state = player.Weapon.LASER
 
 
 func more_bullets() -> void:
