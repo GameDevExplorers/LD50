@@ -20,12 +20,12 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = 
 	size = bullet_size
 	velocity = Vector2(speed, 0).rotated(rotation)
 	set_mask(masks)
-	match spawned_by.get_name():
+	match spawned_by.INSTANCE_NAME:
 		"player":
 			scale = Vector2(size, size)
 		"turret":
 			scale = Vector2(size, size)
-		"Demon":
+		"demon":
 			var ran = rand_range(1.5, 2.0)
 			scale = Vector2(ran, ran)
 
@@ -49,7 +49,7 @@ func set_target(pos: Vector2):
 
 
 func _physics_process(delta):
-	if spawned_by.get_name() == "Demon":
+	if spawned_by.INSTANCE_NAME == "demon":
 		rotation += 25 * delta
 	move_and_collide(velocity * delta, false)
 
@@ -70,7 +70,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 
 func _on_Timer_timeout():
-	if spawned_by.get_name() != "Demon":
+	if spawned_by.INSTANCE_NAME != "demon":
 		queue_free()
 
 

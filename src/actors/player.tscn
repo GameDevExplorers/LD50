@@ -94,7 +94,6 @@ height = 53.6842
 
 [node name="Player" type="KinematicBody2D" groups=["ally"]]
 z_index = 1
-collision_layer = 65
 script = ExtResource( 2 )
 speed = 300
 health = 120
@@ -145,29 +144,30 @@ frames = SubResource( 17 )
 [node name="GunAltFire" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
 pitch_scale = 2.42
-bus = "GunBus"
+bus = "Sound Effects"
 
 [node name="GunFire" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
 volume_db = -5.0
 pitch_scale = 1.02
-bus = "GunBus"
+bus = "Sound Effects"
 
 [node name="GunReload" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 volume_db = -10.0
 pitch_scale = 4.0
-bus = "GunBus"
+bus = "Sound Effects"
 
 [node name="Walk" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 5 )
 volume_db = -17.936
 pitch_scale = 0.67
+bus = "Sound Effects"
 
 [node name="Hit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
 pitch_scale = 0.99
-bus = "GunBus"
+bus = "Sound Effects"
 
 [node name="BulletCollider" type="Area2D" parent="."]
 collision_mask = 32

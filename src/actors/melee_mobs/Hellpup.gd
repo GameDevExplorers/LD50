@@ -1,5 +1,7 @@
 extends MeleeMob
 
+const INSTANCE_NAME = "hellpup"
+
 func _ready():
 	anim = $hellpup_anim
 	max_health = 100

@@ -55,6 +55,7 @@ frames = SubResource( 7 )
 [node name="PoweredUp" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
 pitch_scale = 1.76
+bus = "Sound Effects"
 
 [connection signal="body_entered" from="." to="." method="_on_Sigil_body_entered"]
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

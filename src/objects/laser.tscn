@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Assets/Sprites/laser_beam_begin.png" type="Texture" id=1]
+[ext_resource path="res://src/objects/laser.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sprites/laser_beam.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=6]
+
+[sub_resource type="CanvasItemMaterial" id=2]
+
+[sub_resource type="CanvasItemMaterial" id=7]
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0.339223, 0.58216 )
+colors = PoolColorArray( 1, 0, 0, 1, 1, 1, 1, 0.45098 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 500.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color_ramp = SubResource( 4 )
+
+[sub_resource type="CircleShape2D" id=8]
+radius = 14.0357
+
+[node name="laser" type="Node2D"]
+modulate = Color( 1, 0, 0, 1 )
+script = ExtResource( 2 )
+
+[node name="Begin" type="Sprite" parent="."]
+material = SubResource( 6 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 100, -128 )
+region_rect = Rect2( 0, 0, 256, 256 )
+
+[node name="Beam" type="Sprite" parent="."]
+material = SubResource( 2 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 200, -128 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1000, 256 )
+
+[node name="End" type="Position2D" parent="."]
+position = Vector2( 100, 0 )
+
+[node name="Particles2D" type="Particles2D" parent="End"]
+material = SubResource( 7 )
+scale = Vector2( 0.1, 0.1 )
+lifetime = 0.25
+preprocess = 0.25
+process_material = SubResource( 5 )
+texture = ExtResource( 1 )
+
+[node name="Hitbox" type="Area2D" parent="End"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="End/Hitbox"]
+shape = SubResource( 8 )
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 100, 0 )
+collision_mask = 0
+
+[node name="CooldownTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="End/Hitbox" to="." method="_on_Hitbox_body_entered"]
+[connection signal="body_exited" from="End/Hitbox" to="." method="_on_Hitbox_body_exited"]
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_CooldownTimer_timeout"]

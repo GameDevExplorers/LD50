@@ -64,6 +64,7 @@ animation = "position"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
 volume_db = -7.0
+bus = "Sound Effects"
 
 [node name="BulletSpawn" type="Sprite" parent="."]
 position = Vector2( 3, 0 )

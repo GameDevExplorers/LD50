@@ -1,5 +1,7 @@
 extends MeleeMob
 
+const INSTANCE_NAME = "skeleton"
+
 func _ready():
 	anim = $skele_anim
 	max_health = 30

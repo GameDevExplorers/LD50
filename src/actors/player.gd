@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+const INSTANCE_NAME = "player"
 const BULLET_DAMAGE_MOD = 30
 const AMMO_COUNT_MOD = 1
 const HEAL_AMOUNT = 30
@@ -24,6 +25,8 @@ var bullet_speed = 850
 var bullet_damage = 30
 var bullet_size: float = 1.0
 
+var laser
+
 var available_turrets = 3
 var turret_bullet_type = "none"
 var turret_bullet_size: float = 1.0
@@ -41,6 +44,7 @@ var cross_hair:Vector2 = Vector2()
 
 var Bullet = load("res://src/objects/bullet.tscn")
 var Sword = load("res://src/objects/sword_root.tscn")
+var Laser = load("res://src/objects/laser.tscn")
 var Casing = load("res://src/objects/casing.tscn")
 var Turret = load("res://src/objects/Turret.tscn")
 
@@ -51,7 +55,8 @@ enum Action {
 
 enum Weapon {
 	GUN,
-	SWORD
+	SWORD,
+	LASER
 }
 
 var action_state = Action.MOVE
@@ -77,7 +82,6 @@ var slash_frame = "slash2"
 # Piercing
 var has_piercing = false
 var piercing_amount = 0
-
 
 func _ready():
 	health_bar.set_max_health(max_health)
@@ -123,8 +127,7 @@ func _physics_process(delta):
 	Game.player_location = global_position
 	if health <= 0:
 		game_over()
-
-
+	
 func _on_demon_summoned():
 	add_child(health_bar)
 
@@ -216,6 +219,8 @@ func handle_attack():
 			handle_gun_attack()
 		Weapon.SWORD:
 			handle_sword_attack()
+		Weapon.LASER:
+			handle_laser_attack()
 
 func handle_gun_attack() -> void:
 	if Input.is_action_just_pressed("fire") && primary_ready:
@@ -312,6 +317,34 @@ func slash_sword(sword, dmg) -> void:
 		dmg,
 		bullet_size,
 		[Game.Masks.MOB, Game.Masks.BOSS]
+	)
+
+func handle_laser_attack() -> void:
+	if Input.is_action_pressed("fire") && !laser:
+		laser = Laser.instance()
+		fire_laser(laser, bullet_damage * 2, primary_weapon_cooldown)
+		add_child(laser)
+	if Input.is_action_just_released("fire"):
+		laser.queue_free()
+		laser = null
+
+	if Input.is_action_pressed("alt_fire") && !laser:
+		laser = Laser.instance()
+		fire_laser(laser, bullet_damage * 10, secondary_weapon_cooldown)
+		add_child(laser)
+	if Input.is_action_just_released("alt_fire"):
+		laser.queue_free()
+		laser = null
+
+
+func fire_laser(laser, dmg, weapon_cooldown):
+	laser.start(
+		$BulletSpawn.global_position,
+		self,
+		bullet_damage,
+		bullet_size,
+		weapon_cooldown,
+		[Game.Masks.MOB, Game.Masks.BOSS, Game.Masks.BOULDERS]
 	)
 
 

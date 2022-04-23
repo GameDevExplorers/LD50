@@ -6771,6 +6771,7 @@ stream = ExtResource( 13 )
 volume_db = -10.0
 autoplay = true
 mix_target = 2
+bus = "Music"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const INSTANCE_NAME = "demon"
+
 export (int) var speed = 3000
 export (int) var bullet_speed = 200
 export (int) var bullet_damage = 30
@@ -166,13 +168,13 @@ func knockback_target():
 
 
 func _on_Area2D_body_exited(body:Node):
-	if body.get_name() == "player":
+	if body.INSTANCE_NAME == "player":
 		modulate = Color.white
 		player_nearby = false
 
 
 func _on_Area2D_body_entered(body:Node):
-	if body.get_name() == "player":
+	if body.INSTANCE_NAME == "player":
 		player_nearby = true
 
 
