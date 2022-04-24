@@ -136,6 +136,7 @@ func take_damage(damage) -> void:
 	velocity = Vector2.ZERO
 
 	$Hit.play()
+	$DmgNumbersManager.show_value(damage, false)
 	health = health - damage
 	health_bar.set_health(health)
 	if health < max_health && health > 0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://src/actors/Demon.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Sprites/demon 2 idle-Sheet.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/objects/Healthbar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Assets/Sounds/Retro Impact Punch 07.wav" type="AudioStream" id=7]
 [ext_resource path="res://Assets/Sounds/Retro Roar Krushed 01.wav" type="AudioStream" id=8]
+[ext_resource path="res://src/actors/DmgNumbersManager.gd" type="Script" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -100,6 +101,7 @@ shape = SubResource( 1 )
 rotation = 0.0012719
 frames = SubResource( 2 )
 animation = "flying"
+frame = 5
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -121,7 +123,6 @@ texture = ExtResource( 5 )
 stream = ExtResource( 8 )
 volume_db = -13.639
 pitch_scale = 0.89
-bus = "Sound Effects"
 
 [node name="BulletCollider" type="Area2D" parent="."]
 collision_layer = 2
@@ -144,7 +145,9 @@ margin_bottom = 48.0
 stream = ExtResource( 7 )
 volume_db = 1.594
 pitch_scale = 0.63
-bus = "Sound Effects"
+
+[node name="DmgNumbersManager" type="Node2D" parent="."]
+script = ExtResource( 9 )
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

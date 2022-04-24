@@ -135,6 +135,7 @@ func assign_attack():
 			attack = Attack.BLAST
 
 func take_damage(damage) -> void:
+	$DmgNumbersManager.show_value(damage, false)
 	health = health - damage
 	set_health_bar()
 	flash()

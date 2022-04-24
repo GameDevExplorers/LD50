@@ -388,6 +388,7 @@ func hit(source = null, weapon = null, damage = 0, _knockback = false) -> void:
 
 
 func take_damage(damage) -> void:
+	$DmgNumbersManager.show_value(damage, false)
 	$Hit.play()
 	invincible = true
 	health = health - damage
