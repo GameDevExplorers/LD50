@@ -2,20 +2,24 @@ extends Node2D
 
 var spawned_by
 var damage
+var damage_with_mods
 var sword_body
 var hitbox_rotator
 var slash
 var size
 var damage_type = "melee"
 var knockback = true
+var crit
+var crit_chance
 
-func start(r, spawner, dam, sword_size, masks):
+func start(r, spawner, dam, sword_size, _crit_chance, masks):
 	load_nodes()
 	rotation = r
 	spawned_by = spawner
 	damage = dam
 	size = sword_size
-	
+	crit_chance = _crit_chance
+
 	scale = Vector2(size, size)
 	set_mask(masks)
 	set_sword_body_data()
@@ -35,6 +39,13 @@ func set_mask(masks: Array) -> void:
 	for m in masks:
 		get_node("sword_body").get_node("Hitbox").set_collision_mask_bit(m, true)
 
+func is_crit() -> bool:
+	if Utils.percentage(crit_chance):
+		damage_with_mods = damage * 2
+		return true
+	else:
+		damage_with_mods = damage
+		return false
 
 func set_sword_body_data():
 	sword_body.spawned_by = spawned_by
@@ -50,4 +61,5 @@ func play_animations():
 func _on_Hitbox_body_entered(body):
 	if body == spawned_by: # prevents people from swording themselves
 		return
-	body.hit(spawned_by, self, damage, knockback)
+	crit = is_crit()
+	body.hit(spawned_by, self, damage_with_mods, knockback, crit)

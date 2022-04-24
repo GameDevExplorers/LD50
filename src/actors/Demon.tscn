@@ -11,6 +11,7 @@
 [ext_resource path="res://src/actors/DmgNumbersManager.gd" type="Script" id=9]
 
 [sub_resource type="CircleShape2D" id=1]
+radius = 26.0
 
 [sub_resource type="AtlasTexture" id=4]
 atlas = ExtResource( 2 )
@@ -101,7 +102,7 @@ shape = SubResource( 1 )
 rotation = 0.0012719
 frames = SubResource( 2 )
 animation = "flying"
-frame = 5
+frame = 4
 playing = true
 
 [node name="Timer" type="Timer" parent="."]

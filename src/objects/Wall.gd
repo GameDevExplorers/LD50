@@ -30,7 +30,7 @@ func repair() -> void:
 	$Repaired.play()
 	_broken = false
 
-func take_damage(damage) -> void:
+func take_damage(damage, crit) -> void:
 	$Hit.play()
 	health -= damage
 	health_bar.set_health(health)
@@ -46,7 +46,7 @@ func take_damage(damage) -> void:
 		anim.set_animation("broken")
 		$CollisionPolygon2D.disabled = true
 
-func hit(source = null, weapon = null, damage = 0, _knockback = false) -> void:
-	take_damage(damage)
+func hit(source = null, weapon = null, damage = 0, _knockback = false, crit = false) -> void:
+	take_damage(damage, crit)
 	if has_thorns && weapon.damage_type == "melee":
-		source.take_damage(damage * 0.5)
+		source.take_damage(damage * 0.5, crit)

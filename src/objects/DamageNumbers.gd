@@ -31,8 +31,6 @@ func show_value(value, travel, duration, spread, crit=false) -> void:
 
 	handle_crits(crit)
 
-	print("DamageNumbers", text)
-
 	$tween.start()
 	yield($tween, "tween_all_completed")
 	queue_free()

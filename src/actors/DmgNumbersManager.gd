@@ -10,4 +10,3 @@ func show_value(value, crit = false):
     var damage_numbers = DamageNumbers.instance()
     add_child(damage_numbers)
     damage_numbers.show_value(str(value), travel, duration, spread, crit)
-    print("DmgNumbersManager")

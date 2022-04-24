@@ -9,6 +9,30 @@
 [ext_resource path="res://src/objects/Healthbar.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/actors/DmgNumbersManager.gd" type="Script" id=8]
 
+[sub_resource type="AtlasTexture" id=31]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 26, 22 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 2 )
+region = Rect2( 26, 0, 26, 22 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 2 )
+region = Rect2( 52, 0, 26, 22 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 2 )
+region = Rect2( 78, 0, 26, 22 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 2 )
+region = Rect2( 104, 0, 26, 22 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 2 )
+region = Rect2( 130, 0, 26, 22 )
+
 [sub_resource type="AtlasTexture" id=37]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 24, 18 )
@@ -53,32 +77,13 @@ region = Rect2( 240, 0, 48, 48 )
 atlas = ExtResource( 1 )
 region = Rect2( 288, 0, 48, 48 )
 
-[sub_resource type="AtlasTexture" id=31]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 26, 22 )
-
-[sub_resource type="AtlasTexture" id=32]
-atlas = ExtResource( 2 )
-region = Rect2( 26, 0, 26, 22 )
-
-[sub_resource type="AtlasTexture" id=33]
-atlas = ExtResource( 2 )
-region = Rect2( 52, 0, 26, 22 )
-
-[sub_resource type="AtlasTexture" id=34]
-atlas = ExtResource( 2 )
-region = Rect2( 78, 0, 26, 22 )
-
-[sub_resource type="AtlasTexture" id=35]
-atlas = ExtResource( 2 )
-region = Rect2( 104, 0, 26, 22 )
-
-[sub_resource type="AtlasTexture" id=36]
-atlas = ExtResource( 2 )
-region = Rect2( 130, 0, 26, 22 )
-
 [sub_resource type="SpriteFrames" id=18]
 animations = [ {
+"frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
+"loop": true,
+"name": "attack",
+"speed": 15.0
+}, {
 "frames": [ SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ) ],
 "loop": true,
 "name": "move",
@@ -88,11 +93,6 @@ animations = [ {
 "loop": true,
 "name": "death",
 "speed": 5.0
-}, {
-"frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ) ],
-"loop": true,
-"name": "attack",
-"speed": 15.0
 } ]
 
 [sub_resource type="CircleShape2D" id=45]
@@ -126,8 +126,7 @@ rect_scale = Vector2( 0.073, 0.323 )
 [node name="hellpup_anim" type="AnimatedSprite" parent="."]
 frames = SubResource( 18 )
 animation = "attack"
-frame = 3
-playing = true
+frame = 5
 
 [node name="BulletCollider" type="Area2D" parent="."]
 collision_layer = 2

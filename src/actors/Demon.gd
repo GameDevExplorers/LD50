@@ -27,6 +27,8 @@ onready var health_bar = get_node("CanvasLayer/Healthbar")
 
 var has_piercing = false
 var knocked_back = false
+var crit_chance = 0
+
 
 # The demon has a Timer which fires an event every second
 # In the callback, it will decide if its time to attack again, pick an attack and commit to it.
@@ -55,13 +57,7 @@ func _process(_delta):
 
 	if state == State.ATTACKING:
 		if attack == Attack.SPIRAL:
-			var count = 20
-			var radius = Vector2(10, 0)
-			var step = 2 * PI / count
-			var b = Bullet.instance()
-			b.start(position + radius.rotated(step * attack_progress), (step * attack_progress) + 5, self, bullet_speed)
-			b.set_animation("demon")
-			get_parent().add_child(b)
+			fire_spiral()
 			state = State.ATTACK_PAUSE
 		if attack == Attack.BEAM:
 			fire()
@@ -71,11 +67,7 @@ func _process(_delta):
 			$AnimatedSprite.play("default")
 			var vecs = [Vector2(0, -1), Vector2(1, 0), Vector2(0, 1), Vector2(-1, 0), Vector2(0.5, 0.5), Vector2(-0.5, 0.5), Vector2(0.5, -0.5), Vector2(-0.5, -0.5)]
 			var vel = vecs[attack_progress % vecs.size()]
-			var b = Bullet.instance()
-			b.start(position, 0, self, bullet_speed)
-			b.set_animation("demon")
-			b.set_velocity(vel)
-			get_parent().add_child(b)
+			fire(vel)
 			state = State.ATTACK_PAUSE
 
 
@@ -98,12 +90,24 @@ func absorb_souls():
 		max_health = health
 	set_health_bar()
 
-
-func fire():
+func fire_spiral():
+	var count = 20
+	var radius = Vector2(10, 0)
+	var step = 2 * PI / count
 	var b = Bullet.instance()
-	b.start(position, 0, self, bullet_speed, bullet_damage, bullet_size, [Game.Masks.PLAYER, Game.Masks.MOB])
+	var bullet_position = position + radius.rotated(step * attack_progress)
+	var bullet_direction = (step * attack_progress) + 5
+	b.start(bullet_position, bullet_direction, self, bullet_speed, bullet_damage, bullet_size, crit_chance, [Game.Masks.PLAYER, Game.Masks.MOB])
+	b.set_animation("demon")
+	get_parent().add_child(b)
+
+func fire(vel = null):
+	var b = Bullet.instance()
+	b.start(position, 0, self, bullet_speed, bullet_damage, bullet_size, crit_chance, [Game.Masks.PLAYER, Game.Masks.MOB])
 	b.set_animation("demon")
 	b.set_target(Game.player_location)
+	if vel:
+		b.set_velocity(vel)
 	get_parent().add_child(b)
 
 
@@ -134,8 +138,8 @@ func assign_attack():
 		else:
 			attack = Attack.BLAST
 
-func take_damage(damage) -> void:
-	$DmgNumbersManager.show_value(damage, false)
+func take_damage(damage, crit) -> void:
+	$DmgNumbersManager.show_value(damage, crit)
 	health = health - damage
 	set_health_bar()
 	flash()
@@ -154,9 +158,9 @@ func flash():
 	modulate = Color.white
 
 
-func hit(_source = null, _weapon = null, damage = 0, knockback = false) -> void:
+func hit(_source = null, _weapon = null, damage = 0, knockback = false, crit = false) -> void:
 	if damage:
-		take_damage(damage)
+		take_damage(damage, crit)
 		if knockback:
 			knockback_target()
 

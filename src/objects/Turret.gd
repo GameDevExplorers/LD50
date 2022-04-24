@@ -22,6 +22,8 @@ var target = null
 var target_position = Vector2()
 var mobs_in_range = []
 
+var crit_chance = 0
+
 onready var anim = $TurretAnimation
 
 # Called when the node enters the scene tree for the first time.
@@ -50,7 +52,7 @@ func _process(_delta):
 		anim.frame = 0
 
 
-func hit(_source = null, _weapon = null, _damage = 0, _knockback = false) -> void:
+func hit(_source = null, _weapon = null, _damage = 0, _knockback = false, _crit = false) -> void:
 	pass
 
 
@@ -90,6 +92,7 @@ func show_bullet(offset) -> void:
 		bullet_speed,
 		bullet_damage,
 		bullet_size,
+		crit_chance,
 		[Game.Masks.MOB, Game.Masks.BOSS]
 	)
 	get_parent().add_child(bullet)

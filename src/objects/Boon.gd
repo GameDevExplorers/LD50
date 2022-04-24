@@ -25,6 +25,7 @@ const BOONS = [
 	"weapon-enemy-explode-on-death",
 	"weapon-frost-bullets",
 	"weapon-homing-bullets",
+	"weapon-laser-gun",
 	"weapon-more-bullets",
 	"weapon-piercing-bullets",
 	"weapon-saw-blades",
@@ -188,7 +189,7 @@ func cooldown_reduction() -> void:
 	player.primary_weapon_cooldown -= player.primary_weapon_cooldown * 0.2
 
 func critical_damage() -> void:
-	pass
+	player.crit_chance += 10
 
 
 func explode_on_death() -> void:
@@ -204,6 +205,7 @@ func homing_bullets() -> void:
 
 
 func equip_laser() -> void:
+	player.secondary_weapon_cooldown = 5
 	player.weapon_state = player.Weapon.LASER
 
 
