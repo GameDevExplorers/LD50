@@ -200,6 +200,8 @@ wait_time = 2.0
 [node name="DmgNumbersManager" type="Node2D" parent="."]
 script = ExtResource( 16 )
 
+[node name="tween" type="Tween" parent="."]
+
 [connection signal="animation_finished" from="PlayerAnimation" to="." method="_on_player_anim_finished"]
 [connection signal="frame_changed" from="PlayerAnimation" to="." method="_on_player_anim_frame_changed"]
 [connection signal="body_entered" from="BulletCollider" to="." method="_on_BulletCollider_body_entered"]

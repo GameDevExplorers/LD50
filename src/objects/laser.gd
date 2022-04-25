@@ -30,9 +30,15 @@ const MAX_LENGTH = 10000
 onready var begin = $Begin
 onready var beam = $Beam
 onready var end = $End
-onready var rayCast2D = $RayCast2D
+onready var raycast = $RayCast2D
 onready var beam_hitbox = $RayCast2D/BeamHitbox
 onready var beam_collision_shape = $RayCast2D/BeamHitbox/CollisionShape2D
+
+
+enum Type {
+	CHARGE,
+	BEAM
+}
 
 func _ready():
 	set_cooldown_timer()
@@ -54,10 +60,11 @@ func start(pos, spawner, dam = damage, laser_size = size, laser_cooldown = coold
 
 
 func _physics_process(delta):
-	if laser_type == "charge":
-		charge_laser()
-	else:
-		beam_laser()
+	match laser_type:
+		Type.CHARGE:
+			charge_laser()
+		Type.BEAM:
+			beam_laser()
 	
 
 func charge_laser() -> void:
@@ -73,14 +80,14 @@ func charge_laser() -> void:
 
 	var mouse_position = get_local_mouse_position()
 	var max_cast_to = mouse_position.normalized() * MAX_LENGTH
-	rayCast2D.cast_to = max_cast_to
-	if rayCast2D.is_colliding():
-		end.global_position = rayCast2D.get_collision_point()
+	raycast.cast_to = max_cast_to
+	if raycast.is_colliding():
+		end.global_position = raycast.get_collision_point()
 	else:
-		end.global_position = rayCast2D.cast_to
+		end.global_position = raycast.cast_to
 
-	begin.rotation = rayCast2D.cast_to.angle()
-	beam.rotation = rayCast2D.cast_to.angle()
+	begin.rotation = raycast.cast_to.angle()
+	beam.rotation = raycast.cast_to.angle()
 	beam.region_rect.end.x = (end.position.length() * 10) - 150
 
 
@@ -89,13 +96,13 @@ func beam_laser() -> void:
 
 	var mouse_position = get_local_mouse_position()
 	var max_cast_to = mouse_position.normalized() * MAX_LENGTH
-	rayCast2D.cast_to = max_cast_to
-	end.global_position = rayCast2D.cast_to
+	raycast.cast_to = max_cast_to
+	end.global_position = raycast.cast_to
 
-	begin.rotation = rayCast2D.cast_to.angle()
-	beam.rotation = rayCast2D.cast_to.angle()
+	begin.rotation = raycast.cast_to.angle()
+	beam.rotation = raycast.cast_to.angle()
 	beam.region_rect.end.x = (end.position.length() * 10) - 150
-	beam_hitbox.rotation = rayCast2D.cast_to.angle()
+	beam_hitbox.rotation = raycast.cast_to.angle()
 	charged_damage = damage
 	yield(get_tree().create_timer(0.5), "timeout")
 	spawned_by.laser = null

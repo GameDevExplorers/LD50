@@ -328,7 +328,7 @@ func slash_sword(sword, dmg) -> void:
 func handle_laser_attack() -> void:
 	if Input.is_action_pressed("fire") && !laser:
 		laser = Laser.instance()
-		fire_laser(bullet_damage, primary_weapon_cooldown, "charge")
+		fire_laser(bullet_damage, primary_weapon_cooldown, laser.Type.CHARGE)
 		add_child(laser)
 	if Input.is_action_just_released("fire") && is_instance_valid(laser):
 		laser.queue_free()
@@ -337,9 +337,9 @@ func handle_laser_attack() -> void:
 	if Input.is_action_pressed("alt_fire") && !laser && secondary_ready:
 		secondary_ready = false
 		laser = Laser.instance()
-		fire_laser(bullet_damage * 2, secondary_weapon_cooldown, "blast")
+		fire_laser(bullet_damage * 2, secondary_weapon_cooldown, laser.Type.BEAM)
 		add_child(laser)
-		yield(get_tree().create_timer(secondary_weapon_cooldown), "timeout")
+		yield(get_tree().create_timer(0), "timeout")
 		secondary_ready = true
 	if Input.is_action_just_released("alt_fire") && is_instance_valid(laser):
 		laser.queue_free()
