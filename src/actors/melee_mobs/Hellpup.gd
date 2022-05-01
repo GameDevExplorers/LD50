@@ -13,5 +13,6 @@ func _ready():
 	HEALTH_DROP_CHANCE = 10
 	WEAPON_UP_CHANCE = 0
 	EXPERIENCE = 50
-	
+
+	anim.play("move")
 	._ready()

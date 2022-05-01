@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export var damage: = 30
+var damage_with_mods = damage
 var spawned_by
 var speed = 850
 var size = 1.0
@@ -9,8 +10,10 @@ var target = Vector2();
 var piercing_amount = 0
 var damage_type = "ranged"
 var knockback = false
+var crit
+var crit_chance
 
-func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = size, masks = []):
+func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = size, _crit_chance = 0, masks = []):
 	rotation = dir
 	position = pos
 	speed    = bullet_speed
@@ -18,6 +21,7 @@ func start(pos, dir, spawner, bullet_speed = speed, dam = damage, bullet_size = 
 	spawned_by = spawner
 	z_index = 3
 	size = bullet_size
+	crit_chance = _crit_chance
 	velocity = Vector2(speed, 0).rotated(rotation)
 	set_mask(masks)
 	match spawned_by.INSTANCE_NAME:
@@ -40,7 +44,7 @@ func set_velocity(vel: Vector2):
 
 func set_mask(masks: Array) -> void:
 	for m in masks:
-		get_node("Hitbox").set_collision_mask_bit(m, true)
+		$Hitbox.set_collision_mask_bit(m, true)
 
 
 func set_target(pos: Vector2):
@@ -53,11 +57,18 @@ func _physics_process(delta):
 		rotation += 25 * delta
 	move_and_collide(velocity * delta, false)
 
+func is_crit() -> bool:
+	if Utils.percentage(crit_chance):
+		damage_with_mods = damage * 2
+		return true
+	else:
+		damage_with_mods = damage
+		return false
 
 func can_pierce() -> bool:
 	return spawned_by.has_piercing && piercing_amount <= spawned_by.piercing_amount
 
-func take_damage(_damage) -> void:
+func take_damage(_damage, _crit) -> void:
 	pass
 
 
@@ -75,10 +86,12 @@ func _on_Timer_timeout():
 
 
 func _on_Hitbox_body_entered(body):
+	print(body)
 	if is_from_self_or_ally(body): #prevents people from shooting themselves
 		return
 	piercing_amount += 1
-	body.hit(spawned_by, self, damage, knockback)
+	crit = is_crit()
+	body.hit(spawned_by, self, damage_with_mods, knockback, crit)
 	if can_pierce():
 		pass
 	else:

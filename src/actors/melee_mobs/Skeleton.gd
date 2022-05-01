@@ -14,4 +14,5 @@ func _ready():
 	WEAPON_UP_CHANCE = 0
 	EXPERIENCE = 80
 	
+	anim.play("move")
 	._ready()

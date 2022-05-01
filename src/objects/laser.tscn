@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Sprites/laser_beam_begin.png" type="Texture" id=1]
 [ext_resource path="res://src/objects/laser.gd" type="Script" id=2]
@@ -28,6 +28,9 @@ color_ramp = SubResource( 4 )
 
 [sub_resource type="CircleShape2D" id=8]
 radius = 14.0357
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 202.531, 10 )
 
 [node name="laser" type="Node2D"]
 modulate = Color( 1, 0, 0, 1 )
@@ -71,8 +74,20 @@ enabled = true
 cast_to = Vector2( 100, 0 )
 collision_mask = 0
 
+[node name="BeamHitbox" type="Area2D" parent="RayCast2D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RayCast2D/BeamHitbox"]
+position = Vector2( 630, 0 )
+scale = Vector2( 3, 1 )
+shape = SubResource( 9 )
+
 [node name="CooldownTimer" type="Timer" parent="."]
 
+[connection signal="tree_exited" from="." to="." method="_on_laser_tree_exited"]
 [connection signal="body_entered" from="End/Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="body_exited" from="End/Hitbox" to="." method="_on_Hitbox_body_exited"]
+[connection signal="body_entered" from="RayCast2D/BeamHitbox" to="." method="_on_Hitbox_body_entered"]
+[connection signal="body_exited" from="RayCast2D/BeamHitbox" to="." method="_on_Hitbox_body_exited"]
 [connection signal="timeout" from="CooldownTimer" to="." method="_on_CooldownTimer_timeout"]

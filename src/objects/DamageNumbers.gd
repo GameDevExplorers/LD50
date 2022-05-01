@@ -5,9 +5,9 @@ extends Label
 func _ready():
 	pass # Replace with function body.
 
-func show_value(value, travel, duration, spread, crit=false) -> void:
+func show_value(value, travel, duration, crit=false) -> void:
 	text = value
-	var movement = travel.rotated(rand_range(-spread/2, spread/2))
+	var movement = travel.rotated(0)
 	rect_pivot_offset = rect_size / 2
 
 	$tween.interpolate_property(
@@ -16,8 +16,8 @@ func show_value(value, travel, duration, spread, crit=false) -> void:
 		rect_position,
 		rect_position + movement,
 		duration,
-		Tween.TRANS_LINEAR,
-		Tween.EASE_IN_OUT
+		Tween.TRANS_BACK,
+		Tween.EASE_OUT
 	)
 	$tween.interpolate_property(
 		self,
@@ -26,12 +26,10 @@ func show_value(value, travel, duration, spread, crit=false) -> void:
 		0.0,
 		duration,
 		Tween.TRANS_LINEAR,
-		Tween.EASE_IN_OUT
+		Tween.EASE_OUT
 	)
 
 	handle_crits(crit)
-
-	print("DamageNumbers", text)
 
 	$tween.start()
 	yield($tween, "tween_all_completed")

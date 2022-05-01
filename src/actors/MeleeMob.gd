@@ -58,6 +58,7 @@ func _ready():
 	health_bar.set_health(health)
 	health_bar.hide()
 
+
 func set_sigils(t, default) -> void:
 	sigil = t
 	default_target = default
@@ -131,12 +132,12 @@ func attack() -> void:
 		attack_timer.start(cooldown_length)
 
 
-func take_damage(damage) -> void:
+func take_damage(damage, crit) -> void:
 	var old_velocity = velocity
 	velocity = Vector2.ZERO
 
 	$Hit.play()
-	$DmgNumbersManager.show_value(damage, false)
+	$DmgNumbersManager.show_value(damage, crit)
 	health = health - damage
 	health_bar.set_health(health)
 	if health < max_health && health > 0:
@@ -161,9 +162,9 @@ func take_damage(damage) -> void:
 # If player isn't in movement range, then no aggro
 # If player in movement range and is colliding, then attack
 # If player in movement range but not colliding, no attack
-func hit(_source = null, _weapon = null, damage = 0, knockback = false) -> void:
+func hit(_source = null, _weapon = null, damage = 0, knockback = false, crit = false) -> void:
 	if damage && !_dead:
-		take_damage(damage)
+		take_damage(damage, crit)
 
 		if knockback:
 			knockback_target()

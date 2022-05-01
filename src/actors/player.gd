@@ -13,7 +13,7 @@ export (int) var max_health = 400
 
 var primary_bullet_spread: int = 4
 var primary_bullet_count: int = 1
-var primary_weapon_cooldown: float = 0.15
+var primary_weapon_cooldown: float = 0.25
 var primary_ready = true
 
 var secondary_bullet_spread: int = 5
@@ -39,6 +39,7 @@ var invincible = false
 var MASS_FACTOR: float = 5.0
 
 var velocity:Vector2 = Vector2()
+var velocity_mod:Vector2 = Vector2.ZERO
 var roll_vector:Vector2 = Vector2.ZERO
 var cross_hair:Vector2 = Vector2()
 
@@ -83,6 +84,9 @@ var slash_frame = "slash2"
 var has_piercing = false
 var piercing_amount = 0
 
+# Critical Damage
+var crit_chance = 10
+
 func _ready():
 	health_bar.set_max_health(max_health)
 	health_bar.set_health(health)
@@ -120,7 +124,7 @@ func _physics_process(delta):
 		Action.ROLL:
 			roll_state()
 
-	var collision = move_and_collide(velocity * delta)
+	var collision = move_and_collide((velocity - velocity_mod) * delta)
 	if collision && collision.collider.is_in_group("movable"):
 		collision.collider.move_and_slide(velocity * Utils.calculate_resistance(self, collision.collider))
 
@@ -285,6 +289,7 @@ func show_bullet(offset) -> void:
 		bullet_speed,
 		bullet_damage,
 		bullet_size,
+		crit_chance,
 		[Game.Masks.MOB, Game.Masks.BOSS]
 	)
 	get_parent().add_child(bullet)
@@ -316,34 +321,40 @@ func slash_sword(sword, dmg) -> void:
 		self,
 		dmg,
 		bullet_size,
+		crit_chance,
 		[Game.Masks.MOB, Game.Masks.BOSS]
 	)
 
 func handle_laser_attack() -> void:
 	if Input.is_action_pressed("fire") && !laser:
 		laser = Laser.instance()
-		fire_laser(laser, bullet_damage * 2, primary_weapon_cooldown)
+		fire_laser(bullet_damage, primary_weapon_cooldown, laser.Type.CHARGE)
 		add_child(laser)
-	if Input.is_action_just_released("fire"):
+	if Input.is_action_just_released("fire") && is_instance_valid(laser):
 		laser.queue_free()
 		laser = null
 
-	if Input.is_action_pressed("alt_fire") && !laser:
+	if Input.is_action_pressed("alt_fire") && !laser && secondary_ready:
+		secondary_ready = false
 		laser = Laser.instance()
-		fire_laser(laser, bullet_damage * 10, secondary_weapon_cooldown)
+		fire_laser(bullet_damage * 2, secondary_weapon_cooldown, laser.Type.BEAM)
 		add_child(laser)
-	if Input.is_action_just_released("alt_fire"):
+		yield(get_tree().create_timer(0), "timeout")
+		secondary_ready = true
+	if Input.is_action_just_released("alt_fire") && is_instance_valid(laser):
 		laser.queue_free()
 		laser = null
 
 
-func fire_laser(laser, dmg, weapon_cooldown):
+func fire_laser(dmg, weapon_cooldown, type):
 	laser.start(
 		$BulletSpawn.global_position,
 		self,
-		bullet_damage,
+		dmg,
 		bullet_size,
 		weapon_cooldown,
+		crit_chance,
+		type,
 		[Game.Masks.MOB, Game.Masks.BOSS, Game.Masks.BOULDERS]
 	)
 
@@ -379,16 +390,14 @@ func is_ally(source) -> bool:
 	return source.is_in_group("ally")
 
 
-func hit(source = null, weapon = null, damage = 0, _knockback = false) -> void:
-	take_damage(damage)
-	# TODO: prevent ranged from taking thorn damage
-	has_thorns = true
+func hit(source = null, weapon = null, damage = 0, _knockback = false, crit = false) -> void:
+	take_damage(damage, crit)
 	if has_thorns && weapon.damage_type == "melee":
-		source.take_damage(damage * .5)
+		source.take_damage(floor(damage * .5), false)
 
 
-func take_damage(damage) -> void:
-	$DmgNumbersManager.show_value(damage, false)
+func take_damage(damage, crit) -> void:
+	$DmgNumbersManager.show_value(damage, crit)
 	$Hit.play()
 	invincible = true
 	health = health - damage
